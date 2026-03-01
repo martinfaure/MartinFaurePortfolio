@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Martin Faure — Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #0a0a0a;
+        --light: #f0ede6;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--light);
+        font-family: "Inter", sans-serif;
+        overflow-x: hidden;
+      }
+
+      /* NAV */
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 28px;
+        z-index: 10;
+        position: relative;
+      }
+
+      .nav-left {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--light);
+        opacity: 0.85;
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .nav-toggle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.07);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 16px;
+        color: var(--light);
+        transition: background 0.2s;
+      }
+      .nav-toggle:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2px;
+        align-items: center;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--light);
+        font-size: 14px;
+        font-weight: 500;
+        padding: 7px 14px;
+        border-radius: 999px;
+        opacity: 0.55;
+        transition: opacity 0.2s;
+      }
+      .nav-links a:hover {
+        opacity: 1;
+      }
+      .nav-links a.active {
+        background: var(--light);
+        color: var(--bg);
+        opacity: 1;
+        font-weight: 700;
+      }
+
+      /* HERO TITLE */
+      .hero-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(80px, 13vw, 190px);
+        line-height: 0.88;
+        padding: 0 14px;
+        color: var(--light);
+        animation: fadeDown 0.7s ease both;
+      }
+
+      @keyframes fadeDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* SUBTITLE ROW */
+      .subtitle-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 32px 28px 48px;
+        animation: fadeUp 0.8s 0.15s ease both;
+      }
+
+      .subtitle-left h2 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(40px, 5vw, 72px);
+        line-height: 1.05;
+        color: rgba(255, 255, 255, 0.55);
+        font-weight: 400;
+        letter-spacing: 0.01em;
+      }
+
+      .subtitle-right {
+        max-width: 300px;
+        text-align: right;
+        font-size: 13px;
+        line-height: 1.65;
+        color: rgba(255, 255, 255, 0.45);
+        font-weight: 400;
+        padding-top: 8px;
+      }
+
+      /* MASONRY GRID */
+      .grid {
+        columns: 3;
+        column-gap: 12px;
+        padding: 0 14px 80px;
+        animation: fadeUp 0.9s 0.25s ease both;
+      }
+
+      .grid-item {
+        break-inside: avoid;
+        margin-bottom: 12px;
+        border-radius: 6px;
+        overflow: hidden;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .grid-item img {
+        display: block;
+        width: 100%;
+        height: auto;
+        transition:
+          transform 0.5s ease,
+          filter 0.3s ease;
+        filter: brightness(0.95);
+      }
+
+      .grid-item:hover img {
+        transform: scale(1.03);
+        filter: brightness(1.1);
+      }
+
+      /* Overlay on hover */
+      .grid-item::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0);
+        transition: background 0.3s;
+        border-radius: 6px;
+      }
+      .grid-item:hover::after {
+        background: rgba(0, 0, 0, 0.15);
+      }
+
+      /* Color placeholder cards (since we don't have the actual images) */
+      .card {
+        width: 100%;
+        border-radius: 6px;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+      }
+
+      /* FROST */
+      .card-frost {
+        background: linear-gradient(
+          160deg,
+          #b8d4e8 0%,
+          #6ba3c4 30%,
+          #2a6a9a 60%,
+          #1a4a7a 100%
+        );
+        aspect-ratio: 3/4;
+      }
+      .card-frost::before {
+        content: "FROST";
+        position: absolute;
+        top: 12px;
+        left: 10px;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 52px;
+        color: white;
+        letter-spacing: 0.04em;
+        mix-blend-mode: overlay;
+        opacity: 0.9;
+        text-shadow: 2px 2px 0 rgba(0, 100, 180, 0.5);
+      }
+      .card-frost::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 8px,
+          rgba(255, 255, 255, 0.04) 8px,
+          rgba(255, 255, 255, 0.04) 10px
+        );
+      }
+
+      /* VIPER/dark figure */
+      .card-viper {
+        background: #0a0a0a;
+        aspect-ratio: 3/5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 0;
+      }
+      .card-viper .viper-figure {
+        width: 70%;
+        height: 65%;
+        background: radial-gradient(
+          ellipse at center top,
+          #1a1a2e 0%,
+          #050505 100%
+        );
+        border-radius: 50% 50% 0 0;
+        position: relative;
+        margin-top: 20px;
+      }
+      .card-viper .viper-eye {
+        width: 28px;
+        height: 28px;
+        background: radial-gradient(circle, #ff6a00, #ee0979);
+        border-radius: 50%;
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow:
+          0 0 20px #ff6a00,
+          0 0 40px #ff3300;
+      }
+      .card-viper .viper-lines {
+        width: 100%;
+        padding: 12px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .card-viper .vl {
+        height: 2px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 1px;
+      }
+      .card-viper .viper-text {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.3);
+        letter-spacing: 0.2em;
+        padding-bottom: 14px;
+      }
+
+      /* INVASION */
+      .card-invasion {
+        background: linear-gradient(
+          135deg,
+          #8b0000 0%,
+          #c0392b 40%,
+          #e74c3c 70%,
+          #ff6b35 100%
+        );
+        aspect-ratio: 3/4;
+        position: relative;
+      }
+      .card-invasion::before {
+        content: "INVASION";
+        position: absolute;
+        top: 10px;
+        right: 8px;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 38px;
+        color: white;
+        letter-spacing: 0.08em;
+        line-height: 1;
+        text-align: right;
+      }
+      .card-invasion .inv-lines {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 5px;
+      }
+      .card-invasion .inv-line {
+        width: 4px;
+        height: 100%;
+        background: white;
+        opacity: 0.7;
+        clip-path: polygon(0 10%, 100% 5%, 100% 95%, 0 90%);
+      }
+      .card-invasion .inv-line:nth-child(2) {
+        transform: skewY(-8deg);
+      }
+      .card-invasion .inv-line:nth-child(3) {
+        opacity: 0.4;
+      }
+
+      /* NOISE */
+      .card-noise {
+        background: #000;
+        aspect-ratio: 3/4;
+        position: relative;
+        overflow: hidden;
+      }
+      .card-noise .noise-shape {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%;
+        height: 70%;
+        background: white;
+        clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+        filter: blur(3px);
+        opacity: 0.85;
+      }
+      .card-noise .noise-text {
+        position: absolute;
+        bottom: 20px;
+        left: 16px;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 48px;
+        color: white;
+        letter-spacing: 0.08em;
+        line-height: 1;
+      }
+
+      /* DISCOVERING */
+      .card-discovering {
+        background: linear-gradient(
+          180deg,
+          #f0f0f0 0%,
+          #e8e8e8 50%,
+          #1a1a2e 100%
+        );
+        aspect-ratio: 3/4;
+        position: relative;
+      }
+      .card-discovering .dis-top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 12px;
+      }
+      .card-discovering .dis-bars {
+        display: flex;
+        gap: 3px;
+        margin-bottom: 6px;
+      }
+      .card-discovering .dis-bar {
+        height: 3px;
+        flex: 1;
+        background: #000;
+        border-radius: 2px;
+      }
+      .card-discovering .dis-bar.blue {
+        background: #0033cc;
+      }
+      .card-discovering .dis-word {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 42px;
+        color: #000;
+        line-height: 1;
+        letter-spacing: 0.04em;
+      }
+      .card-discovering .dis-sub {
+        font-size: 7px;
+        color: #333;
+        line-height: 1.4;
+        max-width: 120px;
+        margin-top: 4px;
+      }
+      .card-discovering .dis-future {
+        position: absolute;
+        bottom: 12px;
+        left: 12px;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 22px;
+        color: #f0c040;
+        letter-spacing: 0.1em;
+      }
+      .card-discovering .dis-orb {
+        position: absolute;
+        bottom: 20%;
+        right: -10px;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 35% 35%,
+          #ff8c00,
+          #ff4500,
+          #8b0000
+        );
+        box-shadow: -5px 5px 20px rgba(255, 100, 0, 0.4);
+      }
+
+      /* GRABZ */
+      .card-grabz {
+        background: #0a0a0a;
+        aspect-ratio: 3/4;
+        position: relative;
+        overflow: hidden;
+      }
+      .card-grabz .grabz-hands {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 65%;
+        background: linear-gradient(180deg, #1a0a0a 0%, #000 100%);
+      }
+      .card-grabz .grabz-hand-l {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 45%;
+        height: 100%;
+        background: linear-gradient(135deg, #ff3366 0%, #cc0033 100%);
+        clip-path: polygon(0 0, 70% 0, 100% 100%, 30% 100%);
+        opacity: 0.7;
+      }
+      .card-grabz .grabz-hand-r {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 45%;
+        height: 100%;
+        background: linear-gradient(225deg, #ff3366 0%, #cc0033 100%);
+        clip-path: polygon(30% 0, 100% 0, 70% 100%, 0 100%);
+        opacity: 0.7;
+      }
+      .card-grabz .grabz-text {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 52px;
+        color: #ff3366;
+        letter-spacing: 0.06em;
+        text-align: center;
+        padding-bottom: 10px;
+        line-height: 1;
+      }
+
+      /* CURRENTS */
+      .card-currents {
+        background: linear-gradient(
+          180deg,
+          #7b6fa0 0%,
+          #d4c060 40%,
+          #b8a040 80%,
+          #2a2a2a 100%
+        );
+        aspect-ratio: 3/4;
+        position: relative;
+        overflow: hidden;
+      }
+      .card-currents .curr-lines {
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 3px,
+          rgba(0, 0, 0, 0.15) 3px,
+          rgba(0, 0, 0, 0.15) 4px
+        );
+      }
+      .card-currents .curr-orb {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 35% 35%,
+          #d0d0d0,
+          #606060,
+          #202020
+        );
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+      .card-currents .curr-text {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 38px;
+        color: #fff;
+        letter-spacing: 0.08em;
+        text-align: left;
+        padding: 0 8px 8px;
+        line-height: 1;
+      }
+      .card-currents .curr-top-text {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 28px;
+        color: rgba(255, 255, 255, 0.6);
+        letter-spacing: 0.1em;
+        line-height: 1;
+      }
+
+      /* ══ RESPONSIVE ══ */
+      @media (max-width: 860px) {
+        .grid {
+          columns: 2;
+          column-gap: 10px;
+          padding: 0 14px 60px;
+        }
+        .subtitle-row {
+          padding: 24px 20px 36px;
+          flex-direction: column;
+          gap: 16px;
+        }
+        .subtitle-right {
+          text-align: left;
+          max-width: 100%;
+        }
+      }
+
+      @media (max-width: 600px) {
+        nav {
+          padding: 14px 18px;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hero-title {
+          font-size: clamp(52px, 16vw, 90px);
+          padding: 0 12px;
+        }
+        .subtitle-row {
+          padding: 20px 16px 28px;
+          gap: 12px;
+        }
+        .subtitle-left h2 {
+          font-size: clamp(28px, 8vw, 48px);
+        }
+        .subtitle-right {
+          font-size: 12px;
+        }
+        .grid {
+          columns: 2;
+          column-gap: 8px;
+          padding: 0 10px 48px;
+        }
+        .grid-item {
+          margin-bottom: 8px;
+          border-radius: 4px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-left">Développeur Web &amp; Designer</div>
+      <div class="nav-right">
+        <button class="nav-toggle">—</button>
+        <div class="nav-links">
+          <a href="./index.html">Accueil</a>
+          <a href="./projets.html">Projets</a>
+          <a href="./design.html" class="active">Design</a>
+          <a href="./apropos.html">A Propos</a>
+          <a href="./contact.html">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero-title">MART/N FAURE</div>
+
+    <div class="subtitle-row">
+      <div class="subtitle-left">
+        <h2>Exploration<br />Graphiques</h2>
+      </div>
+      <div class="subtitle-right">
+        Une série d'expérimentations visuelles centrée sur la<br />
+        typographie, la texture et la composition
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- Col 1 -->
+      <div class="grid-item">
+        <div class="card card-frost"></div>
+      </div>
+      <div class="grid-item">
+        <div class="card card-discovering">
+          <div class="dis-top">
+            <div class="dis-bars">
+              <div class="dis-bar"></div>
+              <div class="dis-bar"></div>
+              <div class="dis-bar blue"></div>
+              <div class="dis-bar"></div>
+              <div class="dis-bar"></div>
+            </div>
+            <div class="dis-word">DIS<br />COVERING</div>
+            <div class="dis-sub">
+              New ideas shaping the world around us every day
+            </div>
+          </div>
+          <div class="dis-orb"></div>
+          <div class="dis-future">FUTURE.</div>
+        </div>
+      </div>
+
+      <!-- Col 2 -->
+      <div class="grid-item">
+        <div class="card card-viper">
+          <div class="viper-figure">
+            <div class="viper-eye"></div>
+          </div>
+          <div class="viper-lines">
+            <div class="vl"></div>
+            <div class="vl"></div>
+            <div class="vl"></div>
+          </div>
+          <div class="viper-text">V/PER</div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="card card-noise">
+          <div class="noise-shape"></div>
+          <div class="noise-text">NOISE</div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="card card-grabz">
+          <div class="grabz-hands">
+            <div class="grabz-hand-l"></div>
+            <div class="grabz-hand-r"></div>
+          </div>
+          <div class="grabz-text">GRABZ</div>
+        </div>
+      </div>
+
+      <!-- Col 3 -->
+      <div class="grid-item">
+        <div class="card card-invasion">
+          <div class="inv-lines">
+            <div class="inv-line"></div>
+            <div class="inv-line"></div>
+            <div class="inv-line"></div>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="card card-currents">
+          <div class="curr-lines"></div>
+          <div class="curr-top-text">CAME<br />MBALA</div>
+          <div class="curr-orb"></div>
+          <div class="curr-text">CURRENTS</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Mobile hamburger
+      const toggle = document.querySelector(".nav-toggle");
+      const links = document.querySelector(".nav-links");
+      if (toggle && links) {
+        toggle.addEventListener("click", () => {
+          const open = links.style.display === "flex";
+          links.style.display = open ? "" : "flex";
+          links.style.flexDirection = "column";
+          links.style.position = "fixed";
+          links.style.top = "60px";
+          links.style.right = "18px";
+          links.style.background = "var(--bg, #0a0a0a)";
+          links.style.padding = "16px";
+          links.style.borderRadius = "12px";
+          links.style.border = "1px solid rgba(255,255,255,0.1)";
+          links.style.zIndex = "999";
+          if (open) {
+            links.removeAttribute("style");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

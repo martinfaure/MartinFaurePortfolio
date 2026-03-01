@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Martin Faure — Contact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #0a0a0a;
+        --light: #f0ede6;
+        --muted: rgba(255, 255, 255, 0.35);
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--light);
+        font-family: "Inter", sans-serif;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      /* NAV */
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 28px;
+        position: relative;
+        z-index: 10;
+      }
+
+      .nav-left {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--light);
+        opacity: 0.85;
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .nav-toggle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.07);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 16px;
+        color: var(--light);
+        transition: background 0.2s;
+      }
+      .nav-toggle:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2px;
+        align-items: center;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--light);
+        font-size: 14px;
+        font-weight: 500;
+        padding: 7px 14px;
+        border-radius: 999px;
+        opacity: 0.55;
+        transition: opacity 0.2s;
+      }
+      .nav-links a:hover {
+        opacity: 1;
+      }
+      .nav-links a.active {
+        background: var(--light);
+        color: var(--bg);
+        opacity: 1;
+        font-weight: 700;
+      }
+
+      /* HERO */
+      .hero-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(80px, 13vw, 200px);
+        line-height: 0.88;
+        padding: 0 14px;
+        color: var(--light);
+        animation: fadeDown 0.7s ease both;
+      }
+
+      @keyframes fadeDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .section-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(42px, 6vw, 80px);
+        color: var(--muted);
+        padding: 40px 28px 0;
+        letter-spacing: 0.01em;
+        animation: fadeUp 0.8s 0.1s ease both;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* FORM AREA */
+      .form-area {
+        padding: 80px 28px 100px;
+        max-width: 760px;
+        animation: fadeUp 0.8s 0.2s ease both;
+      }
+
+      /* Steps progress dots */
+      .steps-dots {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 48px;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        transition:
+          background 0.3s,
+          transform 0.3s;
+      }
+      .dot.active {
+        background: var(--light);
+        transform: scale(1.2);
+      }
+      .dot.done {
+        background: rgba(255, 255, 255, 0.5);
+      }
+
+      /* Step container */
+      .step {
+        display: none;
+        flex-direction: column;
+        gap: 0;
+      }
+      .step.visible {
+        display: flex;
+        animation: stepIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      .step.exit {
+        animation: stepOut 0.3s ease both;
+      }
+
+      @keyframes stepIn {
+        from {
+          opacity: 0;
+          transform: translateY(28px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes stepOut {
+        from {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        to {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+      }
+
+      /* Step label */
+      .step-label {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.3);
+        margin-bottom: 20px;
+      }
+
+      /* Field row */
+      .field-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 0;
+        border-bottom: 1.5px solid rgba(255, 255, 255, 0.22);
+        padding-bottom: 14px;
+        transition: border-color 0.3s;
+        position: relative;
+      }
+      .field-row:focus-within {
+        border-color: var(--light);
+      }
+
+      .field-row input,
+      .field-row textarea {
+        flex: 1;
+        background: none;
+        border: none;
+        outline: none;
+        font-family: "Inter", sans-serif;
+        font-size: clamp(16px, 2vw, 22px);
+        font-weight: 300;
+        color: var(--light);
+        padding: 0;
+        resize: none;
+        caret-color: var(--light);
+      }
+
+      .field-row input::placeholder,
+      .field-row textarea::placeholder {
+        color: rgba(255, 255, 255, 0.28);
+      }
+
+      .field-row textarea {
+        min-height: 80px;
+      }
+
+      .btn-next {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--light);
+        font-size: 22px;
+        padding: 4px 0 4px 16px;
+        opacity: 0.5;
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+        flex-shrink: 0;
+      }
+      .btn-next:hover {
+        opacity: 1;
+        transform: translateX(4px);
+      }
+
+      /* Error hint */
+      .hint {
+        font-size: 11px;
+        color: rgba(255, 80, 80, 0.8);
+        margin-top: 10px;
+        min-height: 16px;
+        letter-spacing: 0.04em;
+      }
+
+      /* Submit button */
+      .btn-submit {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--light);
+        color: var(--bg);
+        border: none;
+        cursor: pointer;
+        padding: 16px 36px;
+        border-radius: 999px;
+        font-family: "Inter", sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        margin-top: 32px;
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+        letter-spacing: 0.02em;
+      }
+      .btn-submit:hover {
+        opacity: 0.85;
+        transform: scale(0.98);
+      }
+
+      /* CONFIRMATION */
+      .confirmation {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 80px 28px 100px;
+        animation: fadeUp 0.7s ease both;
+      }
+      .confirmation.visible {
+        display: flex;
+      }
+
+      .confirm-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        border: 2px solid var(--light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        animation: popIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+
+      @keyframes popIn {
+        from {
+          transform: scale(0.5);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .confirm-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(38px, 5vw, 64px);
+        color: var(--light);
+        line-height: 1.05;
+      }
+
+      .confirm-sub {
+        font-size: 15px;
+        color: var(--muted);
+        font-weight: 300;
+        line-height: 1.6;
+        max-width: 420px;
+      }
+
+      .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: none;
+        border: 1.5px solid rgba(255, 255, 255, 0.2);
+        color: var(--light);
+        cursor: pointer;
+        padding: 12px 24px;
+        border-radius: 999px;
+        font-family: "Inter", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        margin-top: 16px;
+        text-decoration: none;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .btn-back:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+
+      /* ══ RESPONSIVE ══ */
+      @media (max-width: 860px) {
+        .form-area {
+          padding: 60px 24px 80px;
+          max-width: 100%;
+        }
+        .section-title {
+          padding: 32px 24px 0;
+        }
+      }
+
+      @media (max-width: 600px) {
+        nav {
+          padding: 14px 18px;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hero-title {
+          font-size: clamp(52px, 16vw, 90px);
+          padding: 0 12px;
+        }
+        .section-title {
+          font-size: clamp(32px, 9vw, 56px);
+          padding: 24px 18px 0;
+        }
+        .form-area {
+          padding: 48px 18px 70px;
+        }
+        .steps-dots {
+          margin-bottom: 36px;
+        }
+        .field-row input,
+        .field-row textarea {
+          font-size: clamp(16px, 4.5vw, 22px);
+        }
+        .btn-submit {
+          padding: 14px 28px;
+          font-size: 14px;
+          width: 100%;
+          justify-content: center;
+        }
+        .confirmation {
+          padding: 60px 18px 80px;
+        }
+        .confirm-title {
+          font-size: clamp(32px, 9vw, 56px);
+        }
+        .confirm-sub {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-left">Développeur Web &amp; Designer</div>
+      <div class="nav-right">
+        <button class="nav-toggle">—</button>
+        <div class="nav-links">
+          <a href="./index.html">Accueil</a>
+          <a href="./projets.html">Projets</a>
+          <a href="./design.html">Design</a>
+          <a href="./apropos.html">A Propos</a>
+          <a href="./contact.html" class="active">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero-title">MART/N FAURE</div>
+    <div class="section-title">Contactez Moi</div>
+
+    <!-- FORM -->
+    <div class="form-area" id="formArea">
+      <!-- Dots -->
+      <div class="steps-dots" id="stepsDots">
+        <div class="dot active" data-i="0"></div>
+        <div class="dot" data-i="1"></div>
+        <div class="dot" data-i="2"></div>
+        <div class="dot" data-i="3"></div>
+      </div>
+
+      <!-- Step 1: Nom -->
+      <div class="step visible" id="step0">
+        <div class="step-label">01 — Comment vous appelez-vous ?</div>
+        <div class="field-row">
+          <input
+            type="text"
+            id="inputNom"
+            placeholder="Nom"
+            autocomplete="off"
+          />
+          <button class="btn-next" onclick="nextStep(0)">→</button>
+        </div>
+        <div class="hint" id="hint0"></div>
+      </div>
+
+      <!-- Step 2: Email -->
+      <div class="step" id="step1">
+        <div class="step-label">02 — Votre adresse email ?</div>
+        <div class="field-row">
+          <input
+            type="email"
+            id="inputEmail"
+            placeholder="email@exemple.com"
+            autocomplete="off"
+          />
+          <button class="btn-next" onclick="nextStep(1)">→</button>
+        </div>
+        <div class="hint" id="hint1"></div>
+      </div>
+
+      <!-- Step 3: Sujet -->
+      <div class="step" id="step2">
+        <div class="step-label">03 — Quel est le sujet ?</div>
+        <div class="field-row">
+          <input
+            type="text"
+            id="inputSujet"
+            placeholder="Sujet"
+            autocomplete="off"
+          />
+          <button class="btn-next" onclick="nextStep(2)">→</button>
+        </div>
+        <div class="hint" id="hint2"></div>
+      </div>
+
+      <!-- Step 4: Message + submit -->
+      <div class="step" id="step3">
+        <div class="step-label">04 — Votre message</div>
+        <div class="field-row">
+          <textarea
+            id="inputMessage"
+            placeholder="Décrivez votre projet ou votre demande..."
+            rows="4"
+          ></textarea>
+        </div>
+        <div class="hint" id="hint3"></div>
+        <button class="btn-submit" onclick="submitForm()">
+          Envoyer le message ↗
+        </button>
+      </div>
+    </div>
+
+    <!-- CONFIRMATION -->
+    <div class="confirmation" id="confirmation">
+      <div class="confirm-icon">✓</div>
+      <div class="confirm-title">Message<br />Envoyé !</div>
+      <div class="confirm-sub" id="confirmSub">
+        Merci <strong id="confirmName"></strong>, votre message a bien été
+        reçu.<br />
+        Je vous répondrai dans les plus brefs délais à
+        <strong id="confirmEmail"></strong>.
+      </div>
+      <a href="martin-faure.html" class="btn-back">← Retour à l'accueil</a>
+    </div>
+
+    <script>
+      let current = 0;
+      const total = 4;
+
+      // Enter key support
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          if (current < total - 1) nextStep(current);
+          else if (current === total - 1) submitForm();
+        }
+      });
+
+      // Auto-focus first input
+      document.getElementById("inputNom").focus();
+
+      function updateDots(step) {
+        document.querySelectorAll(".dot").forEach((d, i) => {
+          d.classList.remove("active", "done");
+          if (i < step) d.classList.add("done");
+          else if (i === step) d.classList.add("active");
+        });
+      }
+
+      function nextStep(fromIdx) {
+        const inputs = ["inputNom", "inputEmail", "inputSujet", "inputMessage"];
+        const hints = ["hint0", "hint1", "hint2", "hint3"];
+        const val = document.getElementById(inputs[fromIdx]).value.trim();
+
+        // Validation
+        if (!val) {
+          showHint(hints[fromIdx], "Ce champ est requis.");
+          shake(fromIdx);
+          return;
+        }
+        if (fromIdx === 1 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+          showHint(hints[fromIdx], "Veuillez entrer une adresse email valide.");
+          shake(fromIdx);
+          return;
+        }
+
+        clearHint(hints[fromIdx]);
+        animateOut(fromIdx, () => {
+          current = fromIdx + 1;
+          updateDots(current);
+          animateIn(current);
+          // Focus next input
+          const nextInputId = inputs[current];
+          if (nextInputId) {
+            setTimeout(() => document.getElementById(nextInputId)?.focus(), 80);
+          }
+        });
+      }
+
+      function animateOut(idx, cb) {
+        const el = document.getElementById("step" + idx);
+        el.classList.add("exit");
+        setTimeout(() => {
+          el.classList.remove("visible", "exit");
+          cb();
+        }, 280);
+      }
+
+      function animateIn(idx) {
+        const el = document.getElementById("step" + idx);
+        el.classList.add("visible");
+      }
+
+      function shake(idx) {
+        const el = document.getElementById("step" + idx);
+        el.style.animation = "none";
+        el.offsetHeight; // reflow
+        el.style.animation = "shake 0.4s ease";
+      }
+
+      function showHint(id, msg) {
+        document.getElementById(id).textContent = msg;
+      }
+      function clearHint(id) {
+        document.getElementById(id).textContent = "";
+      }
+
+      function submitForm() {
+        const msg = document.getElementById("inputMessage").value.trim();
+        if (!msg) {
+          showHint("hint3", "Veuillez écrire votre message.");
+          shake(3);
+          return;
+        }
+        clearHint("hint3");
+
+        const name = document.getElementById("inputNom").value.trim();
+        const email = document.getElementById("inputEmail").value.trim();
+
+        // Hide form, show confirmation
+        const formArea = document.getElementById("formArea");
+        formArea.style.animation = "stepOut 0.3s ease both";
+        setTimeout(() => {
+          formArea.style.display = "none";
+          document.getElementById("confirmName").textContent = name;
+          document.getElementById("confirmEmail").textContent = email;
+          document.querySelector(".section-title").style.display = "none";
+          const conf = document.getElementById("confirmation");
+          conf.classList.add("visible");
+        }, 300);
+      }
+    </script>
+
+    <style>
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20% {
+          transform: translateX(-10px);
+        }
+        40% {
+          transform: translateX(10px);
+        }
+        60% {
+          transform: translateX(-6px);
+        }
+        80% {
+          transform: translateX(6px);
+        }
+      }
+    </style>
+
+    <script>
+      // Mobile hamburger
+      const toggle = document.querySelector(".nav-toggle");
+      const links = document.querySelector(".nav-links");
+      if (toggle && links) {
+        toggle.addEventListener("click", () => {
+          const open = links.style.display === "flex";
+          links.style.display = open ? "" : "flex";
+          links.style.flexDirection = "column";
+          links.style.position = "fixed";
+          links.style.top = "60px";
+          links.style.right = "18px";
+          links.style.background = "var(--bg, #0a0a0a)";
+          links.style.padding = "16px";
+          links.style.borderRadius = "12px";
+          links.style.border = "1px solid rgba(255,255,255,0.1)";
+          links.style.zIndex = "999";
+          if (open) {
+            links.removeAttribute("style");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

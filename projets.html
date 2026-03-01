@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Martin Faure — Projets</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #0e0e0e;
+        --light: #f0ede6;
+        --accent: #e05a00;
+        --col: 300px;
+      }
+
+      html,
+      body {
+        height: 100%;
+        background: var(--bg);
+        color: var(--light);
+        font-family: "Inter", sans-serif;
+        overflow: hidden;
+      }
+
+      /* NAV */
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 28px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        background: linear-gradient(
+          to bottom,
+          rgba(14, 14, 14, 0.97) 0%,
+          transparent 100%
+        );
+      }
+      .nav-left {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--light);
+        opacity: 0.85;
+      }
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .nav-toggle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.07);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 16px;
+        color: var(--light);
+        transition: background 0.2s;
+      }
+      .nav-toggle:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2px;
+        align-items: center;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--light);
+        font-size: 14px;
+        font-weight: 500;
+        padding: 7px 14px;
+        border-radius: 999px;
+        opacity: 0.55;
+        transition: opacity 0.2s;
+      }
+      .nav-links a:hover {
+        opacity: 1;
+      }
+      .nav-links a.active {
+        background: var(--light);
+        color: var(--bg);
+        opacity: 1;
+        font-weight: 700;
+      }
+      .nav-sep {
+        color: rgba(255, 255, 255, 0.2);
+        font-size: 14px;
+      }
+
+      /* PROGRESS BAR */
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        background: var(--light);
+        z-index: 300;
+        width: 0%;
+        transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      /* ════════════════════════════
+       FIXED LEFT PANEL
+    ════════════════════════════ */
+      .panel-left {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: var(--col);
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 76px 28px 52px;
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--bg);
+      }
+
+      /* ─── CLOCK WHEEL ─── */
+      .clock-wrap {
+        /* Show 3 digits, center slot is the active one */
+        height: 240px;
+        overflow: hidden;
+        position: relative;
+        mask-image: linear-gradient(
+          to bottom,
+          transparent 0%,
+          black 22%,
+          black 78%,
+          transparent 100%
+        );
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          transparent 0%,
+          black 22%,
+          black 78%,
+          transparent 100%
+        );
+      }
+
+      .clock-drum {
+        display: flex;
+        flex-direction: column;
+        /* smooth spring transition = horloge analogique */
+        transition: transform 0.7s cubic-bezier(0.34, 1.4, 0.64, 1);
+        will-change: transform;
+      }
+
+      .clock-digit {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 150px;
+        line-height: 1;
+        height: 150px;
+        letter-spacing: -0.03em;
+        color: rgba(255, 255, 255, 0.06);
+        user-select: none;
+        display: flex;
+        align-items: center;
+        transition:
+          color 0.5s ease,
+          transform 0.5s ease;
+      }
+      .clock-digit.is-active {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .clock-digit.is-near {
+        color: rgba(255, 255, 255, 0.14);
+      }
+
+      /* ─── META (bottom of left panel) ─── */
+      .panel-meta {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .meta-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.28);
+        margin-bottom: 10px;
+      }
+
+      .meta-name-wrap {
+        overflow: hidden;
+        margin-bottom: 6px;
+      }
+      .meta-name {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(24px, 2.8vw, 40px);
+        color: var(--light);
+        letter-spacing: 0.02em;
+        line-height: 1.05;
+        display: block;
+      }
+
+      .meta-type {
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.38);
+        letter-spacing: 0.02em;
+        margin-bottom: 24px;
+      }
+
+      .meta-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .meta-year {
+        font-size: 13px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.3);
+      }
+
+      .btn-gh {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: var(--light);
+        color: var(--bg);
+        padding: 9px 18px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        text-decoration: none;
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+      }
+      .btn-gh:hover {
+        opacity: 0.85;
+        transform: scale(0.97);
+      }
+      .btn-gh svg {
+        width: 14px;
+        height: 14px;
+        fill: var(--bg);
+        flex-shrink: 0;
+      }
+
+      /* ════════════════════════════
+       SCROLLABLE RIGHT AREA
+    ════════════════════════════ */
+      .scroll-wrap {
+        position: fixed;
+        top: 0;
+        left: var(--col);
+        right: 0;
+        bottom: 0;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        scroll-behavior: smooth;
+      }
+
+      /* Each slide fills the right area */
+      .slide {
+        height: 100vh;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .slide-visual {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: translateX(30px);
+        transition:
+          opacity 0.65s 0.05s ease,
+          transform 0.65s 0.05s ease;
+      }
+      .slide.active .slide-visual {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* Scroll hint */
+      .scroll-hint {
+        position: absolute;
+        bottom: 28px;
+        right: 28px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        z-index: 10;
+        opacity: 0.25;
+        pointer-events: none;
+      }
+      .scroll-hint span {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+      }
+      .scroll-line {
+        width: 1px;
+        height: 36px;
+        background: var(--light);
+        animation: pulse 1.8s ease infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scaleY(0.4);
+          transform-origin: top;
+          opacity: 0.3;
+        }
+        50% {
+          transform: scaleY(1);
+          transform-origin: top;
+          opacity: 1;
+        }
+      }
+      .slide:last-child .scroll-hint {
+        display: none;
+      }
+
+      /* ─── VISUALS ─── */
+      .v-chef {
+        background: linear-gradient(135deg, #1a1a1a, #222, #181818);
+      }
+      .v-chef::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 3px,
+          rgba(255, 255, 255, 0.012) 3px,
+          rgba(255, 255, 255, 0.012) 4px
+        );
+      }
+      .mock-phone {
+        width: 190px;
+        background: #111;
+        border-radius: 28px;
+        border: 2px solid rgba(255, 255, 255, 0.12);
+        padding: 14px 10px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+        position: relative;
+        z-index: 1;
+        transform: rotate(-6deg) translateX(20px);
+      }
+      .mock-screen {
+        background: #1c1c1e;
+        border-radius: 18px;
+        overflow: hidden;
+      }
+      .mock-topbar {
+        background: #2a2a2a;
+        padding: 8px 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .mock-topbar span {
+        font-size: 9px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 0.05em;
+      }
+      .mock-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+      .mock-card {
+        margin: 8px;
+        border-radius: 10px;
+        height: 76px;
+        overflow: hidden;
+      }
+      .mock-card-inner {
+        background: linear-gradient(135deg, #e05a00, #c44b00);
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 8px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .mock-rows {
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .mock-row {
+        height: 6px;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .mock-row.s {
+        width: 60%;
+      }
+      .mock-row.o {
+        background: rgba(224, 90, 0, 0.4);
+        width: 40%;
+      }
+
+      .v-portfolio {
+        background: linear-gradient(135deg, #0d1117, #161b22);
+      }
+      .code-block {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 52%;
+        opacity: 0.5;
+      }
+      .cl {
+        height: 8px;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .cl.ind {
+        margin-left: 20px;
+        width: 70%;
+      }
+      .cl.sh {
+        width: 40%;
+      }
+      .cl.b {
+        background: rgba(88, 166, 255, 0.4);
+        width: 55%;
+      }
+      .cl.g {
+        background: rgba(63, 185, 80, 0.4);
+        width: 45%;
+        margin-left: 20px;
+      }
+
+      .v-design {
+        background: #111;
+        overflow: hidden;
+      }
+      .v-design::before {
+        content: "DESIGN";
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 20vw;
+        letter-spacing: 0.1em;
+        color: rgba(255, 255, 255, 0.025);
+        position: absolute;
+        pointer-events: none;
+      }
+      .design-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        width: 58%;
+        z-index: 1;
+      }
+      .dc {
+        border-radius: 8px;
+        aspect-ratio: 3/4;
+      }
+      .dc:nth-child(1) {
+        background: linear-gradient(160deg, #b8d4e8, #2a6a9a);
+      }
+      .dc:nth-child(2) {
+        background: linear-gradient(160deg, #8b0000, #ff6b35);
+        margin-top: 24px;
+      }
+      .dc:nth-child(3) {
+        background: #000;
+        margin-top: -24px;
+      }
+      .dc:nth-child(4) {
+        background: linear-gradient(160deg, #7b6fa0, #d4c060);
+      }
+
+      /* ══ RESPONSIVE ══ */
+
+      /* Tablet: shrink left panel */
+      @media (max-width: 860px) {
+        :root {
+          --col: 220px;
+        }
+        .clock-digit {
+          font-size: 110px;
+          height: 110px;
+        }
+        .clock-wrap {
+          height: 180px;
+        }
+        .meta-name {
+          font-size: clamp(20px, 3vw, 32px);
+        }
+      }
+
+      /* Mobile: stack vertically — left panel becomes top bar */
+      @media (max-width: 600px) {
+        html,
+        body {
+          overflow: auto;
+        }
+
+        /* Nav: hide links, keep toggle */
+        .nav-links {
+          display: none;
+        }
+        nav {
+          padding: 14px 16px;
+        }
+
+        /* Left panel: fixed top strip */
+        .panel-left {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: auto;
+          width: 100%;
+          height: auto;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          padding: 56px 20px 16px;
+          border-right: none;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          z-index: 50;
+          gap: 16px;
+        }
+
+        /* Clock: horizontal mini drum on left */
+        .clock-wrap {
+          width: 90px;
+          height: 72px;
+          flex-shrink: 0;
+          mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            black 18%,
+            black 82%,
+            transparent 100%
+          );
+          -webkit-mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            black 18%,
+            black 82%,
+            transparent 100%
+          );
+        }
+        .clock-drum {
+          flex-direction: row;
+          transition: transform 0.7s cubic-bezier(0.34, 1.4, 0.64, 1);
+        }
+        .clock-digit {
+          font-size: 60px;
+          height: 72px;
+          width: 72px;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+
+        /* Meta: inline right */
+        .panel-meta {
+          flex: 1;
+          flex-direction: row;
+          align-items: center;
+          gap: 12px;
+          flex-wrap: wrap;
+        }
+        .meta-label {
+          display: none;
+        }
+        .meta-name-wrap {
+          margin-bottom: 0;
+        }
+        .meta-name {
+          font-size: 18px;
+        }
+        .meta-type {
+          margin-bottom: 0;
+          font-size: 11px;
+        }
+        .meta-actions {
+          gap: 8px;
+        }
+        .meta-year {
+          font-size: 12px;
+        }
+        .btn-gh {
+          padding: 7px 12px;
+          font-size: 11px;
+        }
+        .btn-gh svg {
+          display: none;
+        }
+
+        /* Scrollable right: full width, offset for top panel height */
+        .scroll-wrap {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          padding-top: 0;
+        }
+
+        /* Slides: full screen, add top padding to avoid overlap */
+        .slide {
+          height: 100vh;
+        }
+        .slide-visual {
+          top: 148px;
+        }
+
+        /* Progress bar stays on top */
+        .progress-bar {
+          z-index: 400;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <nav>
+      <div class="nav-left">Développeur Web &amp; Designer</div>
+      <div class="nav-right">
+        <button class="nav-toggle">—</button>
+        <div class="nav-links">
+          <a href="./index.html">Accueil</a>
+          <a href="#" class="active">Projets</a>
+          <a href="./design.html">Design</a>
+          <a href="./apropos.html">A Propos</a>
+          <a href="./contact.html">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ══ FIXED LEFT ══ -->
+    <div class="panel-left">
+      <div class="clock-wrap">
+        <div class="clock-drum" id="drum"></div>
+      </div>
+
+      <div class="panel-meta">
+        <div class="meta-label" id="mLabel">Projet 01 / 03</div>
+        <div class="meta-name-wrap">
+          <span class="meta-name" id="mName">Chef AI</span>
+        </div>
+        <div class="meta-type" id="mType">Application Mobile</div>
+        <div class="meta-actions">
+          <span class="meta-year" id="mYear">2025</span>
+          <a href="#" class="btn-gh" id="mBtn">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+              />
+            </svg>
+            GitHub ↗
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SCROLLABLE RIGHT ══ -->
+    <div class="scroll-wrap" id="scrollWrap">
+      <div class="slide" id="s0">
+        <div class="slide-visual v-chef">
+          <div class="mock-phone">
+            <div class="mock-screen">
+              <div class="mock-topbar">
+                <div class="mock-dot"></div>
+                <span>ChefAI</span>
+              </div>
+              <div class="mock-card">
+                <div class="mock-card-inner">Trending Cuisine</div>
+              </div>
+              <div class="mock-rows">
+                <div class="mock-row"></div>
+                <div class="mock-row s"></div>
+                <div class="mock-row o"></div>
+                <div class="mock-row"></div>
+                <div class="mock-row s"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-hint">
+          <span>Scroll</span>
+          <div class="scroll-line"></div>
+        </div>
+      </div>
+
+      <div class="slide" id="s1">
+        <div class="slide-visual v-portfolio">
+          <div class="code-block">
+            <div class="cl b"></div>
+            <div class="cl ind"></div>
+            <div class="cl g"></div>
+            <div class="cl ind sh"></div>
+            <div class="cl"></div>
+            <div class="cl b sh"></div>
+            <div class="cl ind"></div>
+            <div class="cl g"></div>
+          </div>
+        </div>
+        <div class="scroll-hint">
+          <span>Scroll</span>
+          <div class="scroll-line"></div>
+        </div>
+      </div>
+
+      <div class="slide" id="s2">
+        <div class="slide-visual v-design">
+          <div class="design-grid">
+            <div class="dc"></div>
+            <div class="dc"></div>
+            <div class="dc"></div>
+            <div class="dc"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const PROJECTS = [
+        {
+          label: "Projet 01 / 03",
+          name: "Chef AI",
+          type: "Application Mobile",
+          year: "2025",
+          href: "#",
+          btn: "GitHub ↗",
+          svg: true,
+        },
+        {
+          label: "Projet 02 / 03",
+          name: "Portfolio V2",
+          type: "Site Web",
+          year: "2025",
+          href: "#",
+          btn: "GitHub ↗",
+          svg: true,
+        },
+        {
+          label: "Projet 03 / 03",
+          name: "Explorations\nGraphiques",
+          type: "Design / Identité",
+          year: "2024",
+          href: "./design.html",
+          btn: "Voir →",
+          svg: false,
+        },
+      ];
+
+      const DIGIT_H = 150; // must match .clock-digit height in CSS
+      const drum = document.getElementById("drum");
+      const wrap = document.getElementById("scrollWrap");
+      const slides = document.querySelectorAll(".slide");
+      const progressBar = document.getElementById("progressBar");
+      const mLabel = document.getElementById("mLabel");
+      const mName = document.getElementById("mName");
+      const mType = document.getElementById("mType");
+      const mYear = document.getElementById("mYear");
+      const mBtn = document.getElementById("mBtn");
+
+      /* ── Build clock drum: one empty before, digits, one empty after ── */
+      const drumLabels = ["", "01", "02", "03", ""];
+      drumLabels.forEach((txt) => {
+        const el = document.createElement("div");
+        el.className = "clock-digit";
+        el.textContent = txt;
+        drum.appendChild(el);
+      });
+      const drumDigits = drum.querySelectorAll(".clock-digit");
+
+      /* ── Position drum so slot `s` is vertically centered in .clock-wrap (240px) ──
+       Center of slot s = s * DIGIT_H + DIGIT_H/2
+       We want it at 120px from top of wrap → translateY = -(center - 120)
+    */
+      function setDrum(idx) {
+        const slot = idx + 1;
+        const isMobile = window.innerWidth <= 600;
+        const SLOT = isMobile ? 72 : DIGIT_H;
+        const CENTER = isMobile ? 45 : 120;
+        const center = slot * SLOT + SLOT / 2;
+        const axis = isMobile ? "X" : "Y";
+        drum.style.transform = `translate${axis}(${-(center - CENTER)}px)`;
+
+        drumDigits.forEach((d, i) => {
+          d.classList.remove("is-active", "is-near");
+          if (i === slot) d.classList.add("is-active");
+          else if (Math.abs(i - slot) === 1) d.classList.add("is-near");
+        });
+      }
+
+      /* ── SVG path for GitHub icon ── */
+      const GH_PATH =
+        "M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12";
+
+      let current = -1;
+
+      function updateMeta(idx) {
+        if (idx === current) return;
+        const dir = idx > current ? 1 : -1;
+        const p = PROJECTS[idx];
+        const metaEls = [mLabel, mName.parentElement, mType];
+
+        // Exit animation
+        metaEls.forEach((el, i) => {
+          el.style.transition = `opacity .2s ${i * 25}ms, transform .2s ${i * 25}ms`;
+          el.style.opacity = "0";
+          el.style.transform = `translateY(${-8 * dir}px)`;
+        });
+
+        setTimeout(() => {
+          // Swap content
+          mLabel.textContent = p.label;
+          mName.innerHTML = p.name.replace("\n", "<br>");
+          mType.textContent = p.type;
+          mYear.textContent = p.year;
+          mBtn.href = p.href;
+          if (p.svg) {
+            mBtn.innerHTML = `<svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:#0e0e0e;flex-shrink:0"><path d="${GH_PATH}"/></svg>${p.btn}`;
+          } else {
+            mBtn.textContent = p.btn;
+          }
+          // Enter animation
+          metaEls.forEach((el) => {
+            el.style.transform = `translateY(${8 * dir}px)`;
+          });
+          requestAnimationFrame(() => {
+            metaEls.forEach((el, i) => {
+              el.style.transition = `opacity .45s ${i * 40}ms, transform .45s ${i * 40}ms`;
+              el.style.opacity = "1";
+              el.style.transform = "translateY(0)";
+            });
+          });
+        }, 180);
+      }
+
+      /* ── Intersection Observer ── */
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              entry.target.classList.remove("active");
+              return;
+            }
+            entry.target.classList.add("active");
+            const idx = Array.from(slides).indexOf(entry.target);
+            setDrum(idx);
+            updateMeta(idx);
+            progressBar.style.width = ((idx + 1) / slides.length) * 100 + "%";
+            current = idx;
+          });
+        },
+        { root: wrap, threshold: 0.55 },
+      );
+
+      slides.forEach((s) => io.observe(s));
+
+      // Init
+      // Mobile hamburger
+      const navToggle = document.querySelector(".nav-toggle");
+      const navLinks = document.querySelector(".nav-links");
+      if (navToggle && navLinks) {
+        navToggle.addEventListener("click", () => {
+          const isOpen = navLinks.style.display === "flex";
+          if (isOpen) {
+            navLinks.removeAttribute("style");
+          } else {
+            navLinks.style.display = "flex";
+            navLinks.style.flexDirection = "column";
+            navLinks.style.position = "fixed";
+            navLinks.style.top = "60px";
+            navLinks.style.right = "18px";
+            navLinks.style.background = "#0e0e0e";
+            navLinks.style.padding = "16px";
+            navLinks.style.borderRadius = "12px";
+            navLinks.style.border = "1px solid rgba(255,255,255,0.1)";
+            navLinks.style.zIndex = "999";
+          }
+        });
+      }
+      setDrum(0);
+      current = 0;
+    </script>
+  </body>
+</html>
