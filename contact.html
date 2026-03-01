@@ -217,6 +217,50 @@
         margin-bottom: 20px;
       }
 
+      /* Two-field row (entreprise + poste) */
+      .field-double {
+        display: flex;
+        gap: 32px;
+        border-bottom: 1.5px solid rgba(255, 255, 255, 0.22);
+        padding-bottom: 14px;
+        transition: border-color 0.3s;
+        align-items: flex-end;
+      }
+      .field-double:focus-within {
+        border-color: var(--light);
+      }
+      .field-double .field-part {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .field-double .field-part label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.25);
+      }
+      .field-double .field-part input {
+        background: none;
+        border: none;
+        outline: none;
+        font-family: "Inter", sans-serif;
+        font-size: clamp(16px, 2vw, 22px);
+        font-weight: 300;
+        color: var(--light);
+        padding: 0;
+        caret-color: var(--light);
+        width: 100%;
+      }
+      .field-double .field-part input::placeholder {
+        color: rgba(255, 255, 255, 0.28);
+      }
+      .field-double .btn-next {
+        flex-shrink: 0;
+      }
+
       /* Field row */
       .field-row {
         display: flex;
@@ -418,6 +462,13 @@
         .field-row textarea {
           font-size: clamp(16px, 4.5vw, 22px);
         }
+        .field-double {
+          flex-direction: column;
+          gap: 20px;
+        }
+        .field-double .field-part input {
+          font-size: clamp(16px, 4.5vw, 22px);
+        }
         .btn-submit {
           padding: 14px 28px;
           font-size: 14px;
@@ -432,6 +483,25 @@
         }
         .confirm-sub {
           font-size: 14px;
+        }
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20% {
+          transform: translateX(-10px);
+        }
+        40% {
+          transform: translateX(10px);
+        }
+        60% {
+          transform: translateX(-6px);
+        }
+        80% {
+          transform: translateX(6px);
         }
       }
     </style>
@@ -456,12 +526,14 @@
 
     <!-- FORM -->
     <div class="form-area" id="formArea">
-      <!-- Dots -->
+      <!-- Dots: 6 steps -->
       <div class="steps-dots" id="stepsDots">
         <div class="dot active" data-i="0"></div>
         <div class="dot" data-i="1"></div>
         <div class="dot" data-i="2"></div>
         <div class="dot" data-i="3"></div>
+        <div class="dot" data-i="4"></div>
+        <div class="dot" data-i="5"></div>
       </div>
 
       <!-- Step 1: Nom -->
@@ -494,9 +566,36 @@
         <div class="hint" id="hint1"></div>
       </div>
 
-      <!-- Step 3: Sujet -->
+      <!-- Step 3: Entreprise + Poste (double champ) -->
       <div class="step" id="step2">
-        <div class="step-label">03 — Quel est le sujet ?</div>
+        <div class="step-label">03 — Votre entreprise &amp; poste ?</div>
+        <div class="field-double">
+          <div class="field-part">
+            <label for="inputEntreprise">Entreprise</label>
+            <input
+              type="text"
+              id="inputEntreprise"
+              placeholder="Nom de l'entreprise"
+              autocomplete="off"
+            />
+          </div>
+          <div class="field-part">
+            <label for="inputPoste">Poste</label>
+            <input
+              type="text"
+              id="inputPoste"
+              placeholder="Votre poste"
+              autocomplete="off"
+            />
+          </div>
+          <button class="btn-next" onclick="nextStep(2)">→</button>
+        </div>
+        <div class="hint" id="hint2"></div>
+      </div>
+
+      <!-- Step 4: Sujet -->
+      <div class="step" id="step3">
+        <div class="step-label">04 — Quel est le sujet ?</div>
         <div class="field-row">
           <input
             type="text"
@@ -504,14 +603,14 @@
             placeholder="Sujet"
             autocomplete="off"
           />
-          <button class="btn-next" onclick="nextStep(2)">→</button>
+          <button class="btn-next" onclick="nextStep(3)">→</button>
         </div>
-        <div class="hint" id="hint2"></div>
+        <div class="hint" id="hint3"></div>
       </div>
 
-      <!-- Step 4: Message + submit -->
-      <div class="step" id="step3">
-        <div class="step-label">04 — Votre message</div>
+      <!-- Step 5: Message + submit -->
+      <div class="step" id="step4">
+        <div class="step-label">05 — Votre message</div>
         <div class="field-row">
           <textarea
             id="inputMessage"
@@ -519,7 +618,7 @@
             rows="4"
           ></textarea>
         </div>
-        <div class="hint" id="hint3"></div>
+        <div class="hint" id="hint4"></div>
         <button class="btn-submit" onclick="submitForm()">
           Envoyer le message ↗
         </button>
@@ -530,7 +629,7 @@
     <div class="confirmation" id="confirmation">
       <div class="confirm-icon">✓</div>
       <div class="confirm-title">Message<br />Envoyé !</div>
-      <div class="confirm-sub" id="confirmSub">
+      <div class="confirm-sub">
         Merci <strong id="confirmName"></strong>, votre message a bien été
         reçu.<br />
         Je vous répondrai dans les plus brefs délais à
@@ -541,11 +640,21 @@
 
     <script>
       let current = 0;
-      const total = 4;
+      const total = 5;
+
+      // Inputs and hints indexed by step
+      const inputs = [
+        "inputNom",
+        "inputEmail",
+        null,
+        "inputSujet",
+        "inputMessage",
+      ];
+      const hints = ["hint0", "hint1", "hint2", "hint3", "hint4"];
 
       // Enter key support
       document.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
+        if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
           if (current < total - 1) nextStep(current);
           else if (current === total - 1) submitForm();
         }
@@ -563,32 +672,42 @@
       }
 
       function nextStep(fromIdx) {
-        const inputs = ["inputNom", "inputEmail", "inputSujet", "inputMessage"];
-        const hints = ["hint0", "hint1", "hint2", "hint3"];
-        const val = document.getElementById(inputs[fromIdx]).value.trim();
-
-        // Validation
-        if (!val) {
-          showHint(hints[fromIdx], "Ce champ est requis.");
-          shake(fromIdx);
-          return;
+        // Validate
+        if (fromIdx === 2) {
+          // Entreprise + Poste step — both optional, just advance
+          clearHint(hints[fromIdx]);
+        } else {
+          const val = document.getElementById(inputs[fromIdx]).value.trim();
+          if (!val) {
+            showHint(hints[fromIdx], "Ce champ est requis.");
+            shake(fromIdx);
+            return;
+          }
+          if (fromIdx === 1 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+            showHint(
+              hints[fromIdx],
+              "Veuillez entrer une adresse email valide.",
+            );
+            shake(fromIdx);
+            return;
+          }
+          clearHint(hints[fromIdx]);
         }
-        if (fromIdx === 1 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-          showHint(hints[fromIdx], "Veuillez entrer une adresse email valide.");
-          shake(fromIdx);
-          return;
-        }
 
-        clearHint(hints[fromIdx]);
         animateOut(fromIdx, () => {
           current = fromIdx + 1;
           updateDots(current);
           animateIn(current);
           // Focus next input
-          const nextInputId = inputs[current];
-          if (nextInputId) {
-            setTimeout(() => document.getElementById(nextInputId)?.focus(), 80);
-          }
+          const nextId = inputs[current];
+          if (nextId)
+            setTimeout(() => document.getElementById(nextId)?.focus(), 80);
+          // For double-field step, focus entreprise
+          if (current === 2)
+            setTimeout(
+              () => document.getElementById("inputEntreprise")?.focus(),
+              80,
+            );
         });
       }
 
@@ -602,14 +721,13 @@
       }
 
       function animateIn(idx) {
-        const el = document.getElementById("step" + idx);
-        el.classList.add("visible");
+        document.getElementById("step" + idx).classList.add("visible");
       }
 
       function shake(idx) {
         const el = document.getElementById("step" + idx);
         el.style.animation = "none";
-        el.offsetHeight; // reflow
+        el.offsetHeight;
         el.style.animation = "shake 0.4s ease";
       }
 
@@ -623,30 +741,34 @@
       function submitForm() {
         const msg = document.getElementById("inputMessage").value.trim();
         if (!msg) {
-          showHint("hint3", "Veuillez écrire votre message.");
-          shake(3);
+          showHint("hint4", "Veuillez écrire votre message.");
+          shake(4);
           return;
         }
-        clearHint("hint3");
+        clearHint("hint4");
 
         const name = document.getElementById("inputNom").value.trim();
         const email = document.getElementById("inputEmail").value.trim();
+        const entreprise = document
+          .getElementById("inputEntreprise")
+          .value.trim();
+        const poste = document.getElementById("inputPoste").value.trim();
         const sujet = document.getElementById("inputSujet").value.trim();
 
-        // Créer un formulaire HTML pour envoyer via FormSubmit
         const form = document.createElement("form");
         form.method = "POST";
         form.action = "https://formsubmit.co/faure.martin2705@gmail.com";
         form.style.display = "none";
 
-        // Ajouter les champs
         const fields = {
-          name: name,
-          email: email,
+          name,
+          email,
+          entreprise: entreprise || "—",
+          poste: poste || "—",
           subject: sujet,
           message: msg,
           _captcha: "false",
-          _next: window.location.href, // Rester sur la même page
+          _next: window.location.href,
         };
 
         for (const [key, value] of Object.entries(fields)) {
@@ -659,7 +781,6 @@
 
         document.body.appendChild(form);
 
-        // Montrer la confirmation immédiatement
         setTimeout(() => {
           const formArea = document.getElementById("formArea");
           formArea.style.animation = "stepOut 0.3s ease both";
@@ -668,40 +789,13 @@
             document.getElementById("confirmName").textContent = name;
             document.getElementById("confirmEmail").textContent = email;
             document.querySelector(".section-title").style.display = "none";
-            const conf = document.getElementById("confirmation");
-            conf.classList.add("visible");
+            document.getElementById("confirmation").classList.add("visible");
           }, 300);
         }, 200);
 
-        // Envoyer le formulaire après 500ms pour laisser le temps d'afficher la confirmation
-        setTimeout(() => {
-          form.submit();
-        }, 500);
+        setTimeout(() => form.submit(), 500);
       }
-    </script>
 
-    <style>
-      @keyframes shake {
-        0%,
-        100% {
-          transform: translateX(0);
-        }
-        20% {
-          transform: translateX(-10px);
-        }
-        40% {
-          transform: translateX(10px);
-        }
-        60% {
-          transform: translateX(-6px);
-        }
-        80% {
-          transform: translateX(6px);
-        }
-      }
-    </style>
-
-    <script>
       // Mobile hamburger
       const toggle = document.querySelector(".nav-toggle");
       const links = document.querySelector(".nav-links");
@@ -718,9 +812,7 @@
           links.style.borderRadius = "12px";
           links.style.border = "1px solid rgba(255,255,255,0.1)";
           links.style.zIndex = "999";
-          if (open) {
-            links.removeAttribute("style");
-          }
+          if (open) links.removeAttribute("style");
         });
       }
     </script>

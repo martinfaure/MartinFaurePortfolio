@@ -158,21 +158,44 @@
         padding-top: 8px;
       }
 
-      /* MASONRY GRID */
+      /* ─── 3-COLUMN MASONRY GRID ─── */
       .grid {
-        columns: 3;
-        column-gap: 12px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto;
+        gap: 12px;
         padding: 0 14px 80px;
         animation: fadeUp 0.9s 0.25s ease both;
+        /* Stagger columns vertically like the screenshot */
+        align-items: start;
+      }
+
+      /* Column 1: starts at top */
+      .col-1 {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      /* Column 2: pushed down to create offset */
+      .col-2 {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 120px;
+      }
+      /* Column 3: starts at top */
+      .col-3 {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
       }
 
       .grid-item {
-        break-inside: avoid;
-        margin-bottom: 12px;
         border-radius: 6px;
         overflow: hidden;
         cursor: pointer;
         position: relative;
+        background: #111;
       }
 
       .grid-item img {
@@ -198,39 +221,157 @@
         background: rgba(0, 0, 0, 0);
         transition: background 0.3s;
         border-radius: 6px;
+        pointer-events: none;
       }
       .grid-item:hover::after {
         background: rgba(0, 0, 0, 0.15);
       }
 
-      /* ─── IMAGE CARDS ─── */
-      .card {
-        width: 100%;
-        border-radius: 6px;
-        overflow: hidden;
-        display: block;
-        position: relative;
-      }
-      .card img {
-        display: block;
-        width: 100%;
-        height: auto;
+      /* Hover label */
+      .grid-label {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 48px 14px 14px;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        opacity: 0;
+        transform: translateY(4px);
         transition:
-          transform 0.5s ease,
-          filter 0.3s ease;
-        filter: brightness(0.95);
+          opacity 0.3s ease,
+          transform 0.3s ease;
+        z-index: 2;
       }
-      .grid-item:hover .card img {
-        transform: scale(1.03);
-        filter: brightness(1.08);
+      .grid-item:hover .grid-label {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .label-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 20px;
+        letter-spacing: 0.06em;
+        color: var(--light);
+      }
+      .label-index {
+        font-size: 11px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.45);
+        letter-spacing: 0.06em;
+      }
+
+      /* Stagger reveal */
+      .grid-item {
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+          opacity 0.55s ease,
+          transform 0.55s ease,
+          box-shadow 0.3s ease;
+      }
+      .grid-item.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .grid-item:hover {
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      }
+
+      /* ── LIGHTBOX ── */
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 500;
+        background: rgba(10, 10, 10, 0.96);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s ease;
+      }
+      .lightbox.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .lightbox img {
+        max-width: 85vw;
+        max-height: 85vh;
+        object-fit: contain;
+        border-radius: 6px;
+        transform: scale(0.96);
+        transition: transform 0.4s ease;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+      }
+      .lightbox.open img {
+        transform: scale(1);
+      }
+
+      .lb-close {
+        position: absolute;
+        top: 22px;
+        right: 28px;
+        font-size: 13px;
+        font-weight: 500;
+        color: rgba(240, 237, 230, 0.45);
+        cursor: pointer;
+        letter-spacing: 0.04em;
+        transition: color 0.2s;
+      }
+      .lb-close:hover {
+        color: var(--light);
+      }
+
+      .lb-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 24px;
+        color: rgba(240, 237, 230, 0.25);
+        cursor: pointer;
+        padding: 16px;
+        transition: color 0.2s;
+        user-select: none;
+      }
+      .lb-nav:hover {
+        color: var(--light);
+      }
+      .lb-prev {
+        left: 14px;
+      }
+      .lb-next {
+        right: 14px;
+      }
+
+      .lb-info {
+        position: absolute;
+        bottom: 26px;
+        left: 26px;
+      }
+      .lb-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 26px;
+        letter-spacing: 0.06em;
+        color: var(--light);
+      }
+      .lb-counter {
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(240, 237, 230, 0.35);
+        margin-top: 2px;
+        letter-spacing: 0.04em;
       }
 
       /* ══ RESPONSIVE ══ */
       @media (max-width: 860px) {
         .grid {
-          columns: 2;
-          column-gap: 10px;
+          grid-template-columns: repeat(3, 1fr);
           padding: 0 14px 60px;
+        }
+        .col-2 {
+          margin-top: 80px;
         }
         .subtitle-row {
           padding: 24px 20px 36px;
@@ -240,6 +381,10 @@
         .subtitle-right {
           text-align: left;
           max-width: 100%;
+        }
+        .grid-label {
+          opacity: 1;
+          transform: none;
         }
       }
 
@@ -265,24 +410,38 @@
           font-size: 12px;
         }
         .grid {
-          columns: 2;
-          column-gap: 8px;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 8px;
           padding: 0 10px 48px;
         }
+        .col-2 {
+          margin-top: 60px;
+        }
         .grid-item {
-          margin-bottom: 8px;
           border-radius: 4px;
         }
       }
     </style>
   </head>
   <body>
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+      <span class="lb-close" id="lbClose">✕ Fermer</span>
+      <span class="lb-nav lb-prev" id="lbPrev">&#8592;</span>
+      <img src="" id="lbImg" alt="" />
+      <span class="lb-nav lb-next" id="lbNext">&#8594;</span>
+      <div class="lb-info">
+        <div class="lb-title" id="lbTitle"></div>
+        <div class="lb-counter" id="lbCounter"></div>
+      </div>
+    </div>
+
     <nav>
       <div class="nav-left">Développeur Web &amp; Designer</div>
       <div class="nav-right">
         <button class="nav-toggle">—</button>
         <div class="nav-links">
-          <a href="./index.html" a>Accueil</a>
+          <a href="./index.html">Accueil</a>
           <a href="./projets.html">Projets</a>
           <a href="./design.html" class="active">Design</a>
           <a href="./apropos.html">A Propos</a>
@@ -304,56 +463,66 @@
     </div>
 
     <div class="grid">
-      <!-- Image 1 -->
-      <div class="grid-item">
-        <div class="card">
-          <img src="assets\1.png" alt="FROST" />
+      <!-- Colonne 1 -->
+      <div class="col-1">
+        <div class="grid-item" data-title="FROST" data-idx="0">
+          <img src="assets/1.png" alt="FROST" />
+          <div class="grid-label">
+            <span class="label-title">FROST</span>
+            <span class="label-index">01</span>
+          </div>
+        </div>
+        <div class="grid-item" data-title="DISCOVERING" data-idx="3">
+          <img src="assets/2.png" alt="DISCOVERING" />
+          <div class="grid-label">
+            <span class="label-title">DISCOVERING</span>
+            <span class="label-index">04</span>
+          </div>
         </div>
       </div>
 
-      <!-- Image 2 -->
-      <div class="grid-item">
-        <div class="card">
-          <img src="assets\2.png" alt="DISCOVERING" />
+      <!-- Colonne 2 (décalée vers le bas) -->
+      <div class="col-2">
+        <div class="grid-item" data-title="VIPER" data-idx="1">
+          <img src="assets/3.png" alt="VIPER" />
+          <div class="grid-label">
+            <span class="label-title">VIPER</span>
+            <span class="label-index">02</span>
+          </div>
+        </div>
+        <div class="grid-item" data-title="NOISE" data-idx="4">
+          <img src="assets/4.png" alt="NOISE" />
+          <div class="grid-label">
+            <span class="label-title">NOISE</span>
+            <span class="label-index">05</span>
+          </div>
+        </div>
+        <div class="grid-item" data-title="GRABZ" data-idx="6">
+          <img src="assets/5.png" alt="GRABZ" />
+          <div class="grid-label">
+            <span class="label-title">GRABZ</span>
+            <span class="label-index">07</span>
+          </div>
         </div>
       </div>
 
-      <!-- Image 3 -->
-      <div class="grid-item">
-        <div class="card">
-          <img src="assets\3.png" alt="VIPER" />
+      <!-- Colonne 3 -->
+      <div class="col-3">
+        <div class="grid-item" data-title="INVASION" data-idx="2">
+          <img src="assets/6.png" alt="INVASION" />
+          <div class="grid-label">
+            <span class="label-title">INVASION</span>
+            <span class="label-index">03</span>
+          </div>
+        </div>
+        <div class="grid-item" data-title="CURRENTS" data-idx="5">
+          <img src="assets/7.png" alt="CURRENTS" />
+          <div class="grid-label">
+            <span class="label-title">CURRENTS</span>
+            <span class="label-index">06</span>
+          </div>
         </div>
       </div>
-
-      <!-- Image 4 -->
-      <div class="grid-item">
-        <div class="card">
-          <img src="assets\4.png" alt="NOISE" />
-        </div>
-      </div>
-
-      <!-- Image 5 -->
-      <div class="grid-item">
-        <div class="card">
-          <img src="assets\5.png" alt="GRABZ" />
-        </div>
-      </div>
-
-      <!-- Image 6 -->
-      <div class="grid-item">
-        <div class="card">
-          <img src="assets\6.png" alt="INVASION" />
-        </div>
-      </div>
-
-      <!-- Image 7 -->
-      <div class="grid-item">
-        <div class="card">
-          <img src="assets\7.png" alt="CURRENTS" />
-        </div>
-      </div>
-
-      <!-- Ajoute autant de grid-item que nécessaire -->
     </div>
 
     <script>
@@ -373,11 +542,86 @@
           links.style.borderRadius = "12px";
           links.style.border = "1px solid rgba(255,255,255,0.1)";
           links.style.zIndex = "999";
-          if (open) {
-            links.removeAttribute("style");
-          }
+          if (open) links.removeAttribute("style");
         });
       }
+
+      // Stagger reveal
+      const items = [...document.querySelectorAll(".grid-item")];
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              const delay = parseInt(e.target.dataset.idx) * 90;
+              setTimeout(() => e.target.classList.add("visible"), delay);
+              obs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.08 },
+      );
+      items.forEach((item) => obs.observe(item));
+
+      // Lightbox
+      const lb = document.getElementById("lightbox");
+      const lbImg = document.getElementById("lbImg");
+      const lbTitle = document.getElementById("lbTitle");
+      const lbCounter = document.getElementById("lbCounter");
+      let current = 0;
+
+      // Ordered list for lightbox navigation
+      const ordered = [...items].sort(
+        (a, b) => parseInt(a.dataset.idx) - parseInt(b.dataset.idx),
+      );
+
+      function openLB(item) {
+        current = ordered.indexOf(item);
+        lbImg.src = item.querySelector("img").src;
+        lbImg.alt = item.dataset.title;
+        lbTitle.textContent = item.dataset.title;
+        lbCounter.textContent = `${String(current + 1).padStart(2, "0")} / ${String(ordered.length).padStart(2, "0")}`;
+        lb.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeLB() {
+        lb.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      function navigate(dir) {
+        current = (current + dir + ordered.length) % ordered.length;
+        const item = ordered[current];
+        lbImg.style.opacity = "0";
+        lbImg.style.transition = "opacity 0.15s";
+        setTimeout(() => {
+          lbImg.src = item.querySelector("img").src;
+          lbImg.alt = item.dataset.title;
+          lbTitle.textContent = item.dataset.title;
+          lbCounter.textContent = `${String(current + 1).padStart(2, "0")} / ${String(ordered.length).padStart(2, "0")}`;
+          lbImg.style.opacity = "1";
+        }, 150);
+      }
+
+      items.forEach((item) =>
+        item.addEventListener("click", () => openLB(item)),
+      );
+      document.getElementById("lbClose").addEventListener("click", closeLB);
+      document
+        .getElementById("lbPrev")
+        .addEventListener("click", () => navigate(-1));
+      document
+        .getElementById("lbNext")
+        .addEventListener("click", () => navigate(1));
+      lb.addEventListener("click", (e) => {
+        if (e.target === lb) closeLB();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (!lb.classList.contains("open")) return;
+        if (e.key === "Escape") closeLB();
+        if (e.key === "ArrowLeft") navigate(-1);
+        if (e.key === "ArrowRight") navigate(1);
+      });
     </script>
   </body>
 </html>

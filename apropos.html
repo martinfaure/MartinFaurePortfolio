@@ -42,20 +42,17 @@
         position: relative;
         z-index: 10;
       }
-
       .nav-left {
         font-size: 13px;
         font-weight: 500;
         color: var(--light);
         opacity: 0.85;
       }
-
       .nav-right {
         display: flex;
         align-items: center;
         gap: 6px;
       }
-
       .nav-toggle {
         width: 36px;
         height: 36px;
@@ -73,13 +70,11 @@
       .nav-toggle:hover {
         background: rgba(255, 255, 255, 0.15);
       }
-
       .nav-links {
         display: flex;
         gap: 2px;
         align-items: center;
       }
-
       .nav-links a {
         text-decoration: none;
         color: var(--light);
@@ -100,7 +95,7 @@
         font-weight: 700;
       }
 
-      /* HERO TITLE */
+      /* HERO */
       .hero-title {
         font-family: "Bebas Neue", sans-serif;
         font-size: clamp(80px, 13vw, 200px);
@@ -109,7 +104,6 @@
         color: var(--light);
         animation: fadeDown 0.7s ease both;
       }
-
       @keyframes fadeDown {
         from {
           opacity: 0;
@@ -120,11 +114,20 @@
           transform: translateY(0);
         }
       }
-
       @keyframes fadeUp {
         from {
           opacity: 0;
           transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes panelIn {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
         }
         to {
           opacity: 1;
@@ -142,39 +145,90 @@
         animation: fadeUp 0.8s 0.15s ease both;
       }
 
-      /* LEFT — roles */
+      /* ── LEFT: clickable roles ── */
       .roles {
         display: flex;
         flex-direction: column;
         gap: 0;
+        position: sticky;
+        top: 40px;
       }
 
       .role {
         font-family: "Bebas Neue", sans-serif;
         font-size: clamp(52px, 7vw, 100px);
         line-height: 1;
-        color: rgba(255, 255, 255, 0.38);
         letter-spacing: 0.01em;
-        transition: color 0.3s;
-        cursor: default;
-      }
-      .role:hover {
-        color: rgba(255, 255, 255, 0.7);
+        cursor: pointer;
+        color: rgba(255, 255, 255, 0.2);
+        transition: color 0.3s ease;
+        user-select: none;
+        position: relative;
+        padding-left: 0;
       }
 
-      /* RIGHT — competences */
-      .competences {
+      /* Active indicator line */
+      .role::before {
+        content: "";
+        position: absolute;
+        left: -20px;
+        top: 50%;
+        transform: translateY(-50%) scaleY(0);
+        width: 3px;
+        height: 60%;
+        background: var(--light);
+        border-radius: 2px;
+        transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .role.active {
+        color: var(--light);
+      }
+      .role.active::before {
+        transform: translateY(-50%) scaleY(1);
+      }
+
+      .role:not(.active):hover {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      /* ── RIGHT: panels ── */
+      .panels {
         padding-top: 8px;
+        min-height: 400px;
+        position: relative;
       }
 
-      .comp-title {
+      .panel {
+        display: none;
+        flex-direction: column;
+        gap: 32px;
+      }
+      .panel.active {
+        display: flex;
+        animation: panelIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+
+      /* Panel title */
+      .panel-title {
         font-family: "Bebas Neue", sans-serif;
         font-size: clamp(36px, 4vw, 56px);
         color: rgba(255, 255, 255, 0.38);
         letter-spacing: 0.02em;
-        margin-bottom: 32px;
       }
 
+      /* Bio text */
+      .panel-bio {
+        font-size: 15px;
+        font-weight: 300;
+        color: var(--muted);
+        line-height: 1.75;
+        max-width: 480px;
+        border-left: 1.5px solid rgba(255, 255, 255, 0.12);
+        padding-left: 20px;
+      }
+
+      /* Skills grid */
       .comp-cols {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -182,18 +236,19 @@
       }
 
       .comp-col h4 {
-        font-size: 13px;
+        font-size: 11px;
         font-weight: 700;
         color: var(--light);
         margin-bottom: 14px;
-        letter-spacing: 0.01em;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
       }
 
       .comp-col ul {
         list-style: none;
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 7px;
       }
 
       .comp-col ul li {
@@ -201,11 +256,74 @@
         font-weight: 300;
         color: var(--muted);
         letter-spacing: 0.01em;
-        transition: color 0.2s;
+        transition:
+          color 0.2s,
+          padding-left 0.2s;
         cursor: default;
+        position: relative;
+        padding-left: 0;
+      }
+      .comp-col ul li::before {
+        content: "—";
+        font-size: 10px;
+        margin-right: 8px;
+        opacity: 0.3;
       }
       .comp-col ul li:hover {
         color: var(--light);
+        padding-left: 4px;
+      }
+
+      /* Tools chips */
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .chip {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--muted);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 999px;
+        padding: 5px 14px;
+        letter-spacing: 0.04em;
+        transition:
+          color 0.2s,
+          border-color 0.2s,
+          background 0.2s;
+        cursor: default;
+      }
+      .chip:hover {
+        color: var(--light);
+        border-color: rgba(255, 255, 255, 0.4);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      /* Stats row */
+      .stats {
+        display: flex;
+        gap: 36px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .stat-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .stat-num {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 40px;
+        line-height: 1;
+        color: var(--light);
+      }
+      .stat-label {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.3);
       }
 
       /* ══ RESPONSIVE ══ */
@@ -219,9 +337,18 @@
           flex-direction: row;
           flex-wrap: wrap;
           gap: 0 16px;
+          position: static;
+        }
+        .role::before {
+          display: none;
         }
         .role {
           font-size: clamp(40px, 10vw, 80px);
+          padding-bottom: 8px;
+          border-bottom: 2px solid transparent;
+        }
+        .role.active {
+          border-bottom-color: var(--light);
         }
       }
 
@@ -243,19 +370,24 @@
         .role {
           font-size: clamp(36px, 12vw, 64px);
         }
-        .comp-title {
+        .panel-title {
           font-size: clamp(28px, 7vw, 44px);
-          margin-bottom: 24px;
         }
         .comp-cols {
           grid-template-columns: 1fr;
           gap: 28px;
         }
         .comp-col h4 {
-          font-size: 12px;
+          font-size: 11px;
         }
         .comp-col ul li {
           font-size: 14px;
+        }
+        .stats {
+          gap: 24px;
+        }
+        .stat-num {
+          font-size: 32px;
         }
       }
     </style>
@@ -278,41 +410,150 @@
     <div class="hero-title">MART/N FAURE</div>
 
     <div class="content-grid">
-      <!-- Left: roles -->
+      <!-- LEFT: clickable tabs -->
       <div class="roles">
-        <div class="role">DEVELOPPEUR</div>
-        <div class="role">DESIGNER</div>
+        <div class="role active" data-panel="dev" onclick="switchPanel('dev')">
+          DEVELOPPEUR
+        </div>
+        <div class="role" data-panel="design" onclick="switchPanel('design')">
+          DESIGNER
+        </div>
       </div>
 
-      <!-- Right: competences -->
-      <div class="competences">
-        <div class="comp-title">Compétences</div>
-        <div class="comp-cols">
-          <div class="comp-col">
-            <h4>Languages &amp; Outils</h4>
-            <ul>
-              <li>Html</li>
-              <li>Css</li>
-              <li>Js</li>
-              <li>Php</li>
-              <li>MySql</li>
-              <li>Git</li>
-              <li>Postman</li>
-              <li>Docker</li>
-            </ul>
+      <!-- RIGHT: panels -->
+      <div class="panels">
+        <!-- Panel Développeur -->
+        <div class="panel active" id="panel-dev">
+          <div class="panel-title">Développeur Web & Web Mobile</div>
+
+          <p class="panel-bio">
+            Passionné par la création d'interfaces web modernes et performantes.
+            Je conçois et développe des applications en m'appuyant sur des
+            technologies robustes, en veillant à la qualité du code et à
+            l'expérience utilisateur.
+          </p>
+
+          <div class="comp-cols">
+            <div class="comp-col">
+              <h4>Langages</h4>
+              <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>PHP</li>
+                <li>MySQL</li>
+              </ul>
+            </div>
+            <div class="comp-col">
+              <h4>Frameworks &amp; Outils</h4>
+              <ul>
+                <li>Node.js</li>
+                <li>TailwindCSS</li>
+                <li>Git</li>
+                <li>Postman</li>
+                <li>Docker</li>
+              </ul>
+            </div>
           </div>
-          <div class="comp-col">
-            <h4>Frameworks &amp; Librairies</h4>
-            <ul>
-              <li>Node.js</li>
-              <li>TailwindCSS</li>
-            </ul>
+
+          <div class="stats">
+            <div class="stat-item">
+              <span class="stat-num">2+</span>
+              <span class="stat-label">Ans d'exp.</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">30+</span>
+              <span class="stat-label">Projets</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">8</span>
+              <span class="stat-label">Technos</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel Designer -->
+        <div class="panel" id="panel-design">
+          <div class="panel-title">Designer</div>
+
+          <p class="panel-bio">
+            J'explore la typographie, la composition et la texture pour créer
+            des univers visuels forts. Chaque projet est l'occasion de pousser
+            les limites du design graphique et de l'identité visuelle.
+          </p>
+
+          <div class="comp-cols">
+            <div class="comp-col">
+              <h4>Disciplines</h4>
+              <ul>
+                <li>Direction artistique</li>
+                <li>Identité visuelle</li>
+                <li>Typographie</li>
+                <li>UI Design</li>
+                <li>Motion Design</li>
+              </ul>
+            </div>
+            <div class="comp-col">
+              <h4>Outils</h4>
+              <ul>
+                <li>Figma</li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <h4
+              style="
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--light);
+                margin-bottom: 12px;
+              "
+            >
+              Univers
+            </h4>
+            <div class="chips">
+              <span class="chip">Brutalisme</span>
+              <span class="chip">Editorial</span>
+              <span class="chip">Texture</span>
+              <span class="chip">Typographie</span>
+              <span class="chip">Noir &amp; Blanc</span>
+              <span class="chip">Expérimental</span>
+            </div>
+          </div>
+
+          <div class="stats">
+            <div class="stat-item">
+              <span class="stat-num">10+</span>
+              <span class="stat-label">Créations</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">1</span>
+              <span class="stat-label">Outils</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">∞</span>
+              <span class="stat-label">Idées</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <script>
+      function switchPanel(name) {
+        // Roles
+        document.querySelectorAll(".role").forEach((r) => {
+          r.classList.toggle("active", r.dataset.panel === name);
+        });
+        // Panels
+        document.querySelectorAll(".panel").forEach((p) => {
+          p.classList.toggle("active", p.id === "panel-" + name);
+        });
+      }
+
       // Mobile hamburger
       const toggle = document.querySelector(".nav-toggle");
       const links = document.querySelector(".nav-links");
@@ -329,9 +570,7 @@
           links.style.borderRadius = "12px";
           links.style.border = "1px solid rgba(255,255,255,0.1)";
           links.style.zIndex = "999";
-          if (open) {
-            links.removeAttribute("style");
-          }
+          if (open) links.removeAttribute("style");
         });
       }
     </script>
