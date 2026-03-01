@@ -631,18 +631,52 @@
 
         const name = document.getElementById("inputNom").value.trim();
         const email = document.getElementById("inputEmail").value.trim();
+        const sujet = document.getElementById("inputSujet").value.trim();
 
-        // Hide form, show confirmation
-        const formArea = document.getElementById("formArea");
-        formArea.style.animation = "stepOut 0.3s ease both";
+        // Créer un formulaire HTML pour envoyer via FormSubmit
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "https://formsubmit.co/faure.martin2705@gmail.com";
+        form.style.display = "none";
+
+        // Ajouter les champs
+        const fields = {
+          name: name,
+          email: email,
+          subject: sujet,
+          message: msg,
+          _captcha: "false",
+          _next: window.location.href, // Rester sur la même page
+        };
+
+        for (const [key, value] of Object.entries(fields)) {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = key;
+          input.value = value;
+          form.appendChild(input);
+        }
+
+        document.body.appendChild(form);
+
+        // Montrer la confirmation immédiatement
         setTimeout(() => {
-          formArea.style.display = "none";
-          document.getElementById("confirmName").textContent = name;
-          document.getElementById("confirmEmail").textContent = email;
-          document.querySelector(".section-title").style.display = "none";
-          const conf = document.getElementById("confirmation");
-          conf.classList.add("visible");
-        }, 300);
+          const formArea = document.getElementById("formArea");
+          formArea.style.animation = "stepOut 0.3s ease both";
+          setTimeout(() => {
+            formArea.style.display = "none";
+            document.getElementById("confirmName").textContent = name;
+            document.getElementById("confirmEmail").textContent = email;
+            document.querySelector(".section-title").style.display = "none";
+            const conf = document.getElementById("confirmation");
+            conf.classList.add("visible");
+          }, 300);
+        }, 200);
+
+        // Envoyer le formulaire après 500ms pour laisser le temps d'afficher la confirmation
+        setTimeout(() => {
+          form.submit();
+        }, 500);
       }
     </script>
 
