@@ -1,0 +1,986 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Martin Faure — Blog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #0a0a0a;
+        --light: #f0ede6;
+        --muted: rgba(255, 255, 255, 0.38);
+        --border: rgba(255, 255, 255, 0.08);
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--light);
+        font-family: "Inter", sans-serif;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      /* ── NAV ── */
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 28px;
+        position: relative;
+        z-index: 10;
+      }
+      .nav-left {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--light);
+        opacity: 0.85;
+      }
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .nav-toggle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.07);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 16px;
+        color: var(--light);
+        transition: background 0.2s;
+      }
+      .nav-toggle:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2px;
+        align-items: center;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--light);
+        font-size: 14px;
+        font-weight: 500;
+        padding: 7px 14px;
+        border-radius: 999px;
+        opacity: 0.55;
+        transition: opacity 0.2s;
+      }
+      .nav-links a:hover {
+        opacity: 1;
+      }
+      .nav-links a.active {
+        background: var(--light);
+        color: var(--bg);
+        opacity: 1;
+        font-weight: 700;
+      }
+
+      /* ── HERO ── */
+      .hero-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(80px, 13vw, 200px);
+        line-height: 0.88;
+        padding: 0 14px;
+        color: var(--light);
+        animation: fadeDown 0.7s ease both;
+      }
+
+      @keyframes fadeDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes panelIn {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ── CONTENT GRID — mirrors apropos exactly ── */
+      .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        padding: 60px 28px 80px;
+        align-items: start;
+        animation: fadeUp 0.8s 0.15s ease both;
+      }
+
+      /* ── LEFT: clickable categories ── */
+      .categories {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        position: sticky;
+        top: 40px;
+      }
+
+      .cat-item {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(52px, 7vw, 100px);
+        line-height: 1;
+        letter-spacing: 0.01em;
+        cursor: pointer;
+        color: rgba(255, 255, 255, 0.2);
+        transition: color 0.3s ease;
+        user-select: none;
+        position: relative;
+        padding-left: 0;
+      }
+
+      .cat-item::before {
+        content: "";
+        position: absolute;
+        left: -20px;
+        top: 50%;
+        transform: translateY(-50%) scaleY(0);
+        width: 3px;
+        height: 60%;
+        background: var(--light);
+        border-radius: 2px;
+        transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .cat-item.active {
+        color: var(--light);
+      }
+      .cat-item.active::before {
+        transform: translateY(-50%) scaleY(1);
+      }
+      .cat-item:not(.active):hover {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .cat-count {
+        font-family: "Inter", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        vertical-align: super;
+        color: rgba(255, 255, 255, 0.28);
+        margin-left: 5px;
+      }
+
+      /* ── RIGHT: panels ── */
+      .panels {
+        padding-top: 8px;
+        min-height: 400px;
+        position: relative;
+      }
+
+      .panel {
+        display: none;
+        flex-direction: column;
+        gap: 0;
+      }
+      .panel.active {
+        display: flex;
+        animation: panelIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+
+      .panel-subtitle {
+        font-size: 13px;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.28);
+        letter-spacing: 0.02em;
+        margin-bottom: 36px;
+        border-left: 1.5px solid rgba(255, 255, 255, 0.12);
+        padding-left: 16px;
+      }
+
+      /* ── ARTICLE ROW ── */
+      .article-row {
+        border-top: 1px solid var(--border);
+        padding: 28px 0;
+        display: grid;
+        grid-template-columns: 36px 1fr 20px;
+        gap: 0 18px;
+        align-items: start;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+      .article-row::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--light);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .article-row:hover::before {
+        transform: scaleX(1);
+      }
+      .article-row:last-child {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .row-index {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.15);
+        line-height: 1.4;
+        letter-spacing: 0.05em;
+        padding-top: 3px;
+        transition: color 0.25s;
+      }
+      .article-row:hover .row-index {
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      .row-content {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+      }
+
+      .row-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .row-tag {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.35);
+        background: rgba(255, 255, 255, 0.07);
+        padding: 2px 9px;
+        border-radius: 999px;
+      }
+
+      .row-date {
+        font-size: 11px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.22);
+        letter-spacing: 0.04em;
+      }
+
+      .row-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(20px, 2.6vw, 34px);
+        line-height: 1.05;
+        color: var(--light);
+        letter-spacing: 0.02em;
+        transition: color 0.2s;
+      }
+      .article-row:hover .row-title {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .row-excerpt {
+        font-size: 13px;
+        font-weight: 300;
+        line-height: 1.65;
+        color: var(--muted);
+        max-width: 420px;
+      }
+
+      .row-read {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.2);
+      }
+
+      .row-arrow {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.18);
+        align-self: center;
+        transition:
+          transform 0.22s,
+          color 0.22s;
+      }
+      .article-row:hover .row-arrow {
+        transform: translate(3px, -3px);
+        color: var(--light);
+      }
+
+      /* ── READER OVERLAY ── */
+      .reader-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 500;
+        background: var(--bg);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        overflow-y: auto;
+      }
+      .reader-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .reader-inner {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 56px 32px 100px;
+      }
+
+      .reader-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.35);
+        cursor: pointer;
+        margin-bottom: 52px;
+        transition: color 0.2s;
+        background: none;
+        border: none;
+      }
+      .reader-back:hover {
+        color: var(--light);
+      }
+
+      .reader-eyebrow {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.28);
+        margin-bottom: 16px;
+      }
+
+      .reader-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(40px, 7vw, 76px);
+        line-height: 0.95;
+        letter-spacing: 0.01em;
+        color: var(--light);
+        margin-bottom: 28px;
+      }
+
+      .reader-meta {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.28);
+        letter-spacing: 0.05em;
+        padding-bottom: 32px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 44px;
+        gap: 0;
+      }
+      .reader-meta span + span::before {
+        content: "—";
+        margin: 0 10px;
+        opacity: 0.3;
+      }
+
+      .reader-body {
+        font-size: 15px;
+        font-weight: 300;
+        line-height: 1.9;
+        color: rgba(255, 255, 255, 0.62);
+      }
+      .reader-body p {
+        margin-bottom: 22px;
+      }
+      .reader-body h3 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 30px;
+        letter-spacing: 0.04em;
+        color: var(--light);
+        margin: 40px 0 14px;
+      }
+      .reader-body blockquote {
+        border-left: 1.5px solid rgba(255, 255, 255, 0.18);
+        padding: 2px 0 2px 20px;
+        font-style: italic;
+        color: rgba(255, 255, 255, 0.4);
+        margin: 24px 0;
+      }
+      .reader-body code {
+        font-family: "Courier New", monospace;
+        font-size: 13px;
+        background: rgba(255, 255, 255, 0.06);
+        padding: 2px 7px;
+        border-radius: 3px;
+        color: rgba(160, 210, 255, 0.85);
+      }
+      .reader-body strong {
+        color: var(--light);
+        font-weight: 500;
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 860px) {
+        .content-grid {
+          grid-template-columns: 1fr;
+          padding: 40px 24px 60px;
+          gap: 48px;
+        }
+        .categories {
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: 0 16px;
+          position: static;
+        }
+        .cat-item::before {
+          display: none;
+        }
+        .cat-item {
+          font-size: clamp(40px, 10vw, 80px);
+          padding-bottom: 8px;
+          border-bottom: 2px solid transparent;
+        }
+        .cat-item.active {
+          border-bottom-color: var(--light);
+        }
+      }
+
+      @media (max-width: 600px) {
+        nav {
+          padding: 14px 18px;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hero-title {
+          font-size: clamp(52px, 16vw, 90px);
+          padding: 0 12px;
+        }
+        .content-grid {
+          padding: 28px 18px 60px;
+          gap: 36px;
+        }
+        .cat-item {
+          font-size: clamp(36px, 12vw, 64px);
+        }
+        .article-row {
+          grid-template-columns: 28px 1fr;
+          padding: 22px 0;
+        }
+        .row-arrow {
+          display: none;
+        }
+        .row-excerpt {
+          display: none;
+        }
+        .reader-inner {
+          padding: 36px 18px 80px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- READER OVERLAY -->
+    <div class="reader-overlay" id="reader">
+      <div class="reader-inner">
+        <button class="reader-back" onclick="closeReader()">← Retour</button>
+        <div class="reader-eyebrow" id="rEyebrow"></div>
+        <h1 class="reader-title" id="rTitle"></h1>
+        <div class="reader-meta">
+          <span id="rDate"></span>
+          <span id="rTime"></span>
+        </div>
+        <div class="reader-body" id="rBody"></div>
+      </div>
+    </div>
+
+    <!-- NAV -->
+    <nav>
+      <div class="nav-left">Développeur Web &amp; Designer</div>
+      <div class="nav-right">
+        <button class="nav-toggle">—</button>
+        <div class="nav-links">
+          <a href="./index.html">Accueil</a>
+          <a href="./projets.html">Projets</a>
+          <a href="./design.html">Design</a>
+          <a href="./apropos.html">A Propos</a>
+          <a href="./blog.html" class="active">Blog</a>
+          <a href="./contact.html">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero-title">MART/N FAURE</div>
+
+    <div class="content-grid">
+      <!-- LEFT: categories (mirrors the DEVELOPPEUR / DESIGNER tabs) -->
+      <div class="categories">
+        <div
+          class="cat-item active"
+          data-cat="all"
+          onclick="switchCat('all', this)"
+        >
+          TOUS<span class="cat-count">06</span>
+        </div>
+        <div
+          class="cat-item"
+          data-cat="design"
+          onclick="switchCat('design', this)"
+        >
+          DESIGN<span class="cat-count">02</span>
+        </div>
+        <div class="cat-item" data-cat="dev" onclick="switchCat('dev', this)">
+          DEV<span class="cat-count">02</span>
+        </div>
+        <div class="cat-item" data-cat="vie" onclick="switchCat('vie', this)">
+          VIE<span class="cat-count">02</span>
+        </div>
+      </div>
+
+      <!-- RIGHT: article panels -->
+      <div class="panels">
+        <!-- ALL -->
+        <div class="panel active" id="panel-all">
+          <p class="panel-subtitle">
+            Notes sur le design, le code et la vie créative.
+          </p>
+
+          <div class="article-row" onclick="openReader(0)">
+            <span class="row-index">01</span>
+            <div class="row-content">
+              <div class="row-meta">
+                <span class="row-tag">Design</span
+                ><span class="row-date">12 Jan 2025</span>
+              </div>
+              <h2 class="row-title">
+                Pourquoi le brutalisme en design web n'est pas ce que vous
+                croyez
+              </h2>
+              <p class="row-excerpt">
+                Le brutalisme est souvent réduit à "moche volontairement". Mais
+                derrière cette esthétique se cache une philosophie radicale sur
+                l'honnêteté du medium numérique.
+              </p>
+              <span class="row-read">8 min de lecture</span>
+            </div>
+            <span class="row-arrow">↗</span>
+          </div>
+
+          <div class="article-row" onclick="openReader(1)">
+            <span class="row-index">02</span>
+            <div class="row-content">
+              <div class="row-meta">
+                <span class="row-tag">Dev</span
+                ><span class="row-date">3 Déc 2024</span>
+              </div>
+              <h2 class="row-title">
+                CSS Container Queries : le changement de paradigme qu'on
+                attendait
+              </h2>
+              <p class="row-excerpt">
+                Les media queries sont mortes, vive les container queries.
+                Comment repenser la réactivité composant par composant.
+              </p>
+              <span class="row-read">5 min de lecture</span>
+            </div>
+            <span class="row-arrow">↗</span>
+          </div>
+
+          <div class="article-row" onclick="openReader(2)">
+            <span class="row-index">03</span>
+            <div class="row-content">
+              <div class="row-meta">
+                <span class="row-tag">Vie</span
+                ><span class="row-date">18 Nov 2024</span>
+              </div>
+              <h2 class="row-title">
+                Apprendre seul : ce que l'autodidaxie m'a vraiment appris
+              </h2>
+              <p class="row-excerpt">
+                Deux ans à me former en dehors des sentiers battus. Les bonnes
+                pratiques, les erreurs, et pourquoi l'ennui est le meilleur
+                prof.
+              </p>
+              <span class="row-read">6 min de lecture</span>
+            </div>
+            <span class="row-arrow">↗</span>
+          </div>
+
+          <div class="article-row" onclick="openReader(3)">
+            <span class="row-index">04</span>
+            <div class="row-content">
+              <div class="row-meta">
+                <span class="row-tag">Design</span
+                ><span class="row-date">5 Oct 2024</span>
+              </div>
+              <h2 class="row-title">
+                Typographie : les règles qu'on ne vous dit jamais
+              </h2>
+              <p class="row-excerpt">
+                Au-delà du tracking et du leading, il y a des subtilités qui
+                séparent le bon typographe de l'excellent.
+              </p>
+              <span class="row-read">7 min de lecture</span>
+            </div>
+            <span class="row-arrow">↗</span>
+          </div>
+
+          <div class="article-row" onclick="openReader(4)">
+            <span class="row-index">05</span>
+            <div class="row-content">
+              <div class="row-meta">
+                <span class="row-tag">Dev</span
+                ><span class="row-date">22 Sep 2024</span>
+              </div>
+              <h2 class="row-title">
+                Construire une API REST propre avec Node.js et Express
+              </h2>
+              <p class="row-excerpt">
+                Structure, gestion des erreurs, authentification JWT — les bases
+                pour une API maintenable sur le long terme.
+              </p>
+              <span class="row-read">10 min de lecture</span>
+            </div>
+            <span class="row-arrow">↗</span>
+          </div>
+
+          <div class="article-row" onclick="openReader(5)">
+            <span class="row-index">06</span>
+            <div class="row-content">
+              <div class="row-meta">
+                <span class="row-tag">Vie</span
+                ><span class="row-date">8 Août 2024</span>
+              </div>
+              <h2 class="row-title">
+                Mon workflow créatif : de l'idée au rendu final
+              </h2>
+              <p class="row-excerpt">
+                Comment je passe d'un brief flou à une identité visuelle
+                cohérente. Outils, méthodes, et rituels qui me gardent dans le
+                flow.
+              </p>
+              <span class="row-read">4 min de lecture</span>
+            </div>
+            <span class="row-arrow">↗</span>
+          </div>
+        </div>
+
+        <!-- DESIGN -->
+        <div class="panel" id="panel-design">
+          <p class="panel-subtitle">
+            Réflexions sur le design graphique et visuel.
+          </p>
+          <div class="article-row" onclick="openReader(0)">
+            <span class="row-index">01</span>
+            <div class="row-content">
+              <div class="row-meta">
+                <span class="row-tag">Design</span
+                ><span class="row-date">12 Jan 2025</span>
+              </div>
+              <h2 class="row-title">
+                Pourquoi le brutalisme en design web n'est pas ce que vous
+                croyez
+              </h2>
+              <p class="row-excerpt">
+                Le brutalisme est souvent réduit à "moche volontairement". Mais
+                derrière cette esthétique se cache une philosophie radicale.
+              </p>
+              <span class="row-read">8 min de lecture</span>
+            </div>
+            <span class="row-arrow">↗</span>
+          </div>
+          <div class="article-row" onclick="openReader(3)">
+            <span class="row-index">02</span>
+            <div class="row-content">
+              <div class="row-meta">
+                <span class="row-tag">Design</span
+                ><span class="row-date">5 Oct 2024</span>
+              </div>
+              <h2 class="row-title">
+                Typographie : les règles qu'on ne vous dit jamais
+              </h2>
+              <p class="row-excerpt">
+                Au-delà du tracking et du leading, il y a des subtilités qui
+                séparent le bon typographe de l'excellent.
+              </p>
+              <span class="row-read">7 min de lecture</span>
+            </div>
+            <span class="row-arrow">↗</span>
+          </div>
+        </div>
+
+        <!-- DEV -->
+        <div class="panel" id="panel-dev">
+          <p class="panel-subtitle">
+            Notes techniques sur le développement web.
+          </p>
+          <div class="article-row" onclick="openReader(1)">
+            <span class="row-index">01</span>
+            <div class="row-content">
+              <div class="row-meta">
+                <span class="row-tag">Dev</span
+                ><span class="row-date">3 Déc 2024</span>
+              </div>
+              <h2 class="row-title">
+                CSS Container Queries : le changement de paradigme qu'on
+                attendait
+              </h2>
+              <p class="row-excerpt">
+                Les media queries sont mortes, vive les container queries.
+                Comment repenser la réactivité composant par composant.
+              </p>
+              <span class="row-read">5 min de lecture</span>
+            </div>
+            <span class="row-arrow">↗</span>
+          </div>
+          <div class="article-row" onclick="openReader(4)">
+            <span class="row-index">02</span>
+            <div class="row-content">
+              <div class="row-meta">
+                <span class="row-tag">Dev</span
+                ><span class="row-date">22 Sep 2024</span>
+              </div>
+              <h2 class="row-title">
+                Construire une API REST propre avec Node.js et Express
+              </h2>
+              <p class="row-excerpt">
+                Structure, gestion des erreurs, authentification JWT — les bases
+                pour une API maintenable sur le long terme.
+              </p>
+              <span class="row-read">10 min de lecture</span>
+            </div>
+            <span class="row-arrow">↗</span>
+          </div>
+        </div>
+
+        <!-- VIE -->
+        <div class="panel" id="panel-vie">
+          <p class="panel-subtitle">
+            Vie de créatif, apprentissage et méthodes.
+          </p>
+          <div class="article-row" onclick="openReader(2)">
+            <span class="row-index">01</span>
+            <div class="row-content">
+              <div class="row-meta">
+                <span class="row-tag">Vie</span
+                ><span class="row-date">18 Nov 2024</span>
+              </div>
+              <h2 class="row-title">
+                Apprendre seul : ce que l'autodidaxie m'a vraiment appris
+              </h2>
+              <p class="row-excerpt">
+                Deux ans à me former en dehors des sentiers battus. Les bonnes
+                pratiques, les erreurs, et pourquoi l'ennui est le meilleur
+                prof.
+              </p>
+              <span class="row-read">6 min de lecture</span>
+            </div>
+            <span class="row-arrow">↗</span>
+          </div>
+          <div class="article-row" onclick="openReader(5)">
+            <span class="row-index">02</span>
+            <div class="row-content">
+              <div class="row-meta">
+                <span class="row-tag">Vie</span
+                ><span class="row-date">8 Août 2024</span>
+              </div>
+              <h2 class="row-title">
+                Mon workflow créatif : de l'idée au rendu final
+              </h2>
+              <p class="row-excerpt">
+                Comment je passe d'un brief flou à une identité visuelle
+                cohérente. Outils, méthodes, et rituels qui me gardent dans le
+                flow.
+              </p>
+              <span class="row-read">4 min de lecture</span>
+            </div>
+            <span class="row-arrow">↗</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const articles = [
+        {
+          cat: "Design",
+          date: "12 Janvier 2025",
+          time: "8 min de lecture",
+          title:
+            "Pourquoi le brutalisme en design web n'est pas ce que vous croyez",
+          body: `<p>Le terme "brutalisme" en design web est l'un des plus mal compris de notre industrie. Beaucoup pensent qu'il s'agit simplement de faire quelque chose de volontairement laid, de casser les conventions pour le simple plaisir de la provocation. C'est une lecture superficielle qui passe à côté de l'essentiel.</p>
+<h3>Les origines architecturales</h3>
+<p>Le brutalisme naît dans l'architecture des années 50–70. Le béton brut — <em>béton brut</em> en français — est laissé apparent, sans revêtement, sans masque. L'idée centrale est l'<strong>honnêteté des matériaux</strong> : montrer ce qui constitue réellement la structure.</p>
+<blockquote>Le brutalisme ne cache pas. Il expose. Il dit : voici ce que je suis, voici comment je fonctionne.</blockquote>
+<h3>Transposé au web</h3>
+<p>Sur le web, cette philosophie se traduit par une mise en avant du medium lui-même. Les liens sont soulignés (leur comportement natif), les formulaires sont des <code>&lt;form&gt;</code> bruts, les couleurs sont système ou primaires pures. Pas de skeuomorphisme, pas de glassmorphism, pas de couche d'illusion.</p>
+<p>Des sites comme Craigslist ou le Hacker News ne sont pas brutalistes "par accident". Ils exposent délibérément la structure de l'information, sans habillage superflu.</p>
+<h3>Ce que le brutalisme contemporain apporte</h3>
+<p>Dans une époque où tout est lissé, Figma-isé, shadow-lg'd, le brutalisme est un acte politique. Il dit : l'interface n'a pas besoin de vous séduire. Elle a besoin de fonctionner. Cette position est radicale — et c'est précisément ce qui la rend intéressante.</p>`,
+        },
+        {
+          cat: "Dev",
+          date: "3 Décembre 2024",
+          time: "5 min de lecture",
+          title:
+            "CSS Container Queries : le changement de paradigme qu'on attendait",
+          body: `<p>Pendant des années, nous avons conçu des composants réactifs en fonction de la taille de la <em>fenêtre du navigateur</em>. C'était logique à l'époque, mais ça créait un problème fondamental : un composant ne peut pas savoir dans quel contexte il est placé.</p>
+<h3>Le problème des media queries</h3>
+<p>Imaginez une card de blog. Sur desktop, elle est dans une grille 3 colonnes — elle doit être compacte. Mais la même card peut aussi apparaître seule dans une sidebar. Avec les media queries classiques, impossible de distinguer ces deux cas sans JavaScript ou CSS-in-JS compliqué.</p>
+<blockquote>La taille de la fenêtre ne dit pas grand chose sur la taille réelle d'un composant.</blockquote>
+<h3>Container queries à la rescousse</h3>
+<p>Avec <code>@container</code>, on peut cibler la taille du <em>parent direct</em> du composant. Le composant devient vraiment autonome et réutilisable dans n'importe quel contexte. Le support navigateur est maintenant excellent (Chrome 105+, Firefox 110+, Safari 16+).</p>
+<h3>Un nouveau paradigme</h3>
+<p>Plus qu'une fonctionnalité CSS, les container queries représentent un changement de pensée : concevoir des systèmes de composants vraiment indépendants, pas des pages qui s'adaptent. C'est la direction dans laquelle tout le design system moderne évolue.</p>`,
+        },
+        {
+          cat: "Vie",
+          date: "18 Novembre 2024",
+          time: "6 min de lecture",
+          title: "Apprendre seul : ce que l'autodidaxie m'a vraiment appris",
+          body: `<p>Personne ne m'a appris à faire du design graphique. Personne ne m'a mis devant Photoshop en me disant "voilà comment ça marche". J'ai tout cherché, tout testé, tout cassé. Et recommencé.</p>
+<h3>L'ennui comme moteur</h3>
+<p>La chose la plus importante que l'autodidaxie m'a enseignée, c'est que <strong>l'ennui est productif</strong>. Quand on n'a pas de prof pour remplir le temps, on est forcé de chercher soi-même ce qu'on veut apprendre. Cette autonomie est une compétence en soi — peut-être la plus importante.</p>
+<blockquote>La curiosité ne se programme pas. Elle se cultive dans le vide.</blockquote>
+<h3>Les erreurs sont des features</h3>
+<p>En cours, une erreur est sanctionnée. En autodidaxie, une erreur est une information. Quand un design ne fonctionne pas, je dois comprendre <em>pourquoi</em> par moi-même. Ça construit une compréhension beaucoup plus profonde des principes.</p>
+<h3>La communauté comme école</h3>
+<p>L'autodidaxie n'est pas de l'isolement. Twitter, Dribbble, GitHub, les forums — ces espaces sont mes salles de classe. Observer et analyser le travail des autres m'a autant formé que créer le mien.</p>`,
+        },
+        {
+          cat: "Design",
+          date: "5 Octobre 2024",
+          time: "7 min de lecture",
+          title: "Typographie : les règles qu'on ne vous dit jamais",
+          body: `<p>Le tracking, l'interlignage, le choix de la police — tout le monde connaît ces bases. Mais il y a une couche de subtilité en typographie que peu de ressources abordent, parce qu'elle demande de regarder vraiment attentivement.</p>
+<h3>Le rythme vertical</h3>
+<p>La typographie, c'est de la musique. Les blancs entre les éléments doivent créer un rythme cohérent qui guide l'œil sans effort. La règle non-dite : utilisez toujours des multiples d'une unité de base (souvent 8px ou 4px) pour tous vos espacements.</p>
+<blockquote>Un bon design typographique se ressent avant de se voir.</blockquote>
+<h3>Optical sizing vs mechanical sizing</h3>
+<p>Les algorithmes de rendu font du sizing mécanique. L'œil humain fait du sizing optique. Un <code>H</code> et un <code>O</code> de la même taille n'ont pas l'air de la même taille à cause de leur forme. Les meilleurs typographes compensent manuellement.</p>
+<h3>Le paradoxe du contraste</h3>
+<p>On croit souvent que plus c'est contrasté, plus c'est lisible. Faux. Un texte blanc pur sur noir pur fatigue les yeux sur de longs passages. Légèrement désaturé (comme <code>#f0ede6</code> sur <code>#0a0a0a</code>), la lecture devient confortable sur des heures.</p>`,
+        },
+        {
+          cat: "Dev",
+          date: "22 Septembre 2024",
+          time: "10 min de lecture",
+          title: "Construire une API REST propre avec Node.js et Express",
+          body: `<p>Une API REST, c'est facile à faire fonctionner. C'est difficile à faire <em>bien</em>. Après plusieurs projets, voici les principes que j'applique systématiquement pour construire quelque chose de maintenable.</p>
+<h3>Structure de projet</h3>
+<p>La première erreur : tout mettre dans <code>app.js</code>. Dès qu'on dépasse 3 routes, il faut séparer. Ma structure de base : <code>/routes</code>, <code>/controllers</code>, <code>/services</code>, <code>/middlewares</code>, <code>/models</code>. Chaque couche a une responsabilité unique.</p>
+<h3>Gestion des erreurs centralisée</h3>
+<p>Pas de <code>try/catch</code> partout. Un middleware d'erreur global qui intercepte tout. Les contrôleurs ne gèrent que le succès — les erreurs remontent automatiquement. Ça simplifie radicalement le code.</p>
+<blockquote>Le code de gestion d'erreur ne devrait jamais être plus complexe que le code de succès.</blockquote>
+<h3>Authentification JWT propre</h3>
+<p>Le JWT se vérifie dans un middleware, pas dans chaque route. Le payload contient l'id et le role, rien de plus. Le refresh token est stocké en base avec une date d'expiration — pas dans le localStorage (faille XSS).</p>`,
+        },
+        {
+          cat: "Vie",
+          date: "8 Août 2024",
+          time: "4 min de lecture",
+          title: "Mon workflow créatif : de l'idée au rendu final",
+          body: `<p>On me demande souvent comment je travaille. La réponse honnête : ça dépend du projet. Mais il y a une structure récurrente dans ma façon d'aborder un nouveau travail créatif.</p>
+<h3>Phase 1 : absorption</h3>
+<p>Avant de toucher Figma ou VS Code, je passe du temps à absorber. Références, moodboards, concurrents, univers adjacent. Pas pour copier — pour comprendre le langage visuel du domaine, et ensuite m'en écarter intelligemment.</p>
+<h3>Phase 2 : esquisse rapide</h3>
+<p>Papier et stylo. Pas Figma. Les outils numériques créent une illusion de précision trop tôt. Sur papier, on reste dans l'intention plutôt que dans l'exécution. Je fais 10–15 thumbnails en 20 minutes avant de valider une direction.</p>
+<blockquote>La vitesse d'exécution sur papier libère la pensée créative.</blockquote>
+<h3>Phase 3 : prototype haute fidélité</h3>
+<p>Là seulement j'ouvre Figma. Avec une direction claire, chaque décision a un sens. Le composant system se construit naturellement autour de l'intention initiale.</p>`,
+        },
+      ];
+
+      function switchCat(name, el) {
+        document
+          .querySelectorAll(".cat-item")
+          .forEach((c) => c.classList.remove("active"));
+        el.classList.add("active");
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => p.classList.remove("active"));
+        document.getElementById("panel-" + name).classList.add("active");
+      }
+
+      function openReader(idx) {
+        const a = articles[idx];
+        document.getElementById("rEyebrow").textContent =
+          a.cat + " — " + a.time;
+        document.getElementById("rTitle").textContent = a.title;
+        document.getElementById("rDate").textContent = a.date;
+        document.getElementById("rTime").textContent = a.time;
+        document.getElementById("rBody").innerHTML = a.body;
+        const overlay = document.getElementById("reader");
+        overlay.classList.add("open");
+        overlay.scrollTop = 0;
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeReader() {
+        document.getElementById("reader").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeReader();
+      });
+
+      const toggle = document.querySelector(".nav-toggle");
+      const links = document.querySelector(".nav-links");
+      if (toggle && links) {
+        toggle.addEventListener("click", () => {
+          const open = links.style.display === "flex";
+          links.style.display = open ? "" : "flex";
+          links.style.flexDirection = "column";
+          links.style.position = "fixed";
+          links.style.top = "60px";
+          links.style.right = "18px";
+          links.style.background = "var(--bg, #0a0a0a)";
+          links.style.padding = "16px";
+          links.style.borderRadius = "12px";
+          links.style.border = "1px solid rgba(255,255,255,0.1)";
+          links.style.zIndex = "999";
+          if (open) links.removeAttribute("style");
+        });
+      }
+    </script>
+  </body>
+</html>
