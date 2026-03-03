@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Martin Faure — Contact</title>
+    <title>Martin Faure - Contact</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -510,7 +510,7 @@
     <nav>
       <div class="nav-left">Développeur Web &amp; Designer</div>
       <div class="nav-right">
-        <button class="nav-toggle">—</button>
+        <button class="nav-toggle">-</button>
         <div class="nav-links">
           <a href="./index.html">Accueil</a>
           <a href="./projets.html">Projets</a>
@@ -539,7 +539,7 @@
 
       <!-- Step 1: Nom -->
       <div class="step visible" id="step0">
-        <div class="step-label">01 — Comment vous appelez-vous ?</div>
+        <div class="step-label">01 - Comment vous appelez-vous ?</div>
         <div class="field-row">
           <input
             type="text"
@@ -554,7 +554,7 @@
 
       <!-- Step 2: Email -->
       <div class="step" id="step1">
-        <div class="step-label">02 — Votre adresse email ?</div>
+        <div class="step-label">02 - Votre adresse email ?</div>
         <div class="field-row">
           <input
             type="email"
@@ -569,7 +569,7 @@
 
       <!-- Step 3: Entreprise + Poste (double champ) -->
       <div class="step" id="step2">
-        <div class="step-label">03 — Votre entreprise &amp; poste ?</div>
+        <div class="step-label">03 - Votre entreprise &amp; poste ?</div>
         <div class="field-double">
           <div class="field-part">
             <label for="inputEntreprise">Entreprise</label>
@@ -596,7 +596,7 @@
 
       <!-- Step 4: Sujet -->
       <div class="step" id="step3">
-        <div class="step-label">04 — Quel est le sujet ?</div>
+        <div class="step-label">04 - Quel est le sujet ?</div>
         <div class="field-row">
           <input
             type="text"
@@ -611,7 +611,7 @@
 
       <!-- Step 5: Message + submit -->
       <div class="step" id="step4">
-        <div class="step-label">05 — Votre message</div>
+        <div class="step-label">05 - Votre message</div>
         <div class="field-row">
           <textarea
             id="inputMessage"
@@ -675,7 +675,7 @@
       function nextStep(fromIdx) {
         // Validate
         if (fromIdx === 2) {
-          // Entreprise + Poste step — both optional, just advance
+          // Entreprise + Poste step - both optional, just advance
           clearHint(hints[fromIdx]);
         } else {
           const val = document.getElementById(inputs[fromIdx]).value.trim();
@@ -764,8 +764,8 @@
         const fields = {
           name,
           email,
-          entreprise: entreprise || "—",
-          poste: poste || "—",
+          entreprise: entreprise || "-",
+          poste: poste || "-",
           subject: sujet,
           message: msg,
           _captcha: "false",
