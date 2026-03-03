@@ -35,7 +35,6 @@
         font-family: "Inter", sans-serif;
         overflow-x: hidden;
         min-height: 100vh;
-        cursor: default;
       }
 
       /* ── NAV ── */
@@ -78,6 +77,7 @@
         font-size: 16px;
         color: var(--light);
         transition: background 0.2s;
+        flex-shrink: 0;
       }
       .nav-toggle:hover {
         background: rgba(255, 255, 255, 0.15);
@@ -113,12 +113,11 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: 80px 14px 48px;
+        padding: 100px 28px 80px;
         position: relative;
         overflow: hidden;
       }
 
-      /* Grain texture overlay */
       .hero::before {
         content: "";
         position: absolute;
@@ -129,13 +128,12 @@
         opacity: 0.4;
       }
 
-      /* Big BG number */
       .hero-bg-num {
         position: absolute;
         right: -2vw;
         bottom: -4vw;
         font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(200px, 30vw, 500px);
+        font-size: clamp(160px, 25vw, 500px);
         color: rgba(255, 255, 255, 0.025);
         line-height: 1;
         user-select: none;
@@ -150,7 +148,7 @@
       }
 
       .hero-eyebrow {
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 500;
         letter-spacing: 0.16em;
         text-transform: uppercase;
@@ -162,24 +160,23 @@
 
       .hero-name {
         font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(90px, 15vw, 230px);
+        font-size: clamp(72px, 14vw, 230px);
         line-height: 0.85;
         color: var(--light);
         letter-spacing: -0.01em;
         opacity: 0;
         animation: fadeDown 0.7s 0.2s ease forwards;
       }
-
       .hero-name .slash {
         color: rgba(255, 255, 255, 0.18);
       }
 
       .hero-bottom {
         display: flex;
-        align-items: flex-end;
+        align-items: flex-start;
         justify-content: space-between;
-        margin-top: 48px;
-        gap: 24px;
+        margin-top: 40px;
+        gap: 32px;
         flex-wrap: wrap;
         opacity: 0;
         animation: fadeUp 0.6s 0.5s ease forwards;
@@ -193,12 +190,15 @@
         max-width: 420px;
         border-left: 1.5px solid rgba(255, 255, 255, 0.12);
         padding-left: 20px;
+        flex: 1;
+        min-width: 200px;
       }
 
       .hero-cta {
         display: flex;
-        gap: 12px;
+        gap: 10px;
         align-items: center;
+        flex-wrap: wrap;
         flex-shrink: 0;
       }
 
@@ -206,15 +206,17 @@
         text-decoration: none;
         background: var(--light);
         color: var(--bg);
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 700;
-        padding: 12px 28px;
+        padding: 11px 24px;
         border-radius: 999px;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.08em;
         text-transform: uppercase;
         transition:
           opacity 0.2s,
           transform 0.2s;
+        white-space: nowrap;
+        display: inline-block;
       }
       .btn-primary:hover {
         opacity: 0.88;
@@ -224,22 +226,75 @@
       .btn-ghost {
         text-decoration: none;
         color: var(--light);
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 500;
-        padding: 12px 24px;
+        padding: 11px 22px;
         border-radius: 999px;
         border: 1.5px solid rgba(255, 255, 255, 0.22);
-        letter-spacing: 0.04em;
+        letter-spacing: 0.05em;
         transition:
           border-color 0.2s,
           background 0.2s;
+        white-space: nowrap;
+        display: inline-block;
       }
       .btn-ghost:hover {
         border-color: rgba(255, 255, 255, 0.55);
         background: rgba(255, 255, 255, 0.04);
       }
 
-      /* Scroll indicator */
+      /* Badge disponibilité */
+      .avail-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 28px;
+        padding: 9px 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        opacity: 0;
+        animation: fadeUp 0.6s 0.75s ease forwards;
+        width: fit-content;
+      }
+      .avail-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #3dba3d;
+        box-shadow: 0 0 0 0 rgba(61, 186, 61, 0.45);
+        animation: pulse-green 2.2s ease infinite;
+        flex-shrink: 0;
+      }
+      @keyframes pulse-green {
+        0% {
+          box-shadow: 0 0 0 0 rgba(61, 186, 61, 0.45);
+        }
+        70% {
+          box-shadow: 0 0 0 8px rgba(61, 186, 61, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(61, 186, 61, 0);
+        }
+      }
+      .avail-text {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .avail-date {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 15px;
+        letter-spacing: 0.08em;
+        color: var(--light);
+        opacity: 0.85;
+        padding-left: 8px;
+        border-left: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      /* Scroll hint */
       .scroll-hint {
         position: absolute;
         bottom: 28px;
@@ -281,14 +336,14 @@
         }
       }
 
-      /* Horizontal divider */
+      /* Divider */
       .divider {
         height: 1px;
         background: rgba(255, 255, 255, 0.07);
         margin: 0 28px;
       }
 
-      /* ── SELECTED WORK ── */
+      /* ── PROJETS ── */
       .section {
         padding: 80px 28px;
       }
@@ -300,14 +355,12 @@
         margin-bottom: 52px;
         gap: 16px;
       }
-
       .section-title {
         font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(48px, 7vw, 90px);
+        font-size: clamp(40px, 7vw, 90px);
         line-height: 0.9;
         color: var(--light);
       }
-
       .section-link {
         text-decoration: none;
         font-size: 12px;
@@ -328,25 +381,24 @@
         border-color: var(--light);
       }
 
-      /* Project list */
       .project-list {
         display: flex;
         flex-direction: column;
-        gap: 0;
       }
 
       .project-item {
         display: grid;
-        grid-template-columns: 56px 1fr auto;
+        grid-template-columns: 48px 1fr auto;
         align-items: center;
-        gap: 24px;
-        padding: 28px 0;
+        gap: 20px;
+        padding: 24px 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.07);
         cursor: pointer;
         position: relative;
         transition: padding-left 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        text-decoration: none;
+        color: inherit;
       }
-
       .project-item::before {
         content: "";
         position: absolute;
@@ -355,10 +407,8 @@
         bottom: 0;
         width: 0;
         background: rgba(255, 255, 255, 0.02);
-        border-radius: 2px;
         transition: width 0.3s ease;
       }
-
       .project-item:hover::before {
         width: 100%;
       }
@@ -373,23 +423,18 @@
         letter-spacing: 0.06em;
         transition: color 0.2s;
       }
-
       .project-item:hover .project-num {
         color: rgba(255, 255, 255, 0.5);
       }
 
-      .project-info {
-      }
-
       .project-name {
         font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(28px, 4vw, 48px);
+        font-size: clamp(22px, 3.5vw, 48px);
         line-height: 1;
         color: var(--light);
         letter-spacing: 0.01em;
         transition: letter-spacing 0.3s ease;
       }
-
       .project-item:hover .project-name {
         letter-spacing: 0.03em;
       }
@@ -397,10 +442,9 @@
       .project-tags {
         display: flex;
         gap: 8px;
-        margin-top: 6px;
+        margin-top: 5px;
         flex-wrap: wrap;
       }
-
       .project-tag {
         font-size: 11px;
         font-weight: 500;
@@ -415,7 +459,7 @@
       }
 
       .project-arrow {
-        font-size: 22px;
+        font-size: 20px;
         color: rgba(255, 255, 255, 0.2);
         transition:
           transform 0.3s ease,
@@ -427,7 +471,7 @@
         color: var(--light);
       }
 
-      /* ── ABOUT STRIP ── */
+      /* ── À PROPOS ── */
       .about-strip {
         padding: 80px 28px;
         display: grid;
@@ -435,10 +479,6 @@
         gap: 0 80px;
         align-items: center;
       }
-
-      .about-left {
-      }
-
       .about-label {
         font-size: 11px;
         font-weight: 700;
@@ -447,15 +487,13 @@
         color: var(--muted);
         margin-bottom: 20px;
       }
-
       .about-heading {
         font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(48px, 6vw, 80px);
+        font-size: clamp(40px, 6vw, 80px);
         line-height: 0.9;
         color: var(--light);
         margin-bottom: 28px;
       }
-
       .about-text {
         font-size: 15px;
         font-weight: 300;
@@ -463,44 +501,34 @@
         line-height: 1.8;
         max-width: 440px;
       }
-
       .about-right {
         display: flex;
         flex-direction: column;
-        gap: 0;
       }
-
       .about-stat {
-        padding: 28px 0;
+        padding: 24px 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.07);
         display: flex;
         align-items: baseline;
         gap: 20px;
       }
-
       .about-stat:first-child {
         border-top: 1px solid rgba(255, 255, 255, 0.07);
       }
-
       .about-stat-num {
         font-family: "Bebas Neue", sans-serif;
-        font-size: 56px;
+        font-size: 52px;
         line-height: 1;
         color: var(--light);
         flex-shrink: 0;
-        min-width: 90px;
+        min-width: 80px;
       }
-
-      .about-stat-info {
-      }
-
       .about-stat-title {
         font-size: 14px;
         font-weight: 500;
         color: var(--light);
         margin-bottom: 4px;
       }
-
       .about-stat-desc {
         font-size: 13px;
         font-weight: 300;
@@ -508,44 +536,37 @@
         line-height: 1.5;
       }
 
-      /* ── SKILLS MARQUEE ── */
+      /* ── MARQUEE ── */
       .marquee-wrap {
-        padding: 40px 0;
+        padding: 36px 0;
         overflow: hidden;
         border-top: 1px solid rgba(255, 255, 255, 0.07);
         border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-        position: relative;
       }
-
       .marquee-track {
         display: flex;
-        gap: 0;
         animation: marquee 18s linear infinite;
         width: max-content;
       }
-
       .marquee-item {
         font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(18px, 2.5vw, 28px);
+        font-size: clamp(16px, 2.5vw, 28px);
         color: rgba(255, 255, 255, 0.18);
         letter-spacing: 0.08em;
-        padding: 0 40px;
+        padding: 0 36px;
         white-space: nowrap;
         transition: color 0.2s;
       }
-
       .marquee-item:hover {
         color: rgba(255, 255, 255, 0.6);
       }
-
       .marquee-sep {
         font-family: "Bebas Neue", sans-serif;
-        font-size: 20px;
+        font-size: 18px;
         color: rgba(255, 255, 255, 0.1);
         padding: 0 4px;
         align-self: center;
       }
-
       @keyframes marquee {
         from {
           transform: translateX(0);
@@ -564,19 +585,16 @@
         flex-wrap: wrap;
         gap: 20px;
       }
-
       .footer-name {
         font-family: "Bebas Neue", sans-serif;
-        font-size: 28px;
+        font-size: 26px;
         color: rgba(255, 255, 255, 0.25);
         letter-spacing: 0.02em;
       }
-
       .footer-links {
         display: flex;
         gap: 20px;
       }
-
       .footer-links a {
         font-size: 12px;
         font-weight: 500;
@@ -589,14 +607,13 @@
       .footer-links a:hover {
         color: var(--light);
       }
-
       .footer-copy {
         font-size: 12px;
         color: rgba(255, 255, 255, 0.18);
         letter-spacing: 0.04em;
       }
 
-      /* ── ANIMATIONS ── */
+      /* ── KEYFRAMES ── */
       @keyframes fadeDown {
         from {
           opacity: 0;
@@ -604,7 +621,7 @@
         }
         to {
           opacity: 1;
-          transform: translateY(0);
+          transform: none;
         }
       }
       @keyframes fadeUp {
@@ -614,11 +631,10 @@
         }
         to {
           opacity: 1;
-          transform: translateY(0);
+          transform: none;
         }
       }
 
-      /* Scroll-reveal */
       .reveal {
         opacity: 0;
         transform: translateY(24px);
@@ -628,18 +644,23 @@
       }
       .reveal.visible {
         opacity: 1;
-        transform: translateY(0);
+        transform: none;
       }
 
-      /* ── RESPONSIVE ── */
+      /* ══════════════════════════════
+         RESPONSIVE
+      ══════════════════════════════ */
+
+      /* Tablette */
       @media (max-width: 860px) {
         .about-strip {
           grid-template-columns: 1fr;
           gap: 48px;
-          padding: 60px 28px;
+          padding: 60px 24px;
         }
       }
 
+      /* Mobile */
       @media (max-width: 600px) {
         nav {
           padding: 14px 18px;
@@ -647,38 +668,129 @@
         .nav-links {
           display: none;
         }
+
         .hero {
-          padding: 80px 18px 40px;
+          padding: 88px 20px 72px;
+          min-height: 100svh;
         }
+
+        .hero-bg-num {
+          display: none;
+        }
+
+        .hero-eyebrow {
+          font-size: 10px;
+        }
+
+        .hero-name {
+          font-size: clamp(64px, 18vw, 110px);
+        }
+
         .hero-bottom {
           flex-direction: column;
           align-items: flex-start;
+          gap: 24px;
+          margin-top: 32px;
         }
+
+        .hero-desc {
+          font-size: 14px;
+          max-width: 100%;
+          min-width: 0;
+        }
+
+        .hero-cta {
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: 10px;
+          width: 100%;
+        }
+
+        .btn-primary,
+        .btn-ghost {
+          font-size: 11px;
+          padding: 10px 20px;
+          flex: 0 0 auto;
+        }
+
+        .avail-badge {
+          margin-top: 20px;
+          padding: 8px 14px;
+          gap: 8px;
+        }
+        .avail-text {
+          font-size: 10px;
+        }
+        .avail-date {
+          font-size: 13px;
+        }
+
+        .scroll-hint {
+          bottom: 20px;
+        }
+
         .section {
-          padding: 60px 18px;
+          padding: 56px 20px;
         }
-        .about-strip {
-          padding: 60px 18px;
+        .section-header {
+          margin-bottom: 36px;
         }
-        footer {
-          padding: 40px 18px 28px;
-        }
+
         .project-item {
-          grid-template-columns: 40px 1fr auto;
-          gap: 16px;
+          grid-template-columns: 36px 1fr auto;
+          gap: 14px;
+          padding: 20px 0;
         }
         .project-num {
-          font-size: 12px;
+          font-size: 11px;
+        }
+        .project-name {
+          font-size: clamp(20px, 5vw, 32px);
+        }
+        .project-tags {
+          display: none;
+        }
+
+        .about-strip {
+          padding: 56px 20px;
+          gap: 40px;
+        }
+        .about-stat-num {
+          font-size: 44px;
+          min-width: 68px;
+        }
+
+        .divider {
+          margin: 0 20px;
+        }
+
+        footer {
+          padding: 36px 20px 28px;
+          flex-direction: column;
+          gap: 16px;
+          align-items: flex-start;
         }
         .footer-links {
           flex-wrap: wrap;
-          gap: 14px;
+          gap: 12px;
+        }
+      }
+
+      /* Très petit mobile */
+      @media (max-width: 380px) {
+        .hero-name {
+          font-size: 58px;
+        }
+        .btn-primary,
+        .btn-ghost {
+          width: 100%;
+          text-align: center;
+          justify-content: center;
         }
       }
     </style>
   </head>
   <body>
-    <!-- NAV -->
     <nav>
       <div class="nav-left">Développeur Web &amp; Designer</div>
       <div class="nav-right">
@@ -694,15 +806,11 @@
       </div>
     </nav>
 
-    <!-- HERO -->
     <section class="hero">
       <div class="hero-bg-num">01</div>
-
       <div class="hero-content">
-        <div class="hero-eyebrow">Based in France — Open to work</div>
-
+        <div class="hero-eyebrow">Basé en France — Ouvert aux opportunités</div>
         <h1 class="hero-name">MART<span class="slash">/</span>N<br />FAURE</h1>
-
         <div class="hero-bottom">
           <p class="hero-desc">
             Je conçois et développe des expériences web mémorables — entre code
@@ -713,80 +821,76 @@
             <a href="./contact.html" class="btn-ghost">Me contacter</a>
           </div>
         </div>
+        <div class="avail-badge">
+          <div class="avail-dot"></div>
+          <span class="avail-text">Disponible en alternance</span>
+          <span class="avail-date">SEPT 2026</span>
+        </div>
       </div>
-
       <div class="scroll-hint">
-        <span>Scroll</span>
+        <span>Défiler</span>
         <div class="scroll-line"></div>
       </div>
     </section>
 
-    <!-- MARQUEE -->
     <div class="marquee-wrap">
-      <div class="marquee-track" id="marquee">
-        <span class="marquee-item">HTML</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">CSS</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">JavaScript</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">PHP</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">Node.js</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">TailwindCSS</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">MySQL</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">Docker</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">Figma</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">Git</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">UI Design</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">Motion</span>
-        <span class="marquee-sep">·</span>
-        <!-- duplicate for seamless loop -->
-        <span class="marquee-item">HTML</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">CSS</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">JavaScript</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">PHP</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">Node.js</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">TailwindCSS</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">MySQL</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">Docker</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">Figma</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">Git</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">UI Design</span>
-        <span class="marquee-sep">·</span>
-        <span class="marquee-item">Motion</span>
-        <span class="marquee-sep">·</span>
+      <div class="marquee-track">
+        <span class="marquee-item">HTML</span><span class="marquee-sep">·</span>
+        <span class="marquee-item">CSS</span><span class="marquee-sep">·</span>
+        <span class="marquee-item">JavaScript</span
+        ><span class="marquee-sep">·</span> <span class="marquee-item">PHP</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">Node.js</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">TailwindCSS</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">MySQL</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">Docker</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">Figma</span
+        ><span class="marquee-sep">·</span> <span class="marquee-item">Git</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">Design UI</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">Animation</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">HTML</span><span class="marquee-sep">·</span>
+        <span class="marquee-item">CSS</span><span class="marquee-sep">·</span>
+        <span class="marquee-item">JavaScript</span
+        ><span class="marquee-sep">·</span> <span class="marquee-item">PHP</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">Node.js</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">TailwindCSS</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">MySQL</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">Docker</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">Figma</span
+        ><span class="marquee-sep">·</span> <span class="marquee-item">Git</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">Design UI</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">Animation</span
+        ><span class="marquee-sep">·</span>
       </div>
     </div>
 
-    <!-- SELECTED WORK -->
     <section class="section">
       <div class="section-header reveal">
-        <h2 class="section-title">SELECTED<br />WORK</h2>
+        <h2 class="section-title">PROJETS<br />SÉLECTIONNÉS</h2>
         <a href="./projets.html" class="section-link">Tous les projets ↗</a>
       </div>
-
       <div class="project-list">
-        <div class="project-item reveal" style="transition-delay: 0.05s">
+        <a
+          href="./projets.html"
+          class="project-item reveal"
+          style="transition-delay: 0.05s"
+        >
           <span class="project-num">001</span>
-          <div class="project-info">
+          <div>
             <div class="project-name">PORTFOLIO V2</div>
             <div class="project-tags">
               <span class="project-tag">HTML / CSS</span>
@@ -795,12 +899,15 @@
             </div>
           </div>
           <span class="project-arrow">↗</span>
-        </div>
-
-        <div class="project-item reveal" style="transition-delay: 0.1s">
+        </a>
+        <a
+          href="./projets.html"
+          class="project-item reveal"
+          style="transition-delay: 0.1s"
+        >
           <span class="project-num">002</span>
-          <div class="project-info">
-            <div class="project-name">APP E-COMMERCE</div>
+          <div>
+            <div class="project-name">APPLICATION E-COMMERCE</div>
             <div class="project-tags">
               <span class="project-tag">PHP</span>
               <span class="project-tag">MySQL</span>
@@ -808,24 +915,30 @@
             </div>
           </div>
           <span class="project-arrow">↗</span>
-        </div>
-
-        <div class="project-item reveal" style="transition-delay: 0.15s">
+        </a>
+        <a
+          href="./projets.html"
+          class="project-item reveal"
+          style="transition-delay: 0.15s"
+        >
           <span class="project-num">003</span>
-          <div class="project-info">
-            <div class="project-name">DASHBOARD UI</div>
+          <div>
+            <div class="project-name">TABLEAU DE BORD</div>
             <div class="project-tags">
               <span class="project-tag">TailwindCSS</span>
               <span class="project-tag">JavaScript</span>
-              <span class="project-tag">UI Design</span>
+              <span class="project-tag">Design UI</span>
             </div>
           </div>
           <span class="project-arrow">↗</span>
-        </div>
-
-        <div class="project-item reveal" style="transition-delay: 0.2s">
+        </a>
+        <a
+          href="./design.html"
+          class="project-item reveal"
+          style="transition-delay: 0.2s"
+        >
           <span class="project-num">004</span>
-          <div class="project-info">
+          <div>
             <div class="project-name">IDENTITÉ VISUELLE</div>
             <div class="project-tags">
               <span class="project-tag">Figma</span>
@@ -834,13 +947,12 @@
             </div>
           </div>
           <span class="project-arrow">↗</span>
-        </div>
+        </a>
       </div>
     </section>
 
     <div class="divider"></div>
 
-    <!-- ABOUT STRIP -->
     <section class="about-strip">
       <div class="about-left reveal">
         <div class="about-label">À propos</div>
@@ -850,11 +962,10 @@
           et sensibilité visuelle pour construire des interfaces qui marquent.
           Disponible pour des projets freelance et des collaborations créatives.
         </p>
-        <div style="margin-top: 32px">
+        <div style="margin-top: 28px">
           <a href="./apropos.html" class="btn-ghost">En savoir plus</a>
         </div>
       </div>
-
       <div class="about-right reveal" style="transition-delay: 0.1s">
         <div class="about-stat">
           <div class="about-stat-num">2+</div>
@@ -886,7 +997,6 @@
       </div>
     </section>
 
-    <!-- FOOTER -->
     <div class="divider"></div>
     <footer>
       <div class="footer-name">MARTIN FAURE</div>
@@ -900,39 +1010,39 @@
     </footer>
 
     <script>
-      // Mobile hamburger
       const toggle = document.querySelector(".nav-toggle");
       const links = document.querySelector(".nav-links");
       if (toggle && links) {
         toggle.addEventListener("click", () => {
           const open = links.style.display === "flex";
-          links.style.display = open ? "" : "flex";
-          links.style.flexDirection = "column";
-          links.style.position = "fixed";
-          links.style.top = "60px";
-          links.style.right = "18px";
-          links.style.background = "var(--bg, #0a0a0a)";
-          links.style.padding = "16px";
-          links.style.borderRadius = "12px";
-          links.style.border = "1px solid rgba(255,255,255,0.1)";
-          links.style.zIndex = "999";
-          if (open) links.removeAttribute("style");
+          if (open) {
+            links.removeAttribute("style");
+          } else {
+            links.style.display = "flex";
+            links.style.flexDirection = "column";
+            links.style.position = "fixed";
+            links.style.top = "60px";
+            links.style.right = "18px";
+            links.style.background = "#0a0a0a";
+            links.style.padding = "16px";
+            links.style.borderRadius = "12px";
+            links.style.border = "1px solid rgba(255,255,255,0.1)";
+            links.style.zIndex = "999";
+            links.style.gap = "4px";
+          }
         });
       }
 
-      // Scroll reveal
       const observer = new IntersectionObserver(
-        (entries) => {
+        (entries) =>
           entries.forEach((e) => {
             if (e.isIntersecting) {
               e.target.classList.add("visible");
               observer.unobserve(e.target);
             }
-          });
-        },
+          }),
         { threshold: 0.12 },
       );
-
       document
         .querySelectorAll(".reveal")
         .forEach((el) => observer.observe(el));
