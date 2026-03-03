@@ -23,7 +23,7 @@
         --bg: #0e0e0e;
         --light: #f0ede6;
         --accent: #e05a00;
-        --col: 300px;
+        --col: 340px;
       }
 
       html,
@@ -51,6 +51,7 @@
           rgba(14, 14, 14, 0.97) 0%,
           transparent 100%
         );
+        backdrop-filter: blur(10px);
       }
       .nav-left {
         font-size: 13px;
@@ -128,7 +129,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        padding: 76px 28px 52px;
+        padding: 76px 32px 52px;
         border-right: 1px solid rgba(255, 255, 255, 0.06);
         background: var(--bg);
       }
@@ -199,18 +200,27 @@
       }
       .meta-name {
         font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(24px, 2.8vw, 40px);
+        font-size: clamp(28px, 3vw, 44px);
         color: var(--light);
         letter-spacing: 0.02em;
         line-height: 1.05;
         display: block;
       }
       .meta-type {
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 500;
-        color: rgba(255, 255, 255, 0.38);
+        color: rgba(255, 255, 255, 0.42);
         letter-spacing: 0.02em;
+        margin-bottom: 20px;
+        line-height: 1.4;
+      }
+      .meta-desc {
+        font-size: 13px;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.5);
+        line-height: 1.6;
         margin-bottom: 24px;
+        max-width: 280px;
       }
       .meta-actions {
         display: flex;
@@ -228,7 +238,7 @@
         gap: 7px;
         background: var(--light);
         color: var(--bg);
-        padding: 9px 18px;
+        padding: 10px 20px;
         border-radius: 999px;
         font-size: 12px;
         font-weight: 700;
@@ -258,6 +268,7 @@
         overflow-y: scroll;
         scroll-snap-type: y mandatory;
         scroll-behavior: smooth;
+        background: var(--bg);
       }
 
       .slide {
@@ -266,62 +277,126 @@
         scroll-snap-stop: always;
         position: relative;
         overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 60px;
       }
 
-      .slide-visual {
-        position: absolute;
-        inset: 0;
+      /* ─── CONTAINER MOCKUP ─── */
+      .mockup-container {
+        position: relative;
+        width: 100%;
+        max-width: 900px;
+        height: 80%;
         display: flex;
         align-items: center;
         justify-content: center;
         opacity: 0;
-        transform: translateX(30px);
+        transform: scale(0.92) translateY(30px);
         transition:
-          opacity 0.65s 0.05s ease,
-          transform 0.65s 0.05s ease;
+          opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
       }
-      .slide.active .slide-visual {
+      .slide.active .mockup-container {
         opacity: 1;
-        transform: none;
+        transform: scale(1) translateY(0);
       }
 
-      /* ─── PROJECT IMAGE ─── */
-      .project-img {
+      /* Browser mockup */
+      .browser-mockup {
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        object-position: center;
-        display: block;
-        position: absolute;
-        inset: 0;
+        background: #1a1a1a;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow:
+          0 25px 80px rgba(0, 0, 0, 0.6),
+          0 0 0 1px rgba(255, 255, 255, 0.08);
       }
 
-      /* subtle dark gradient overlay to keep the nav readable */
-      .slide-visual::after {
+      .browser-header {
+        height: 40px;
+        background: #252525;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+        gap: 8px;
+      }
+
+      .browser-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .browser-dot:nth-child(1) {
+        background: #ff5f57;
+      }
+      .browser-dot:nth-child(2) {
+        background: #ffbd2e;
+      }
+      .browser-dot:nth-child(3) {
+        background: #28ca42;
+      }
+
+      .browser-content {
+        width: 100%;
+        height: calc(100% - 40px);
+        background: #0a0a0a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Image haute qualité */
+      .project-img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        display: block;
+        border-radius: 8px;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+        filter: contrast(1.05) saturate(1.1);
+      }
+
+      /* Glow effect */
+      .browser-mockup::before {
         content: "";
         position: absolute;
-        inset: 0;
+        inset: -2px;
         background: linear-gradient(
-          to bottom,
-          rgba(14, 14, 14, 0.35) 0%,
-          transparent 30%,
-          transparent 70%,
-          rgba(14, 14, 14, 0.5) 100%
+          135deg,
+          rgba(224, 90, 0, 0.3),
+          transparent 40%,
+          transparent 60%,
+          rgba(240, 237, 230, 0.2)
         );
-        pointer-events: none;
+        border-radius: 14px;
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.5s;
+      }
+      .slide.active .browser-mockup::before {
+        opacity: 1;
       }
 
       /* Scroll hint */
       .scroll-hint {
         position: absolute;
-        bottom: 28px;
-        right: 28px;
+        bottom: 32px;
+        right: 32px;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 8px;
         z-index: 10;
-        opacity: 0.25;
+        opacity: 0.3;
         pointer-events: none;
       }
       .scroll-hint span {
@@ -356,9 +431,18 @@
       }
 
       /* ══ RESPONSIVE ══ */
+      @media (max-width: 1024px) {
+        :root {
+          --col: 280px;
+        }
+        .slide {
+          padding: 60px 40px;
+        }
+      }
+
       @media (max-width: 860px) {
         :root {
-          --col: 220px;
+          --col: 240px;
         }
         .clock-digit {
           font-size: 110px;
@@ -367,8 +451,8 @@
         .clock-wrap {
           height: 180px;
         }
-        .meta-name {
-          font-size: clamp(20px, 3vw, 32px);
+        .slide {
+          padding: 60px 30px;
         }
       }
 
@@ -412,13 +496,6 @@
             black 82%,
             transparent 100%
           );
-          -webkit-mask-image: linear-gradient(
-            to right,
-            transparent 0%,
-            black 18%,
-            black 82%,
-            transparent 100%
-          );
         }
         .clock-drum {
           flex-direction: row;
@@ -432,53 +509,48 @@
         }
         .panel-meta {
           flex: 1;
-          flex-direction: row;
-          align-items: center;
-          gap: 12px;
-          flex-wrap: wrap;
         }
         .meta-label {
-          display: none;
-        }
-        .meta-name-wrap {
-          margin-bottom: 0;
+          font-size: 9px;
+          margin-bottom: 4px;
         }
         .meta-name {
           font-size: 18px;
         }
         .meta-type {
-          margin-bottom: 0;
           font-size: 11px;
+          margin-bottom: 8px;
+        }
+        .meta-desc {
+          display: none;
         }
         .meta-actions {
           gap: 8px;
         }
         .meta-year {
-          font-size: 12px;
-        }
-        .btn-gh {
-          padding: 7px 12px;
           font-size: 11px;
         }
-        .btn-gh svg {
-          display: none;
+        .btn-gh {
+          padding: 7px 14px;
+          font-size: 10px;
         }
 
         .scroll-wrap {
-          position: fixed;
-          top: 0;
           left: 0;
-          right: 0;
-          bottom: 0;
+          top: 140px;
         }
         .slide {
-          height: 100vh;
+          padding: 20px;
         }
-        .slide-visual {
-          top: 148px;
+        .browser-header {
+          height: 32px;
         }
-        .progress-bar {
-          z-index: 400;
+        .browser-dot {
+          width: 10px;
+          height: 10px;
+        }
+        .browser-content {
+          padding: 20px;
         }
       }
     </style>
@@ -511,7 +583,12 @@
         <div class="meta-name-wrap">
           <span class="meta-name" id="mName">Chef AI</span>
         </div>
-        <div class="meta-type" id="mType">Application Mobile</div>
+        <div class="meta-type" id="mType">
+          Application Mobile · React Native
+        </div>
+        <div class="meta-desc" id="mDesc">
+          Une application mobile pour découvrir des recettes personnalisées.
+        </div>
         <div class="meta-actions">
           <span class="meta-year" id="mYear">2025</span>
           <a href="#" class="btn-gh" id="mBtn">
@@ -530,12 +607,21 @@
     <div class="scroll-wrap" id="scrollWrap">
       <!-- PROJET 01 -->
       <div class="slide" id="s0">
-        <div class="slide-visual">
-          <img
-            class="project-img"
-            src="./assets/chefai.png"
-            alt="Chef AI — Application Mobile"
-          />
+        <div class="mockup-container">
+          <div class="browser-mockup">
+            <div class="browser-header">
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+            </div>
+            <div class="browser-content">
+              <img
+                class="project-img"
+                src="./assets/chefai.jpg"
+                alt="Chef AI"
+              />
+            </div>
+          </div>
         </div>
         <div class="scroll-hint">
           <span>Scroll</span>
@@ -545,12 +631,17 @@
 
       <!-- PROJET 02 -->
       <div class="slide" id="s1">
-        <div class="slide-visual">
-          <img
-            class="project-img"
-            src="./assets/dryvea.png"
-            alt="Portfolio V2 — Site Web"
-          />
+        <div class="mockup-container">
+          <div class="browser-mockup">
+            <div class="browser-header">
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+            </div>
+            <div class="browser-content">
+              <img class="project-img" src="./assets/dryvea.png" alt="Dryvea" />
+            </div>
+          </div>
         </div>
         <div class="scroll-hint">
           <span>Scroll</span>
@@ -560,12 +651,21 @@
 
       <!-- PROJET 03 -->
       <div class="slide" id="s2">
-        <div class="slide-visual">
-          <img
-            class="project-img"
-            src="./assets/uptwowin.png"
-            alt="Explorations Graphiques — Design / Identité"
-          />
+        <div class="mockup-container">
+          <div class="browser-mockup">
+            <div class="browser-header">
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+            </div>
+            <div class="browser-content">
+              <img
+                class="project-img"
+                src="./assets/uptwowin.png"
+                alt="Up2Win"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -575,25 +675,28 @@
         {
           label: "Projet 01 / 03",
           name: "Chef AI",
-          type: "Application Mobile",
+          type: "Application Mobile · React Native",
+          desc: "Une application mobile pour découvrir des recettes personnalisées basées sur vos préférences alimentaires.",
           year: "2025",
-          href: "#",
+          href: "https://github.com/martinfaure",
           btn: "GitHub ↗",
           svg: true,
         },
         {
           label: "Projet 02 / 03",
           name: "Dryvea",
-          type: "Site Web - Projet Fil Rouge",
+          type: "Site Web · Projet Fil Rouge",
+          desc: "Plateforme e-commerce complète avec système de gestion de stock et interface d'administration.",
           year: "2026",
-          href: "#",
+          href: "https://github.com/martinfaure",
           btn: "GitHub ↗",
           svg: true,
         },
         {
           label: "Projet 03 / 03",
-          name: "Up2WIn",
-          type: "Design / Identité",
+          name: "Up2Win",
+          type: "Design · Identité Visuelle",
+          desc: "Création d'une identité visuelle complète avec logo, charte graphique et supports de communication.",
           year: "2024",
           href: "./design.html",
           btn: "Voir →",
@@ -609,6 +712,7 @@
       const mLabel = document.getElementById("mLabel");
       const mName = document.getElementById("mName");
       const mType = document.getElementById("mType");
+      const mDesc = document.getElementById("mDesc");
       const mYear = document.getElementById("mYear");
       const mBtn = document.getElementById("mBtn");
 
@@ -645,9 +749,10 @@
         if (idx === current) return;
         const dir = idx > current ? 1 : -1;
         const p = PROJECTS[idx];
-        const metaEls = [mLabel, mName.parentElement, mType];
+        const metaEls = [mLabel, mName.parentElement, mType, mDesc];
 
         metaEls.forEach((el, i) => {
+          if (!el) return;
           el.style.transition = `opacity .2s ${i * 25}ms, transform .2s ${i * 25}ms`;
           el.style.opacity = "0";
           el.style.transform = `translateY(${-8 * dir}px)`;
@@ -655,8 +760,9 @@
 
         setTimeout(() => {
           mLabel.textContent = p.label;
-          mName.innerHTML = p.name.replace("\n", "<br>");
+          mName.textContent = p.name;
           mType.textContent = p.type;
+          if (mDesc) mDesc.textContent = p.desc;
           mYear.textContent = p.year;
           mBtn.href = p.href;
           if (p.svg) {
@@ -665,10 +771,12 @@
             mBtn.textContent = p.btn;
           }
           metaEls.forEach((el) => {
+            if (!el) return;
             el.style.transform = `translateY(${8 * dir}px)`;
           });
           requestAnimationFrame(() => {
             metaEls.forEach((el, i) => {
+              if (!el) return;
               el.style.transition = `opacity .45s ${i * 40}ms, transform .45s ${i * 40}ms`;
               el.style.opacity = "1";
               el.style.transform = "translateY(0)";
@@ -720,6 +828,7 @@
       }
 
       setDrum(0);
+      updateMeta(0);
       current = 0;
     </script>
   </body>
