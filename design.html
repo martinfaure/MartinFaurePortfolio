@@ -158,15 +158,20 @@
         padding-top: 8px;
       }
 
+      /* ─── CONTAINER POUR CENTRER LA GRILLE ─── */
+      .grid-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 28px 80px;
+      }
+
       /* ─── 3-COLUMN MASONRY GRID ─── */
       .grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: auto;
-        gap: 12px;
-        padding: 0 14px 80px;
+        gap: 16px;
         animation: fadeUp 0.9s 0.25s ease both;
-        /* Stagger columns vertically like the screenshot */
         align-items: start;
       }
 
@@ -174,24 +179,24 @@
       .col-1 {
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 16px;
       }
       /* Column 2: pushed down to create offset */
       .col-2 {
         display: flex;
         flex-direction: column;
-        gap: 12px;
-        margin-top: 120px;
+        gap: 16px;
+        margin-top: 100px;
       }
       /* Column 3: starts at top */
       .col-3 {
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 16px;
       }
 
       .grid-item {
-        border-radius: 6px;
+        border-radius: 8px;
         overflow: hidden;
         cursor: pointer;
         position: relative;
@@ -209,7 +214,7 @@
       }
 
       .grid-item:hover img {
-        transform: scale(1.03);
+        transform: scale(1.04);
         filter: brightness(1.1);
       }
 
@@ -220,11 +225,11 @@
         inset: 0;
         background: rgba(0, 0, 0, 0);
         transition: background 0.3s;
-        border-radius: 6px;
+        border-radius: 8px;
         pointer-events: none;
       }
       .grid-item:hover::after {
-        background: rgba(0, 0, 0, 0.15);
+        background: rgba(0, 0, 0, 0.2);
       }
 
       /* Hover label */
@@ -233,8 +238,8 @@
         bottom: 0;
         left: 0;
         right: 0;
-        padding: 48px 14px 14px;
-        background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+        padding: 48px 16px 16px;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
@@ -251,12 +256,12 @@
       }
       .label-title {
         font-family: "Bebas Neue", sans-serif;
-        font-size: 20px;
+        font-size: 22px;
         letter-spacing: 0.06em;
         color: var(--light);
       }
       .label-index {
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 500;
         color: rgba(255, 255, 255, 0.45);
         letter-spacing: 0.06em;
@@ -276,7 +281,7 @@
         transform: translateY(0);
       }
       .grid-item:hover {
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 12px 45px rgba(0, 0, 0, 0.6);
       }
 
       /* ── LIGHTBOX ── */
@@ -285,6 +290,7 @@
         inset: 0;
         z-index: 500;
         background: rgba(10, 10, 10, 0.96);
+        backdrop-filter: blur(8px);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -300,10 +306,10 @@
         max-width: 85vw;
         max-height: 85vh;
         object-fit: contain;
-        border-radius: 6px;
+        border-radius: 8px;
         transform: scale(0.96);
         transition: transform 0.4s ease;
-        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
       }
       .lightbox.open img {
         transform: scale(1);
@@ -311,48 +317,54 @@
 
       .lb-close {
         position: absolute;
-        top: 22px;
-        right: 28px;
+        top: 24px;
+        right: 32px;
         font-size: 13px;
         font-weight: 500;
         color: rgba(240, 237, 230, 0.45);
         cursor: pointer;
         letter-spacing: 0.04em;
         transition: color 0.2s;
+        padding: 8px 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
       }
       .lb-close:hover {
         color: var(--light);
+        background: rgba(255, 255, 255, 0.05);
       }
 
       .lb-nav {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        font-size: 24px;
-        color: rgba(240, 237, 230, 0.25);
+        font-size: 28px;
+        color: rgba(240, 237, 230, 0.3);
         cursor: pointer;
-        padding: 16px;
+        padding: 20px;
         transition: color 0.2s;
         user-select: none;
+        border-radius: 50%;
       }
       .lb-nav:hover {
         color: var(--light);
+        background: rgba(255, 255, 255, 0.05);
       }
       .lb-prev {
-        left: 14px;
+        left: 20px;
       }
       .lb-next {
-        right: 14px;
+        right: 20px;
       }
 
       .lb-info {
         position: absolute;
-        bottom: 26px;
-        left: 26px;
+        bottom: 32px;
+        left: 32px;
       }
       .lb-title {
         font-family: "Bebas Neue", sans-serif;
-        font-size: 26px;
+        font-size: 28px;
         letter-spacing: 0.06em;
         color: var(--light);
       }
@@ -360,15 +372,29 @@
         font-size: 12px;
         font-weight: 500;
         color: rgba(240, 237, 230, 0.35);
-        margin-top: 2px;
+        margin-top: 4px;
         letter-spacing: 0.04em;
       }
 
       /* ══ RESPONSIVE ══ */
+      @media (max-width: 1400px) {
+        .grid-container {
+          max-width: 1000px;
+        }
+      }
+
       @media (max-width: 860px) {
+        .grid-container {
+          max-width: 100%;
+          padding: 0 20px 60px;
+        }
         .grid {
-          grid-template-columns: repeat(3, 1fr);
-          padding: 0 14px 60px;
+          gap: 12px;
+        }
+        .col-1,
+        .col-2,
+        .col-3 {
+          gap: 12px;
         }
         .col-2 {
           margin-top: 80px;
@@ -409,16 +435,22 @@
         .subtitle-right {
           font-size: 12px;
         }
+        .grid-container {
+          padding: 0 14px 48px;
+        }
         .grid {
-          grid-template-columns: repeat(3, 1fr);
-          gap: 8px;
-          padding: 0 10px 48px;
+          gap: 10px;
+        }
+        .col-1,
+        .col-2,
+        .col-3 {
+          gap: 10px;
         }
         .col-2 {
           margin-top: 60px;
         }
         .grid-item {
-          border-radius: 4px;
+          border-radius: 6px;
         }
       }
     </style>
@@ -463,64 +495,66 @@
       </div>
     </div>
 
-    <div class="grid">
-      <!-- Colonne 1 -->
-      <div class="col-1">
-        <div class="grid-item" data-title="FROST" data-idx="0">
-          <img src="assets/1.png" alt="FROST" />
-          <div class="grid-label">
-            <span class="label-title">FROST</span>
-            <span class="label-index">01</span>
+    <div class="grid-container">
+      <div class="grid">
+        <!-- Colonne 1 -->
+        <div class="col-1">
+          <div class="grid-item" data-title="FROST" data-idx="0">
+            <img src="assets/1.png" alt="FROST" />
+            <div class="grid-label">
+              <span class="label-title">FROST</span>
+              <span class="label-index">01</span>
+            </div>
+          </div>
+          <div class="grid-item" data-title="DISCOVERING" data-idx="3">
+            <img src="assets/2.png" alt="DISCOVERING" />
+            <div class="grid-label">
+              <span class="label-title">DISCOVERING</span>
+              <span class="label-index">04</span>
+            </div>
           </div>
         </div>
-        <div class="grid-item" data-title="DISCOVERING" data-idx="3">
-          <img src="assets/2.png" alt="DISCOVERING" />
-          <div class="grid-label">
-            <span class="label-title">DISCOVERING</span>
-            <span class="label-index">04</span>
-          </div>
-        </div>
-      </div>
 
-      <!-- Colonne 2 (décalée vers le bas) -->
-      <div class="col-2">
-        <div class="grid-item" data-title="VIPER" data-idx="1">
-          <img src="assets/3.png" alt="VIPER" />
-          <div class="grid-label">
-            <span class="label-title">VIPER</span>
-            <span class="label-index">02</span>
+        <!-- Colonne 2 (décalée vers le bas) -->
+        <div class="col-2">
+          <div class="grid-item" data-title="VIPER" data-idx="1">
+            <img src="assets/3.png" alt="VIPER" />
+            <div class="grid-label">
+              <span class="label-title">VIPER</span>
+              <span class="label-index">02</span>
+            </div>
+          </div>
+          <div class="grid-item" data-title="NOISE" data-idx="4">
+            <img src="assets/4.png" alt="NOISE" />
+            <div class="grid-label">
+              <span class="label-title">NOISE</span>
+              <span class="label-index">05</span>
+            </div>
+          </div>
+          <div class="grid-item" data-title="GRABZ" data-idx="6">
+            <img src="assets/5.png" alt="GRABZ" />
+            <div class="grid-label">
+              <span class="label-title">GRABZ</span>
+              <span class="label-index">07</span>
+            </div>
           </div>
         </div>
-        <div class="grid-item" data-title="NOISE" data-idx="4">
-          <img src="assets/4.png" alt="NOISE" />
-          <div class="grid-label">
-            <span class="label-title">NOISE</span>
-            <span class="label-index">05</span>
-          </div>
-        </div>
-        <div class="grid-item" data-title="GRABZ" data-idx="6">
-          <img src="assets/5.png" alt="GRABZ" />
-          <div class="grid-label">
-            <span class="label-title">GRABZ</span>
-            <span class="label-index">07</span>
-          </div>
-        </div>
-      </div>
 
-      <!-- Colonne 3 -->
-      <div class="col-3">
-        <div class="grid-item" data-title="INVASION" data-idx="2">
-          <img src="assets/6.png" alt="INVASION" />
-          <div class="grid-label">
-            <span class="label-title">INVASION</span>
-            <span class="label-index">03</span>
+        <!-- Colonne 3 -->
+        <div class="col-3">
+          <div class="grid-item" data-title="INVASION" data-idx="2">
+            <img src="assets/6.png" alt="INVASION" />
+            <div class="grid-label">
+              <span class="label-title">INVASION</span>
+              <span class="label-index">03</span>
+            </div>
           </div>
-        </div>
-        <div class="grid-item" data-title="CURRENTS" data-idx="5">
-          <img src="assets/7.png" alt="CURRENTS" />
-          <div class="grid-label">
-            <span class="label-title">CURRENTS</span>
-            <span class="label-index">06</span>
+          <div class="grid-item" data-title="CURRENTS" data-idx="5">
+            <img src="assets/7.png" alt="CURRENTS" />
+            <div class="grid-label">
+              <span class="label-title">CURRENTS</span>
+              <span class="label-index">06</span>
+            </div>
           </div>
         </div>
       </div>
