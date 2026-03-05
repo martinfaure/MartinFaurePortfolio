@@ -23,6 +23,7 @@
         --bg: #0a0a0a;
         --light: #f0ede6;
         --muted: rgba(255, 255, 255, 0.35);
+        --border: rgba(255, 255, 255, 0.07);
       }
 
       body {
@@ -33,7 +34,7 @@
         min-height: 100vh;
       }
 
-      /* NAV */
+      /* ── NAV ── */
       nav {
         display: flex;
         align-items: center;
@@ -42,20 +43,17 @@
         position: relative;
         z-index: 10;
       }
-
       .nav-left {
         font-size: 13px;
         font-weight: 500;
         color: var(--light);
         opacity: 0.85;
       }
-
       .nav-right {
         display: flex;
         align-items: center;
         gap: 6px;
       }
-
       .nav-toggle {
         width: 36px;
         height: 36px;
@@ -73,13 +71,11 @@
       .nav-toggle:hover {
         background: rgba(255, 255, 255, 0.15);
       }
-
       .nav-links {
         display: flex;
         gap: 2px;
         align-items: center;
       }
-
       .nav-links a {
         text-decoration: none;
         color: var(--light);
@@ -100,16 +96,15 @@
         font-weight: 700;
       }
 
-      /* HERO */
+      /* ── HERO ── */
       .hero-title {
         font-family: "Bebas Neue", sans-serif;
         font-size: clamp(80px, 13vw, 200px);
         line-height: 0.88;
-        padding: 0 14px;
+        padding: 0 28px;
         color: var(--light);
         animation: fadeDown 0.7s ease both;
       }
-
       @keyframes fadeDown {
         from {
           opacity: 0;
@@ -117,19 +112,9 @@
         }
         to {
           opacity: 1;
-          transform: translateY(0);
+          transform: none;
         }
       }
-
-      .section-title {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(42px, 6vw, 80px);
-        color: var(--muted);
-        padding: 40px 28px 0;
-        letter-spacing: 0.01em;
-        animation: fadeUp 0.8s 0.1s ease both;
-      }
-
       @keyframes fadeUp {
         from {
           opacity: 0;
@@ -137,24 +122,38 @@
         }
         to {
           opacity: 1;
-          transform: translateY(0);
+          transform: none;
         }
       }
 
-      /* FORM AREA */
+      .section-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(42px, 6vw, 80px);
+        color: var(--muted);
+        padding: 32px 28px 0;
+        letter-spacing: 0.01em;
+        animation: fadeUp 0.8s 0.1s ease both;
+      }
+
+      /* ── MAIN LAYOUT ── */
+      .page-body {
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        align-items: start;
+        padding: 0 0 100px;
+      }
+
+      /* ── FORM ── */
       .form-area {
-        padding: 80px 28px 100px;
-        max-width: 760px;
+        padding: 64px 28px 0;
         animation: fadeUp 0.8s 0.2s ease both;
       }
 
-      /* Steps progress dots */
       .steps-dots {
         display: flex;
         gap: 8px;
         margin-bottom: 48px;
       }
-
       .dot {
         width: 8px;
         height: 8px;
@@ -172,7 +171,6 @@
         background: rgba(255, 255, 255, 0.5);
       }
 
-      /* Step container */
       .step {
         display: none;
         flex-direction: column;
@@ -185,7 +183,6 @@
       .step.exit {
         animation: stepOut 0.3s ease both;
       }
-
       @keyframes stepIn {
         from {
           opacity: 0;
@@ -193,13 +190,13 @@
         }
         to {
           opacity: 1;
-          transform: translateY(0);
+          transform: none;
         }
       }
       @keyframes stepOut {
         from {
           opacity: 1;
-          transform: translateY(0);
+          transform: none;
         }
         to {
           opacity: 0;
@@ -207,7 +204,6 @@
         }
       }
 
-      /* Step label */
       .step-label {
         font-size: 12px;
         font-weight: 600;
@@ -217,7 +213,6 @@
         margin-bottom: 20px;
       }
 
-      /* Two-field row (entreprise + poste) */
       .field-double {
         display: flex;
         gap: 32px;
@@ -257,24 +252,17 @@
       .field-double .field-part input::placeholder {
         color: rgba(255, 255, 255, 0.28);
       }
-      .field-double .btn-next {
-        flex-shrink: 0;
-      }
 
-      /* Field row */
       .field-row {
         display: flex;
         align-items: flex-end;
-        gap: 0;
         border-bottom: 1.5px solid rgba(255, 255, 255, 0.22);
         padding-bottom: 14px;
         transition: border-color 0.3s;
-        position: relative;
       }
       .field-row:focus-within {
         border-color: var(--light);
       }
-
       .field-row input,
       .field-row textarea {
         flex: 1;
@@ -289,12 +277,10 @@
         resize: none;
         caret-color: var(--light);
       }
-
       .field-row input::placeholder,
       .field-row textarea::placeholder {
         color: rgba(255, 255, 255, 0.28);
       }
-
       .field-row textarea {
         min-height: 80px;
       }
@@ -317,7 +303,6 @@
         transform: translateX(4px);
       }
 
-      /* Error hint */
       .hint {
         font-size: 11px;
         color: rgba(255, 80, 80, 0.8);
@@ -326,7 +311,6 @@
         letter-spacing: 0.04em;
       }
 
-      /* Submit button */
       .btn-submit {
         display: inline-flex;
         align-items: center;
@@ -351,7 +335,132 @@
         transform: scale(0.98);
       }
 
-      /* CONFIRMATION */
+      /* ── SIDE PANEL ── */
+      .contact-side {
+        padding: 64px 28px 0 40px;
+        border-left: 1px solid var(--border);
+        animation: fadeUp 0.8s 0.3s ease both;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .side-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.25);
+        margin-bottom: 24px;
+      }
+
+      /* Social links — disposition horizontale */
+      .social-list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .social-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 12px 7px 7px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        text-decoration: none;
+        color: var(--light);
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          transform 0.2s;
+      }
+      .social-item:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+      }
+
+      .social-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .social-item:hover .social-icon {
+        border-color: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .social-icon svg {
+        width: 12px;
+        height: 12px;
+        fill: var(--light);
+        opacity: 0.7;
+      }
+
+      .social-info {
+        min-width: 0;
+      }
+      .social-name {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+      .social-handle {
+        display: none;
+      }
+
+      .social-arrow {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.25);
+        flex-shrink: 0;
+        transition:
+          transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+          color 0.2s;
+      }
+      .social-item:hover .social-arrow {
+        transform: translate(2px, -2px);
+        color: var(--light);
+      }
+
+      /* Email direct */
+      .side-email {
+        margin-top: 28px;
+        padding-top: 24px;
+        border-top: 1px solid var(--border);
+      }
+      .side-email-label {
+        display: block;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.25);
+        margin-bottom: 8px;
+      }
+      .side-email a {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--light);
+        text-decoration: none;
+        opacity: 0.55;
+        letter-spacing: 0.02em;
+        transition: opacity 0.2s;
+        word-break: break-all;
+      }
+      .side-email a:hover {
+        opacity: 1;
+      }
+
+      /* ── CONFIRMATION ── */
       .confirmation {
         display: none;
         flex-direction: column;
@@ -363,7 +472,6 @@
       .confirmation.visible {
         display: flex;
       }
-
       .confirm-icon {
         width: 56px;
         height: 56px;
@@ -375,7 +483,6 @@
         font-size: 22px;
         animation: popIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
       }
-
       @keyframes popIn {
         from {
           transform: scale(0.5);
@@ -386,14 +493,12 @@
           opacity: 1;
         }
       }
-
       .confirm-title {
         font-family: "Bebas Neue", sans-serif;
         font-size: clamp(38px, 5vw, 64px);
         color: var(--light);
         line-height: 1.05;
       }
-
       .confirm-sub {
         font-size: 15px;
         color: var(--muted);
@@ -401,7 +506,6 @@
         line-height: 1.6;
         max-width: 420px;
       }
-
       .btn-back {
         display: inline-flex;
         align-items: center;
@@ -426,66 +530,6 @@
         border-color: rgba(255, 255, 255, 0.4);
       }
 
-      /* ══ RESPONSIVE ══ */
-      @media (max-width: 860px) {
-        .form-area {
-          padding: 60px 24px 80px;
-          max-width: 100%;
-        }
-        .section-title {
-          padding: 32px 24px 0;
-        }
-      }
-
-      @media (max-width: 600px) {
-        nav {
-          padding: 14px 18px;
-        }
-        .nav-links {
-          display: none;
-        }
-        .hero-title {
-          font-size: clamp(52px, 16vw, 90px);
-          padding: 0 12px;
-        }
-        .section-title {
-          font-size: clamp(32px, 9vw, 56px);
-          padding: 24px 18px 0;
-        }
-        .form-area {
-          padding: 48px 18px 70px;
-        }
-        .steps-dots {
-          margin-bottom: 36px;
-        }
-        .field-row input,
-        .field-row textarea {
-          font-size: clamp(16px, 4.5vw, 22px);
-        }
-        .field-double {
-          flex-direction: column;
-          gap: 20px;
-        }
-        .field-double .field-part input {
-          font-size: clamp(16px, 4.5vw, 22px);
-        }
-        .btn-submit {
-          padding: 14px 28px;
-          font-size: 14px;
-          width: 100%;
-          justify-content: center;
-        }
-        .confirmation {
-          padding: 60px 18px 80px;
-        }
-        .confirm-title {
-          font-size: clamp(32px, 9vw, 56px);
-        }
-        .confirm-sub {
-          font-size: 14px;
-        }
-      }
-
       @keyframes shake {
         0%,
         100% {
@@ -504,13 +548,67 @@
           transform: translateX(6px);
         }
       }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 860px) {
+        .page-body {
+          grid-template-columns: 1fr;
+        }
+        .contact-side {
+          border-left: none;
+          border-top: 1px solid var(--border);
+          padding: 48px 28px 0;
+          margin-top: 16px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        nav {
+          padding: 14px 18px;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hero-title {
+          font-size: clamp(52px, 16vw, 90px);
+          padding: 0 18px;
+        }
+        .section-title {
+          font-size: clamp(32px, 9vw, 56px);
+          padding: 24px 18px 0;
+        }
+        .form-area {
+          padding: 40px 18px 0;
+        }
+        .contact-side {
+          padding: 40px 18px 0;
+        }
+        .field-double {
+          flex-direction: column;
+          gap: 20px;
+        }
+        .field-double .field-part input,
+        .field-row input,
+        .field-row textarea {
+          font-size: clamp(16px, 4.5vw, 22px);
+        }
+        .btn-submit {
+          width: 100%;
+          justify-content: center;
+          padding: 14px 28px;
+          font-size: 14px;
+        }
+        .confirmation {
+          padding: 60px 18px 80px;
+        }
+      }
     </style>
   </head>
   <body>
     <nav>
       <div class="nav-left">Développeur Web &amp; Designer</div>
       <div class="nav-right">
-        <button class="nav-toggle">-</button>
+        <button class="nav-toggle">—</button>
         <div class="nav-links">
           <a href="./index.html">Accueil</a>
           <a href="./projets.html">Projets</a>
@@ -522,107 +620,217 @@
       </div>
     </nav>
 
-    <div class="hero-title">MART/N FAURE</div>
-    <div class="section-title">Contactez Moi</div>
+    <div class="hero-title" id="heroTitle">MART/N FAURE</div>
+    <div class="section-title" id="sectionTitle">Contactez Moi</div>
 
-    <!-- FORM -->
-    <div class="form-area" id="formArea">
-      <!-- Dots: 6 steps -->
-      <div class="steps-dots" id="stepsDots">
-        <div class="dot active" data-i="0"></div>
-        <div class="dot" data-i="1"></div>
-        <div class="dot" data-i="2"></div>
-        <div class="dot" data-i="3"></div>
-        <div class="dot" data-i="4"></div>
-        <div class="dot" data-i="5"></div>
-      </div>
-
-      <!-- Step 1: Nom -->
-      <div class="step visible" id="step0">
-        <div class="step-label">01 - Comment vous appelez-vous ?</div>
-        <div class="field-row">
-          <input
-            type="text"
-            id="inputNom"
-            placeholder="Nom"
-            autocomplete="off"
-          />
-          <button class="btn-next" onclick="nextStep(0)">→</button>
+    <div class="page-body" id="pageBody">
+      <!-- FORMULAIRE -->
+      <div class="form-area" id="formArea">
+        <div class="steps-dots" id="stepsDots">
+          <div class="dot active" data-i="0"></div>
+          <div class="dot" data-i="1"></div>
+          <div class="dot" data-i="2"></div>
+          <div class="dot" data-i="3"></div>
+          <div class="dot" data-i="4"></div>
         </div>
-        <div class="hint" id="hint0"></div>
-      </div>
 
-      <!-- Step 2: Email -->
-      <div class="step" id="step1">
-        <div class="step-label">02 - Votre adresse email ?</div>
-        <div class="field-row">
-          <input
-            type="email"
-            id="inputEmail"
-            placeholder="email@exemple.com"
-            autocomplete="off"
-          />
-          <button class="btn-next" onclick="nextStep(1)">→</button>
-        </div>
-        <div class="hint" id="hint1"></div>
-      </div>
-
-      <!-- Step 3: Entreprise + Poste (double champ) -->
-      <div class="step" id="step2">
-        <div class="step-label">03 - Votre entreprise &amp; poste ?</div>
-        <div class="field-double">
-          <div class="field-part">
-            <label for="inputEntreprise">Entreprise</label>
+        <div class="step visible" id="step0">
+          <div class="step-label">01 — Comment vous appelez-vous ?</div>
+          <div class="field-row">
             <input
               type="text"
-              id="inputEntreprise"
-              placeholder="Nom de l'entreprise"
+              id="inputNom"
+              placeholder="Votre nom"
               autocomplete="off"
             />
+            <button class="btn-next" onclick="nextStep(0)">→</button>
           </div>
-          <div class="field-part">
-            <label for="inputPoste">Poste</label>
+          <div class="hint" id="hint0"></div>
+        </div>
+
+        <div class="step" id="step1">
+          <div class="step-label">02 — Votre adresse email ?</div>
+          <div class="field-row">
+            <input
+              type="email"
+              id="inputEmail"
+              placeholder="email@exemple.com"
+              autocomplete="off"
+            />
+            <button class="btn-next" onclick="nextStep(1)">→</button>
+          </div>
+          <div class="hint" id="hint1"></div>
+        </div>
+
+        <div class="step" id="step2">
+          <div class="step-label">03 — Votre entreprise &amp; poste ?</div>
+          <div class="field-double">
+            <div class="field-part">
+              <label for="inputEntreprise">Entreprise</label>
+              <input
+                type="text"
+                id="inputEntreprise"
+                placeholder="Nom de l'entreprise"
+                autocomplete="off"
+              />
+            </div>
+            <div class="field-part">
+              <label for="inputPoste">Poste</label>
+              <input
+                type="text"
+                id="inputPoste"
+                placeholder="Votre poste"
+                autocomplete="off"
+              />
+            </div>
+            <button class="btn-next" onclick="nextStep(2)">→</button>
+          </div>
+          <div class="hint" id="hint2"></div>
+        </div>
+
+        <div class="step" id="step3">
+          <div class="step-label">04 — Quel est le sujet ?</div>
+          <div class="field-row">
             <input
               type="text"
-              id="inputPoste"
-              placeholder="Votre poste"
+              id="inputSujet"
+              placeholder="Sujet de votre message"
               autocomplete="off"
             />
+            <button class="btn-next" onclick="nextStep(3)">→</button>
           </div>
-          <button class="btn-next" onclick="nextStep(2)">→</button>
+          <div class="hint" id="hint3"></div>
         </div>
-        <div class="hint" id="hint2"></div>
+
+        <div class="step" id="step4">
+          <div class="step-label">05 — Votre message</div>
+          <div class="field-row">
+            <textarea
+              id="inputMessage"
+              placeholder="Décrivez votre projet ou votre demande..."
+              rows="4"
+            ></textarea>
+          </div>
+          <div class="hint" id="hint4"></div>
+          <button class="btn-submit" onclick="submitForm()">
+            Envoyer le message ↗
+          </button>
+        </div>
       </div>
 
-      <!-- Step 4: Sujet -->
-      <div class="step" id="step3">
-        <div class="step-label">04 - Quel est le sujet ?</div>
-        <div class="field-row">
-          <input
-            type="text"
-            id="inputSujet"
-            placeholder="Sujet"
-            autocomplete="off"
-          />
-          <button class="btn-next" onclick="nextStep(3)">→</button>
-        </div>
-        <div class="hint" id="hint3"></div>
-      </div>
+      <!-- SIDE : RÉSEAUX SOCIAUX -->
+      <div class="contact-side">
+        <div class="side-label">Retrouvez-moi sur</div>
 
-      <!-- Step 5: Message + submit -->
-      <div class="step" id="step4">
-        <div class="step-label">05 - Votre message</div>
-        <div class="field-row">
-          <textarea
-            id="inputMessage"
-            placeholder="Décrivez votre projet ou votre demande..."
-            rows="4"
-          ></textarea>
+        <div class="social-list">
+          <!-- LinkedIn -->
+          <a
+            href="https://linkedin.com/in/martin-faure"
+            target="_blank"
+            rel="noopener"
+            class="social-item"
+          >
+            <div class="social-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                />
+              </svg>
+            </div>
+            <div class="social-info">
+              <div class="social-name">LinkedIn</div>
+            </div>
+            <span class="social-arrow">↗</span>
+          </a>
+
+          <!-- GitHub -->
+          <a
+            href="https://github.com/martin-faure"
+            target="_blank"
+            rel="noopener"
+            class="social-item"
+          >
+            <div class="social-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+                />
+              </svg>
+            </div>
+            <div class="social-info">
+              <div class="social-name">GitHub</div>
+            </div>
+            <span class="social-arrow">↗</span>
+          </a>
+
+          <!-- Instagram -->
+          <a
+            href="https://instagram.com/martin.faure"
+            target="_blank"
+            rel="noopener"
+            class="social-item"
+          >
+            <div class="social-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"
+                />
+              </svg>
+            </div>
+            <div class="social-info">
+              <div class="social-name">Instagram</div>
+            </div>
+            <span class="social-arrow">↗</span>
+          </a>
+
+          <!-- Behance -->
+          <a
+            href="https://behance.net/martinfaure"
+            target="_blank"
+            rel="noopener"
+            class="social-item"
+          >
+            <div class="social-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M22 7h-7V5h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 3.211 3.483 3.312 4.588 2.029H23.7zM15.999 13h4.013c-.07-1.643-1.118-2.278-1.986-2.278-1.012 0-1.928.618-2.027 2.278zM9.33 12.535c1.21.44 1.861 1.3 1.861 2.683 0 2.115-1.87 2.782-4.165 2.782H1V7h6.108c2.271 0 3.854.703 3.854 2.55 0 1.137-.608 1.82-1.633 1.985zM3.768 11h2.261c.76 0 1.408-.277 1.408-1.083 0-.822-.648-1.061-1.448-1.061H3.768V11zm0 4.714h2.585c.82 0 1.545-.253 1.545-1.168 0-.87-.679-1.197-1.577-1.197H3.768v2.365z"
+                />
+              </svg>
+            </div>
+            <div class="social-info">
+              <div class="social-name">Behance</div>
+            </div>
+            <span class="social-arrow">↗</span>
+          </a>
+
+          <!-- Twitter / X -->
+          <a
+            href="https://x.com/martinfaure"
+            target="_blank"
+            rel="noopener"
+            class="social-item"
+          >
+            <div class="social-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.741l7.73-8.835L1.254 2.25H8.08l4.259 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"
+                />
+              </svg>
+            </div>
+            <div class="social-info">
+              <div class="social-name">Twitter / X</div>
+            </div>
+            <span class="social-arrow">↗</span>
+          </a>
         </div>
-        <div class="hint" id="hint4"></div>
-        <button class="btn-submit" onclick="submitForm()">
-          Envoyer le message ↗
-        </button>
+
+        <!-- Email direct -->
+        <div class="side-email">
+          <span class="side-email-label">Email direct</span>
+          <a href="mailto:faure.martin2705@gmail.com"
+            >faure.martin2705@gmail.com</a
+          >
+        </div>
       </div>
     </div>
 
@@ -642,8 +850,6 @@
     <script>
       let current = 0;
       const total = 5;
-
-      // Inputs and hints indexed by step
       const inputs = [
         "inputNom",
         "inputEmail",
@@ -653,15 +859,13 @@
       ];
       const hints = ["hint0", "hint1", "hint2", "hint3", "hint4"];
 
-      // Enter key support
       document.addEventListener("keydown", (e) => {
         if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
           if (current < total - 1) nextStep(current);
-          else if (current === total - 1) submitForm();
+          else submitForm();
         }
       });
 
-      // Auto-focus first input
       document.getElementById("inputNom").focus();
 
       function updateDots(step) {
@@ -673,9 +877,7 @@
       }
 
       function nextStep(fromIdx) {
-        // Validate
         if (fromIdx === 2) {
-          // Entreprise + Poste step - both optional, just advance
           clearHint(hints[fromIdx]);
         } else {
           const val = document.getElementById(inputs[fromIdx]).value.trim();
@@ -694,16 +896,13 @@
           }
           clearHint(hints[fromIdx]);
         }
-
         animateOut(fromIdx, () => {
           current = fromIdx + 1;
           updateDots(current);
           animateIn(current);
-          // Focus next input
           const nextId = inputs[current];
           if (nextId)
             setTimeout(() => document.getElementById(nextId)?.focus(), 80);
-          // For double-field step, focus entreprise
           if (current === 2)
             setTimeout(
               () => document.getElementById("inputEntreprise")?.focus(),
@@ -760,7 +959,6 @@
         form.method = "POST";
         form.action = "https://formsubmit.co/faure.martin2705@gmail.com";
         form.style.display = "none";
-
         const fields = {
           name,
           email,
@@ -771,25 +969,23 @@
           _captcha: "false",
           _next: window.location.href,
         };
-
-        for (const [key, value] of Object.entries(fields)) {
-          const input = document.createElement("input");
-          input.type = "hidden";
-          input.name = key;
-          input.value = value;
-          form.appendChild(input);
+        for (const [k, v] of Object.entries(fields)) {
+          const inp = document.createElement("input");
+          inp.type = "hidden";
+          inp.name = k;
+          inp.value = v;
+          form.appendChild(inp);
         }
-
         document.body.appendChild(form);
 
         setTimeout(() => {
-          const formArea = document.getElementById("formArea");
-          formArea.style.animation = "stepOut 0.3s ease both";
+          const fa = document.getElementById("formArea");
+          fa.style.animation = "stepOut 0.3s ease both";
           setTimeout(() => {
-            formArea.style.display = "none";
+            document.getElementById("pageBody").style.display = "none";
+            document.getElementById("sectionTitle").style.display = "none";
             document.getElementById("confirmName").textContent = name;
             document.getElementById("confirmEmail").textContent = email;
-            document.querySelector(".section-title").style.display = "none";
             document.getElementById("confirmation").classList.add("visible");
           }, 300);
         }, 200);
@@ -797,23 +993,27 @@
         setTimeout(() => form.submit(), 500);
       }
 
-      // Mobile hamburger
+      // Hamburger
       const toggle = document.querySelector(".nav-toggle");
       const links = document.querySelector(".nav-links");
       if (toggle && links) {
         toggle.addEventListener("click", () => {
           const open = links.style.display === "flex";
-          links.style.display = open ? "" : "flex";
+          if (open) {
+            links.removeAttribute("style");
+            return;
+          }
+          links.style.display = "flex";
           links.style.flexDirection = "column";
           links.style.position = "fixed";
           links.style.top = "60px";
           links.style.right = "18px";
-          links.style.background = "var(--bg, #0a0a0a)";
+          links.style.background = "#0a0a0a";
           links.style.padding = "16px";
           links.style.borderRadius = "12px";
           links.style.border = "1px solid rgba(255,255,255,0.1)";
           links.style.zIndex = "999";
-          if (open) links.removeAttribute("style");
+          links.style.gap = "4px";
         });
       }
     </script>
