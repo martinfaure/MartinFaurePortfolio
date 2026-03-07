@@ -297,6 +297,38 @@
         height: 13px;
         flex-shrink: 0;
       }
+      .badge-coming-soon {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(255, 200, 80, 0.08);
+        color: rgba(130, 255, 80, 0.85);
+        border: 1.5px solid rgba(255, 200, 80, 0.2);
+        padding: 9px 16px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        cursor: default;
+        user-select: none;
+      }
+      .badge-coming-soon .dot-pulse {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(130, 255, 80, 0.85);
+        flex-shrink: 0;
+        animation: blink 1.6s ease infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.2;
+        }
+      }
       .scroll-wrap {
         position: fixed;
         top: 0;
@@ -618,7 +650,7 @@
     <div class="panel-left">
       <div class="clock-wrap"><div class="clock-drum" id="drum"></div></div>
       <div class="panel-meta">
-        <div class="meta-category cat-code" id="mCategory">Code</div>
+        <div class="meta-category cat-code" id="mCategory">Dev</div>
         <div class="meta-label" id="mLabel">Projet 01 / 06</div>
         <div class="meta-name-wrap">
           <span class="meta-name" id="mName">Dryvea</span>
@@ -636,6 +668,7 @@
             id="mBtn"
             target="_blank"
             rel="noopener"
+            style="display: none"
           ></a>
           <a
             href="#"
@@ -645,12 +678,15 @@
             rel="noopener"
             style="display: none"
           ></a>
+          <span class="badge-coming-soon" id="mBadgeComingSoon">
+            <span class="dot-pulse"></span>En cours · Lien bientôt dispo
+          </span>
         </div>
       </div>
     </div>
 
     <div class="scroll-wrap" id="scrollWrap">
-      <!-- 01 Dryvea (Code) -->
+      <!-- 01 Dryvea -->
       <div class="slide" id="s0">
         <div class="mockup-container">
           <div class="browser-mockup">
@@ -670,7 +706,7 @@
         </div>
       </div>
 
-      <!-- 02 Chef AI (Design) -->
+      <!-- 02 Chef AI -->
       <div class="slide" id="s1">
         <div class="mockup-container">
           <div class="browser-mockup">
@@ -694,7 +730,7 @@
         </div>
       </div>
 
-      <!-- 03 Up2Win (Design) -->
+      <!-- 03 Up2Win -->
       <div class="slide" id="s2">
         <div class="mockup-container">
           <div class="browser-mockup">
@@ -729,7 +765,7 @@
         </div>
       </div>
 
-      <!-- 04 TDR Market Analyst (Code) -->
+      <!-- 04 TDR -->
       <div class="slide" id="s3">
         <div class="mockup-container">
           <div class="browser-mockup">
@@ -764,7 +800,7 @@
         </div>
       </div>
 
-      <!-- 05 Eden School Intranet (Design) -->
+      <!-- 05 Eden School -->
       <div class="slide" id="s4">
         <div class="mockup-container">
           <div class="browser-mockup">
@@ -776,7 +812,7 @@
             <div class="browser-content">
               <img
                 class="project-img"
-                src="./assets/eden-school.png"
+                src="./assets/intranet.png"
                 alt="Eden School"
                 onerror="
                   this.style.display = 'none';
@@ -799,7 +835,7 @@
         </div>
       </div>
 
-      <!-- 06 Tesla & Apple Redesign (Design) -->
+      <!-- 06 Tesla Redesign -->
       <div class="slide" id="s5">
         <div class="mockup-container">
           <div class="browser-mockup">
@@ -811,8 +847,8 @@
             <div class="browser-content">
               <img
                 class="project-img"
-                src="./assets/tesla-apple-redesign.png"
-                alt="Tesla Apple Redesign"
+                src="./assets/tesla.png"
+                alt="Tesla Redesign"
                 onerror="
                   this.style.display = 'none';
                   this.nextElementSibling.style.display = 'flex';
@@ -823,7 +859,7 @@
                   <path
                     d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
                   /></svg
-                ><span>Tesla &amp; Apple — Redesign</span>
+                ><span>Tesla — Redesign</span>
               </div>
             </div>
           </div>
@@ -837,13 +873,14 @@
         {
           label: `Projet 01 / ${TOTAL}`,
           name: "Dryvea",
-          category: "Code",
+          category: "Dev",
           catClass: "cat-code",
           type: "Site Web · Projet Fil Rouge",
           desc: "Plateforme de location de voitures sans permis P2P avec gestion des annonces, réservations et paiements en ligne.",
           year: "2025-ACTUEL",
-          href: "https://github.com/martinfaure",
+          href: null,
           figmaHref: null,
+          comingSoon: true,
         },
         {
           label: `Projet 02 / ${TOTAL}`,
@@ -870,12 +907,12 @@
         {
           label: `Projet 04 / ${TOTAL}`,
           name: "TDR",
-          category: "Code",
+          category: "Dev",
           catClass: "cat-code",
           type: "Site Web · Market Analyst",
           desc: "Conception d'une interface d'analyse de marché avec dashboards, visualisations de données et rapports d'insights.",
           year: "2026-ACTUEL",
-          href: "https://github.com/martinfaure",
+          href: "https://github.com/martinfaure/tdr2",
           figmaHref: null,
         },
         {
@@ -885,13 +922,14 @@
           catClass: "cat-design",
           type: "Design · Intranet Scolaire",
           desc: "Conception d'un intranet scolaire moderne pour la gestion des cours, des élèves et de la communication interne.",
-          year: "2025",
-          href: "https://github.com/martinfaure",
-          figmaHref: "https://figma.com",
+          year: "2025-ACTUEL",
+          href: null,
+          figmaHref: null,
+          comingSoon: true,
         },
         {
           label: `Projet 06 / ${TOTAL}`,
-          name: "Tesla & Apple",
+          name: "Tesla Redesign",
           category: "Design",
           catClass: "cat-design",
           type: "Design · Redesign de Sites Web",
@@ -915,8 +953,8 @@
       const mYear = document.getElementById("mYear");
       const mBtn = document.getElementById("mBtn");
       const mBtnFigma = document.getElementById("mBtnFigma");
+      const mBadgeComingSoon = document.getElementById("mBadgeComingSoon");
 
-      const FIGMA_PATH = null;
       const FIGMA_SVG = `<svg viewBox="0 0 38 57" style="width:11px;height:16px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
         <path d="M19 28.5A9.5 9.5 0 0 1 28.5 19 9.5 9.5 0 0 1 38 28.5 9.5 9.5 0 0 1 28.5 38 9.5 9.5 0 0 1 19 28.5z" fill="#1ABCFE"/>
         <path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5A9.5 9.5 0 0 1 9.5 57 9.5 9.5 0 0 1 0 47.5z" fill="#0ACF83"/>
@@ -924,6 +962,9 @@
         <path d="M19 0h9.5A9.5 9.5 0 0 1 38 9.5 9.5 9.5 0 0 1 28.5 19H19V0z" fill="#F24E1E"/>
         <path d="M0 28.5A9.5 9.5 0 0 1 9.5 19H19v19H9.5A9.5 9.5 0 0 1 0 28.5z" fill="#A259FF"/>
       </svg>`;
+
+      const GH_PATH =
+        "M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12";
 
       const drumLabels = [
         "",
@@ -955,9 +996,6 @@
         });
       }
 
-      const GH_PATH =
-        "M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12";
-
       let current = -1;
 
       function updateMeta(idx) {
@@ -979,17 +1017,25 @@
           mType.textContent = p.type;
           if (mDesc) mDesc.textContent = p.desc;
           mYear.textContent = p.year;
-          if (!p.figmaHref) {
+
+          if (p.comingSoon) {
+            mBtn.style.display = "none";
+            mBtnFigma.style.display = "none";
+            mBadgeComingSoon.style.display = "inline-flex";
+          } else if (!p.figmaHref) {
             mBtn.style.display = "inline-flex";
             mBtn.href = p.href;
             mBtn.innerHTML = `<svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:#0e0e0e;flex-shrink:0"><path d="${GH_PATH}"/></svg>GitHub ↗`;
             mBtnFigma.style.display = "none";
+            mBadgeComingSoon.style.display = "none";
           } else {
             mBtn.style.display = "none";
             mBtnFigma.style.display = "inline-flex";
             mBtnFigma.href = p.figmaHref;
             mBtnFigma.innerHTML = `${FIGMA_SVG}Figma ↗`;
+            mBadgeComingSoon.style.display = "none";
           }
+
           metaEls.forEach((el) => {
             if (!el) return;
             el.style.transform = `translateY(${8 * dir}px)`;
