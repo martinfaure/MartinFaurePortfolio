@@ -619,18 +619,17 @@
       <div class="clock-wrap"><div class="clock-drum" id="drum"></div></div>
       <div class="panel-meta">
         <div class="meta-category cat-code" id="mCategory">Code</div>
-        <div class="meta-label" id="mLabel">Projet 01 / 07</div>
+        <div class="meta-label" id="mLabel">Projet 01 / 06</div>
         <div class="meta-name-wrap">
-          <span class="meta-name" id="mName">Chef AI</span>
+          <span class="meta-name" id="mName">Dryvea</span>
         </div>
-        <div class="meta-type" id="mType">
-          Application Mobile · React Native
-        </div>
+        <div class="meta-type" id="mType">Site Web · Projet Fil Rouge</div>
         <div class="meta-desc" id="mDesc">
-          Une application mobile pour découvrir des recettes personnalisées.
+          Plateforme de location de voitures sans permis P2P avec gestion des
+          annonces, réservations et paiements en ligne.
         </div>
         <div class="meta-actions">
-          <span class="meta-year" id="mYear">2025</span>
+          <span class="meta-year" id="mYear">2025-ACTUEL</span>
           <a
             href="#"
             class="btn-gh"
@@ -730,7 +729,7 @@
         </div>
       </div>
 
-      <!-- 04 TDR Market Analyst (Design) -->
+      <!-- 04 TDR Market Analyst (Code) -->
       <div class="slide" id="s3">
         <div class="mockup-container">
           <div class="browser-mockup">
@@ -765,43 +764,8 @@
         </div>
       </div>
 
-      <!-- 05 Chef AI Design (Design) -->
+      <!-- 05 Eden School Intranet (Design) -->
       <div class="slide" id="s4">
-        <div class="mockup-container">
-          <div class="browser-mockup">
-            <div class="browser-header">
-              <div class="browser-dot"></div>
-              <div class="browser-dot"></div>
-              <div class="browser-dot"></div>
-            </div>
-            <div class="browser-content">
-              <img
-                class="project-img"
-                src="./assets/chefai-design.png"
-                alt="Chef AI Design"
-                onerror="
-                  this.style.display = 'none';
-                  this.nextElementSibling.style.display = 'flex';
-                "
-              />
-              <div class="project-placeholder" style="display: none">
-                <svg viewBox="0 0 24 24">
-                  <path
-                    d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
-                  /></svg
-                ><span>Chef AI — Design</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="scroll-hint">
-          <span>Scroll</span>
-          <div class="scroll-line"></div>
-        </div>
-      </div>
-
-      <!-- 06 Eden School Intranet (Design) -->
-      <div class="slide" id="s5">
         <div class="mockup-container">
           <div class="browser-mockup">
             <div class="browser-header">
@@ -835,8 +799,8 @@
         </div>
       </div>
 
-      <!-- 07 Tesla & Apple Redesign (Design) -->
-      <div class="slide" id="s6">
+      <!-- 06 Tesla & Apple Redesign (Design) -->
+      <div class="slide" id="s5">
         <div class="mockup-container">
           <div class="browser-mockup">
             <div class="browser-header">
@@ -868,7 +832,7 @@
     </div>
 
     <script>
-      const TOTAL = 7;
+      const TOTAL = 6;
       const PROJECTS = [
         {
           label: `Projet 01 / ${TOTAL}`,
@@ -877,7 +841,7 @@
           catClass: "cat-code",
           type: "Site Web · Projet Fil Rouge",
           desc: "Plateforme de location de voitures sans permis P2P avec gestion des annonces, réservations et paiements en ligne.",
-          year: "2026",
+          year: "2025-ACTUEL",
           href: "https://github.com/martinfaure",
           figmaHref: null,
         },
@@ -899,7 +863,7 @@
           catClass: "cat-design",
           type: "Design · Identité Visuelle",
           desc: "Création d'une identité visuelle complète avec logo, charte graphique et supports de communication.",
-          year: "2024",
+          year: "2025",
           href: "https://github.com/martinfaure",
           figmaHref: "https://figma.com",
         },
@@ -910,23 +874,12 @@
           catClass: "cat-code",
           type: "Site Web · Market Analyst",
           desc: "Conception d'une interface d'analyse de marché avec dashboards, visualisations de données et rapports d'insights.",
-          year: "2025",
+          year: "2026-ACTUEL",
           href: "https://github.com/martinfaure",
           figmaHref: null,
         },
         {
           label: `Projet 05 / ${TOTAL}`,
-          name: "Chef AI",
-          category: "Design",
-          catClass: "cat-design",
-          type: "Design · UI/UX Mobile",
-          desc: "Design complet de l'application Chef AI — parcours utilisateur, composants et système de design.",
-          year: "2025",
-          href: "https://github.com/martinfaure",
-          figmaHref: "https://figma.com",
-        },
-        {
-          label: `Projet 06 / ${TOTAL}`,
           name: "Eden School",
           category: "Design",
           catClass: "cat-design",
@@ -937,7 +890,7 @@
           figmaHref: "https://figma.com",
         },
         {
-          label: `Projet 07 / ${TOTAL}`,
+          label: `Projet 06 / ${TOTAL}`,
           name: "Tesla & Apple",
           category: "Design",
           catClass: "cat-design",
@@ -963,7 +916,7 @@
       const mBtn = document.getElementById("mBtn");
       const mBtnFigma = document.getElementById("mBtnFigma");
 
-      const FIGMA_PATH = null; // replaced by full SVG below
+      const FIGMA_PATH = null;
       const FIGMA_SVG = `<svg viewBox="0 0 38 57" style="width:11px;height:16px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
         <path d="M19 28.5A9.5 9.5 0 0 1 28.5 19 9.5 9.5 0 0 1 38 28.5 9.5 9.5 0 0 1 28.5 38 9.5 9.5 0 0 1 19 28.5z" fill="#1ABCFE"/>
         <path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5A9.5 9.5 0 0 1 9.5 57 9.5 9.5 0 0 1 0 47.5z" fill="#0ACF83"/>
@@ -1026,7 +979,6 @@
           mType.textContent = p.type;
           if (mDesc) mDesc.textContent = p.desc;
           mYear.textContent = p.year;
-          // GitHub button: only for Code projects
           if (!p.figmaHref) {
             mBtn.style.display = "inline-flex";
             mBtn.href = p.href;

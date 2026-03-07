@@ -472,6 +472,30 @@
         color: var(--light);
       }
 
+      /* Badge catégorie sur les items */
+      .project-badge {
+        display: inline-flex;
+        align-items: center;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 2px 8px;
+        border-radius: 999px;
+        margin-top: 5px;
+        width: fit-content;
+      }
+      .project-badge.cat-code {
+        background: rgba(160, 210, 255, 0.1);
+        color: rgba(160, 210, 255, 0.85);
+        border: 1px solid rgba(160, 210, 255, 0.18);
+      }
+      .project-badge.cat-design {
+        background: rgba(240, 237, 230, 0.07);
+        color: rgba(240, 237, 230, 0.5);
+        border: 1px solid rgba(240, 237, 230, 0.13);
+      }
+
       /* ── À PROPOS ── */
       .about-strip {
         padding: 80px 28px;
@@ -648,11 +672,7 @@
         transform: none;
       }
 
-      /* ══════════════════════════════
-         RESPONSIVE
-      ══════════════════════════════ */
-
-      /* Tablette */
+      /* ══ RESPONSIVE ══ */
       @media (max-width: 860px) {
         .about-strip {
           grid-template-columns: 1fr;
@@ -661,7 +681,6 @@
         }
       }
 
-      /* Mobile */
       @media (max-width: 600px) {
         nav {
           padding: 14px 18px;
@@ -669,51 +688,42 @@
         .nav-links {
           display: none;
         }
-
         .hero {
           padding: 88px 20px 72px;
           min-height: 100svh;
         }
-
         .hero-bg-num {
           display: none;
         }
-
         .hero-eyebrow {
           font-size: 10px;
         }
-
         .hero-name {
           font-size: clamp(64px, 18vw, 110px);
         }
-
         .hero-bottom {
           flex-direction: column;
           align-items: flex-start;
           gap: 24px;
           margin-top: 32px;
         }
-
         .hero-desc {
           font-size: 14px;
           max-width: 100%;
           min-width: 0;
         }
-
         .hero-cta {
           flex-direction: row;
           flex-wrap: wrap;
           gap: 10px;
           width: 100%;
         }
-
         .btn-primary,
         .btn-ghost {
           font-size: 11px;
           padding: 10px 20px;
           flex: 0 0 auto;
         }
-
         .avail-badge {
           margin-top: 20px;
           padding: 8px 14px;
@@ -725,18 +735,15 @@
         .avail-date {
           font-size: 13px;
         }
-
         .scroll-hint {
           bottom: 20px;
         }
-
         .section {
           padding: 56px 20px;
         }
         .section-header {
           margin-bottom: 36px;
         }
-
         .project-item {
           grid-template-columns: 36px 1fr auto;
           gap: 14px;
@@ -751,7 +758,6 @@
         .project-tags {
           display: none;
         }
-
         .about-strip {
           padding: 56px 20px;
           gap: 40px;
@@ -760,11 +766,9 @@
           font-size: 44px;
           min-width: 68px;
         }
-
         .divider {
           margin: 0 20px;
         }
-
         footer {
           padding: 36px 20px 28px;
           flex-direction: column;
@@ -777,7 +781,6 @@
         }
       }
 
-      /* Très petit mobile */
       @media (max-width: 380px) {
         .hero-name {
           font-size: 58px;
@@ -817,7 +820,7 @@
             Apprenti développeur à Eden School, je maîtrise la création de sites
             web de A à Z. Ma particularité ? Une forte passion pour le design
             que je cultive en autodidacte pour donner une identité visuelle
-            unique à chaque projet .
+            unique à chaque projet.
           </p>
           <div class="hero-cta">
             <a href="./projets.html" class="btn-primary">Voir mes projets</a>
@@ -843,9 +846,13 @@
         <span class="marquee-item">JavaScript</span
         ><span class="marquee-sep">·</span> <span class="marquee-item">PHP</span
         ><span class="marquee-sep">·</span>
+        <span class="marquee-item">Laravel</span
+        ><span class="marquee-sep">·</span>
         <span class="marquee-item">Node.js</span
         ><span class="marquee-sep">·</span>
         <span class="marquee-item">TailwindCSS</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">WordPress</span
         ><span class="marquee-sep">·</span>
         <span class="marquee-item">MySQL</span
         ><span class="marquee-sep">·</span>
@@ -858,14 +865,19 @@
         ><span class="marquee-sep">·</span>
         <span class="marquee-item">Animation</span
         ><span class="marquee-sep">·</span>
+        <!-- duplicate for infinite loop -->
         <span class="marquee-item">HTML</span><span class="marquee-sep">·</span>
         <span class="marquee-item">CSS</span><span class="marquee-sep">·</span>
         <span class="marquee-item">JavaScript</span
         ><span class="marquee-sep">·</span> <span class="marquee-item">PHP</span
         ><span class="marquee-sep">·</span>
+        <span class="marquee-item">Laravel</span
+        ><span class="marquee-sep">·</span>
         <span class="marquee-item">Node.js</span
         ><span class="marquee-sep">·</span>
         <span class="marquee-item">TailwindCSS</span
+        ><span class="marquee-sep">·</span>
+        <span class="marquee-item">WordPress</span
         ><span class="marquee-sep">·</span>
         <span class="marquee-item">MySQL</span
         ><span class="marquee-sep">·</span>
@@ -887,8 +899,9 @@
         <a href="./projets.html" class="section-link">Tous les projets ↗</a>
       </div>
       <div class="project-list">
+        <!-- 001 Dryvea — Code -->
         <a
-          href="./projets.html"
+          href="./projets.html#s0"
           class="project-item reveal"
           style="transition-delay: 0.05s"
         >
@@ -898,56 +911,63 @@
             <div class="project-tags">
               <span class="project-tag">HTML / CSS</span>
               <span class="project-tag">JavaScript</span>
-              <span class="project-tag">Design</span>
+              <span class="project-tag">Projet Fil Rouge</span>
             </div>
+            <span class="project-badge cat-code">Code</span>
           </div>
           <span class="project-arrow">↗</span>
         </a>
+
+        <!-- 002 Chef AI — Design -->
         <a
-          href="./projets.html"
+          href="./projets.html#s1"
           class="project-item reveal"
           style="transition-delay: 0.1s"
         >
           <span class="project-num">002</span>
           <div>
-            <div class="project-name">APPLICATION E-COMMERCE</div>
+            <div class="project-name">Chef AI</div>
             <div class="project-tags">
-              <span class="project-tag">PHP</span>
-              <span class="project-tag">MySQL</span>
-              <span class="project-tag">Node.js</span>
+              <span class="project-tag">UI Mobile</span>
+              <span class="project-tag">Figma</span>
             </div>
+            <span class="project-badge cat-design">Design</span>
           </div>
           <span class="project-arrow">↗</span>
         </a>
+
+        <!-- 003 TDR Market Analyst — Code -->
         <a
-          href="./projets.html"
+          href="./projets.html#s3"
           class="project-item reveal"
           style="transition-delay: 0.15s"
         >
           <span class="project-num">003</span>
           <div>
-            <div class="project-name">TABLEAU DE BORD</div>
+            <div class="project-name">TDR — Market Analyst</div>
             <div class="project-tags">
-              <span class="project-tag">TailwindCSS</span>
-              <span class="project-tag">JavaScript</span>
-              <span class="project-tag">Design UI</span>
+              <span class="project-tag">Site Web</span>
+              <span class="project-tag">Dashboard</span>
             </div>
+            <span class="project-badge cat-code">Code</span>
           </div>
           <span class="project-arrow">↗</span>
         </a>
+
+        <!-- 004 Eden School — Design -->
         <a
-          href="./design.html"
+          href="./projets.html#s5"
           class="project-item reveal"
           style="transition-delay: 0.2s"
         >
           <span class="project-num">004</span>
           <div>
-            <div class="project-name">IDENTITÉ VISUELLE</div>
+            <div class="project-name">Eden School</div>
             <div class="project-tags">
               <span class="project-tag">Figma</span>
-              <span class="project-tag">Branding</span>
-              <span class="project-tag">Typographie</span>
+              <span class="project-tag">Intranet Scolaire</span>
             </div>
+            <span class="project-badge cat-design">Design</span>
           </div>
           <span class="project-arrow">↗</span>
         </a>
@@ -961,9 +981,10 @@
         <div class="about-label">À propos</div>
         <h2 class="about-heading">CODE &<br />CRÉATIVITÉ</h2>
         <p class="about-text">
-          Développeur web et designer basé en France, je mêle rigueur technique
-          et sensibilité visuelle pour construire des interfaces qui marquent.
-          Disponible pour des projets freelance et des collaborations créatives.
+          Je code depuis que j'ai réalisé qu'un bloc-notes et un navigateur
+          suffisaient à créer quelque chose de réel. Depuis, j'ai construit des
+          interfaces, intégré des CMS, et appris que le meilleur design est
+          celui qu'on ne remarque pas — jusqu'à ce qu'il soit absent.
         </p>
         <div style="margin-top: 28px">
           <a href="./apropos.html" class="btn-ghost">En savoir plus</a>
@@ -989,7 +1010,7 @@
           </div>
         </div>
         <div class="about-stat">
-          <div class="about-stat-num">8</div>
+          <div class="about-stat-num">10</div>
           <div class="about-stat-info">
             <div class="about-stat-title">Technologies maîtrisées</div>
             <div class="about-stat-desc">
@@ -1001,6 +1022,7 @@
     </section>
 
     <div class="divider"></div>
+
     <footer>
       <div class="footer-name">MARTIN FAURE</div>
       <div class="footer-links">
