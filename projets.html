@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <script src="smooth-scroll.js"></script>
-
     <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
@@ -20,14 +19,12 @@
         padding: 0;
         box-sizing: border-box;
       }
-
       :root {
         --bg: #0e0e0e;
         --light: #f0ede6;
-        --accent: #e05a00;
+        --accent: rgba(160, 210, 255, 0.9);
         --col: 340px;
       }
-
       html,
       body {
         height: 100%;
@@ -36,8 +33,6 @@
         font-family: "Inter", sans-serif;
         overflow: hidden;
       }
-
-      /* NAV */
       nav {
         display: flex;
         align-items: center;
@@ -107,8 +102,29 @@
         opacity: 1;
         font-weight: 700;
       }
-
-      /* PROGRESS BAR */
+      .meta-category {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        padding: 4px 10px;
+        border-radius: 999px;
+        margin-bottom: 10px;
+        width: fit-content;
+      }
+      .meta-category.cat-code {
+        background: rgba(160, 210, 255, 0.1);
+        color: rgba(160, 210, 255, 0.9);
+        border: 1px solid rgba(160, 210, 255, 0.2);
+      }
+      .meta-category.cat-design {
+        background: rgba(240, 237, 230, 0.08);
+        color: rgba(240, 237, 230, 0.6);
+        border: 1px solid rgba(240, 237, 230, 0.15);
+      }
       .progress-bar {
         position: fixed;
         top: 0;
@@ -119,8 +135,6 @@
         width: 0%;
         transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
       }
-
-      /* ════ FIXED LEFT PANEL ════ */
       .panel-left {
         position: fixed;
         top: 0;
@@ -135,8 +149,6 @@
         border-right: 1px solid rgba(255, 255, 255, 0.06);
         background: var(--bg);
       }
-
-      /* ─── CLOCK WHEEL ─── */
       .clock-wrap {
         height: 240px;
         overflow: hidden;
@@ -182,8 +194,6 @@
       .clock-digit.is-near {
         color: rgba(255, 255, 255, 0.14);
       }
-
-      /* ─── META ─── */
       .panel-meta {
         display: flex;
         flex-direction: column;
@@ -227,7 +237,8 @@
       .meta-actions {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
+        flex-wrap: wrap;
       }
       .meta-year {
         font-size: 13px;
@@ -259,8 +270,33 @@
         fill: var(--bg);
         flex-shrink: 0;
       }
-
-      /* ════ SCROLLABLE RIGHT ════ */
+      .btn-figma {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: transparent;
+        color: var(--light);
+        padding: 9px 18px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        text-decoration: none;
+        border: 1.5px solid rgba(255, 255, 255, 0.2);
+        transition:
+          border-color 0.2s,
+          opacity 0.2s,
+          transform 0.2s;
+      }
+      .btn-figma:hover {
+        border-color: rgba(255, 255, 255, 0.5);
+        opacity: 0.9;
+        transform: scale(0.97);
+      }
+      .btn-figma svg {
+        width: 13px;
+        height: 13px;
+        flex-shrink: 0;
+      }
       .scroll-wrap {
         position: fixed;
         top: 0;
@@ -272,7 +308,6 @@
         scroll-behavior: smooth;
         background: var(--bg);
       }
-
       .slide {
         height: 100vh;
         scroll-snap-align: start;
@@ -284,8 +319,6 @@
         justify-content: center;
         padding: 80px 60px;
       }
-
-      /* ─── CONTAINER MOCKUP ─── */
       .mockup-container {
         position: relative;
         width: 100%;
@@ -304,8 +337,6 @@
         opacity: 1;
         transform: scale(1) translateY(0);
       }
-
-      /* Browser mockup */
       .browser-mockup {
         width: 100%;
         height: 100%;
@@ -316,7 +347,6 @@
           0 25px 80px rgba(0, 0, 0, 0.6),
           0 0 0 1px rgba(255, 255, 255, 0.08);
       }
-
       .browser-header {
         height: 40px;
         background: #252525;
@@ -326,7 +356,6 @@
         padding: 0 16px;
         gap: 8px;
       }
-
       .browser-dot {
         width: 12px;
         height: 12px;
@@ -342,7 +371,6 @@
       .browser-dot:nth-child(3) {
         background: #28ca42;
       }
-
       .browser-content {
         width: 100%;
         height: calc(100% - 40px);
@@ -354,8 +382,6 @@
         position: relative;
         overflow: hidden;
       }
-
-      /* Image haute qualité */
       .project-img {
         max-width: 100%;
         max-height: 100%;
@@ -366,15 +392,35 @@
         image-rendering: crisp-edges;
         filter: contrast(1.05) saturate(1.1);
       }
-
-      /* Glow effect */
+      .project-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        opacity: 0.2;
+      }
+      .project-placeholder svg {
+        width: 48px;
+        height: 48px;
+        fill: var(--light);
+      }
+      .project-placeholder span {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--light);
+      }
       .browser-mockup::before {
         content: "";
         position: absolute;
         inset: -2px;
         background: linear-gradient(
           135deg,
-          rgba(224, 90, 0, 0.3),
+          rgba(0, 116, 224, 0.3),
           transparent 40%,
           transparent 60%,
           rgba(240, 237, 230, 0.2)
@@ -387,8 +433,6 @@
       .slide.active .browser-mockup::before {
         opacity: 1;
       }
-
-      /* Scroll hint */
       .scroll-hint {
         position: absolute;
         bottom: 32px;
@@ -431,8 +475,6 @@
       .slide:last-child .scroll-hint {
         display: none;
       }
-
-      /* ══ RESPONSIVE ══ */
       @media (max-width: 1024px) {
         :root {
           --col: 280px;
@@ -441,7 +483,6 @@
           padding: 60px 40px;
         }
       }
-
       @media (max-width: 860px) {
         :root {
           --col: 240px;
@@ -457,7 +498,6 @@
           padding: 60px 30px;
         }
       }
-
       @media (max-width: 600px) {
         html,
         body {
@@ -469,7 +509,6 @@
         nav {
           padding: 14px 16px;
         }
-
         .panel-left {
           position: fixed;
           top: 0;
@@ -536,7 +575,9 @@
           padding: 7px 14px;
           font-size: 10px;
         }
-
+        .meta-category {
+          display: none;
+        }
         .scroll-wrap {
           left: 0;
           top: 140px;
@@ -559,7 +600,6 @@
   </head>
   <body>
     <div class="progress-bar" id="progressBar"></div>
-
     <nav>
       <div class="nav-left">Développeur Web &amp; Designer</div>
       <div class="nav-right">
@@ -575,13 +615,11 @@
       </div>
     </nav>
 
-    <!-- ══ FIXED LEFT ══ -->
     <div class="panel-left">
-      <div class="clock-wrap">
-        <div class="clock-drum" id="drum"></div>
-      </div>
+      <div class="clock-wrap"><div class="clock-drum" id="drum"></div></div>
       <div class="panel-meta">
-        <div class="meta-label" id="mLabel">Projet 01 / 03</div>
+        <div class="meta-category cat-code" id="mCategory">Code</div>
+        <div class="meta-label" id="mLabel">Projet 01 / 07</div>
         <div class="meta-name-wrap">
           <span class="meta-name" id="mName">Chef AI</span>
         </div>
@@ -593,22 +631,48 @@
         </div>
         <div class="meta-actions">
           <span class="meta-year" id="mYear">2025</span>
-          <a href="#" class="btn-gh" id="mBtn">
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
-              />
-            </svg>
-            GitHub ↗
-          </a>
+          <a
+            href="#"
+            class="btn-gh"
+            id="mBtn"
+            target="_blank"
+            rel="noopener"
+          ></a>
+          <a
+            href="#"
+            class="btn-figma"
+            id="mBtnFigma"
+            target="_blank"
+            rel="noopener"
+            style="display: none"
+          ></a>
         </div>
       </div>
     </div>
 
-    <!-- ══ SCROLLABLE RIGHT ══ -->
     <div class="scroll-wrap" id="scrollWrap">
-      <!-- PROJET 01 -->
+      <!-- 01 Dryvea (Code) -->
       <div class="slide" id="s0">
+        <div class="mockup-container">
+          <div class="browser-mockup">
+            <div class="browser-header">
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+            </div>
+            <div class="browser-content">
+              <img class="project-img" src="./assets/dryvea.png" alt="Dryvea" />
+            </div>
+          </div>
+        </div>
+        <div class="scroll-hint">
+          <span>Scroll</span>
+          <div class="scroll-line"></div>
+        </div>
+      </div>
+
+      <!-- 02 Chef AI (Design) -->
+      <div class="slide" id="s1">
         <div class="mockup-container">
           <div class="browser-mockup">
             <div class="browser-header">
@@ -631,27 +695,7 @@
         </div>
       </div>
 
-      <!-- PROJET 02 -->
-      <div class="slide" id="s1">
-        <div class="mockup-container">
-          <div class="browser-mockup">
-            <div class="browser-header">
-              <div class="browser-dot"></div>
-              <div class="browser-dot"></div>
-              <div class="browser-dot"></div>
-            </div>
-            <div class="browser-content">
-              <img class="project-img" src="./assets/dryvea.png" alt="Dryvea" />
-            </div>
-          </div>
-        </div>
-        <div class="scroll-hint">
-          <span>Scroll</span>
-          <div class="scroll-line"></div>
-        </div>
-      </div>
-
-      <!-- PROJET 03 -->
+      <!-- 03 Up2Win (Design) -->
       <div class="slide" id="s2">
         <div class="mockup-container">
           <div class="browser-mockup">
@@ -665,7 +709,158 @@
                 class="project-img"
                 src="./assets/uptwowin.png"
                 alt="Up2Win"
+                onerror="
+                  this.style.display = 'none';
+                  this.nextElementSibling.style.display = 'flex';
+                "
               />
+              <div class="project-placeholder" style="display: none">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                  /></svg
+                ><span>Up2Win</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-hint">
+          <span>Scroll</span>
+          <div class="scroll-line"></div>
+        </div>
+      </div>
+
+      <!-- 04 TDR Market Analyst (Design) -->
+      <div class="slide" id="s3">
+        <div class="mockup-container">
+          <div class="browser-mockup">
+            <div class="browser-header">
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+            </div>
+            <div class="browser-content">
+              <img
+                class="project-img"
+                src="./assets/tdr.png"
+                alt="TDR Market Analyst"
+                onerror="
+                  this.style.display = 'none';
+                  this.nextElementSibling.style.display = 'flex';
+                "
+              />
+              <div class="project-placeholder" style="display: none">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                  /></svg
+                ><span>TDR — Market Analyst</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-hint">
+          <span>Scroll</span>
+          <div class="scroll-line"></div>
+        </div>
+      </div>
+
+      <!-- 05 Chef AI Design (Design) -->
+      <div class="slide" id="s4">
+        <div class="mockup-container">
+          <div class="browser-mockup">
+            <div class="browser-header">
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+            </div>
+            <div class="browser-content">
+              <img
+                class="project-img"
+                src="./assets/chefai-design.png"
+                alt="Chef AI Design"
+                onerror="
+                  this.style.display = 'none';
+                  this.nextElementSibling.style.display = 'flex';
+                "
+              />
+              <div class="project-placeholder" style="display: none">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                  /></svg
+                ><span>Chef AI — Design</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-hint">
+          <span>Scroll</span>
+          <div class="scroll-line"></div>
+        </div>
+      </div>
+
+      <!-- 06 Eden School Intranet (Design) -->
+      <div class="slide" id="s5">
+        <div class="mockup-container">
+          <div class="browser-mockup">
+            <div class="browser-header">
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+            </div>
+            <div class="browser-content">
+              <img
+                class="project-img"
+                src="./assets/eden-school.png"
+                alt="Eden School"
+                onerror="
+                  this.style.display = 'none';
+                  this.nextElementSibling.style.display = 'flex';
+                "
+              />
+              <div class="project-placeholder" style="display: none">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                  /></svg
+                ><span>Eden School — Intranet</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-hint">
+          <span>Scroll</span>
+          <div class="scroll-line"></div>
+        </div>
+      </div>
+
+      <!-- 07 Tesla & Apple Redesign (Design) -->
+      <div class="slide" id="s6">
+        <div class="mockup-container">
+          <div class="browser-mockup">
+            <div class="browser-header">
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+              <div class="browser-dot"></div>
+            </div>
+            <div class="browser-content">
+              <img
+                class="project-img"
+                src="./assets/tesla-apple-redesign.png"
+                alt="Tesla Apple Redesign"
+                onerror="
+                  this.style.display = 'none';
+                  this.nextElementSibling.style.display = 'flex';
+                "
+              />
+              <div class="project-placeholder" style="display: none">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                  /></svg
+                ><span>Tesla &amp; Apple — Redesign</span>
+              </div>
             </div>
           </div>
         </div>
@@ -673,36 +868,84 @@
     </div>
 
     <script>
+      const TOTAL = 7;
       const PROJECTS = [
         {
-          label: "Projet 01 / 03",
-          name: "Chef AI",
-          type: "Application Mobile · React Native",
-          desc: "Une application mobile pour découvrir des recettes personnalisées basées sur vos préférences alimentaires.",
-          year: "2025",
-          href: "https://github.com/martinfaure",
-          btn: "GitHub ↗",
-          svg: true,
-        },
-        {
-          label: "Projet 02 / 03",
+          label: `Projet 01 / ${TOTAL}`,
           name: "Dryvea",
+          category: "Code",
+          catClass: "cat-code",
           type: "Site Web · Projet Fil Rouge",
-          desc: "Plateforme e-commerce complète avec système de gestion de stock et interface d'administration.",
+          desc: "Plateforme de location de voitures sans permis P2P avec gestion des annonces, réservations et paiements en ligne.",
           year: "2026",
           href: "https://github.com/martinfaure",
-          btn: "GitHub ↗",
-          svg: true,
+          figmaHref: null,
         },
         {
-          label: "Projet 03 / 03",
+          label: `Projet 02 / ${TOTAL}`,
+          name: "Chef AI",
+          category: "Design",
+          catClass: "cat-design",
+          type: "Design · UI Mobile",
+          desc: "Un design d'application mobile pour découvrir des recettes personnalisées, avec parcours utilisateur et composants UI.",
+          year: "2025",
+          href: "https://github.com/martinfaure",
+          figmaHref: "https://figma.com",
+        },
+        {
+          label: `Projet 03 / ${TOTAL}`,
           name: "Up2Win",
+          category: "Design",
+          catClass: "cat-design",
           type: "Design · Identité Visuelle",
           desc: "Création d'une identité visuelle complète avec logo, charte graphique et supports de communication.",
           year: "2024",
-          href: "./design.html",
-          btn: "Voir →",
-          svg: false,
+          href: "https://github.com/martinfaure",
+          figmaHref: "https://figma.com",
+        },
+        {
+          label: `Projet 04 / ${TOTAL}`,
+          name: "TDR",
+          category: "Code",
+          catClass: "cat-code",
+          type: "Site Web · Market Analyst",
+          desc: "Conception d'une interface d'analyse de marché avec dashboards, visualisations de données et rapports d'insights.",
+          year: "2025",
+          href: "https://github.com/martinfaure",
+          figmaHref: null,
+        },
+        {
+          label: `Projet 05 / ${TOTAL}`,
+          name: "Chef AI",
+          category: "Design",
+          catClass: "cat-design",
+          type: "Design · UI/UX Mobile",
+          desc: "Design complet de l'application Chef AI — parcours utilisateur, composants et système de design.",
+          year: "2025",
+          href: "https://github.com/martinfaure",
+          figmaHref: "https://figma.com",
+        },
+        {
+          label: `Projet 06 / ${TOTAL}`,
+          name: "Eden School",
+          category: "Design",
+          catClass: "cat-design",
+          type: "Design · Intranet Scolaire",
+          desc: "Conception d'un intranet scolaire moderne pour la gestion des cours, des élèves et de la communication interne.",
+          year: "2025",
+          href: "https://github.com/martinfaure",
+          figmaHref: "https://figma.com",
+        },
+        {
+          label: `Projet 07 / ${TOTAL}`,
+          name: "Tesla & Apple",
+          category: "Design",
+          catClass: "cat-design",
+          type: "Design · Redesign de Sites Web",
+          desc: "Exercice de redesign des sites Tesla et Apple avec une approche éditoriale et des interactions repensées.",
+          year: "2024",
+          href: "https://github.com/martinfaure",
+          figmaHref: "https://figma.com",
         },
       ];
 
@@ -711,14 +954,31 @@
       const wrap = document.getElementById("scrollWrap");
       const slides = document.querySelectorAll(".slide");
       const progressBar = document.getElementById("progressBar");
+      const mCategory = document.getElementById("mCategory");
       const mLabel = document.getElementById("mLabel");
       const mName = document.getElementById("mName");
       const mType = document.getElementById("mType");
       const mDesc = document.getElementById("mDesc");
       const mYear = document.getElementById("mYear");
       const mBtn = document.getElementById("mBtn");
+      const mBtnFigma = document.getElementById("mBtnFigma");
 
-      const drumLabels = ["", "01", "02", "03", ""];
+      const FIGMA_PATH = null; // replaced by full SVG below
+      const FIGMA_SVG = `<svg viewBox="0 0 38 57" style="width:11px;height:16px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 28.5A9.5 9.5 0 0 1 28.5 19 9.5 9.5 0 0 1 38 28.5 9.5 9.5 0 0 1 28.5 38 9.5 9.5 0 0 1 19 28.5z" fill="#1ABCFE"/>
+        <path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5A9.5 9.5 0 0 1 9.5 57 9.5 9.5 0 0 1 0 47.5z" fill="#0ACF83"/>
+        <path d="M19 0v19H9.5A9.5 9.5 0 0 1 0 9.5 9.5 9.5 0 0 1 9.5 0H19z" fill="#FF7262"/>
+        <path d="M19 0h9.5A9.5 9.5 0 0 1 38 9.5 9.5 9.5 0 0 1 28.5 19H19V0z" fill="#F24E1E"/>
+        <path d="M0 28.5A9.5 9.5 0 0 1 9.5 19H19v19H9.5A9.5 9.5 0 0 1 0 28.5z" fill="#A259FF"/>
+      </svg>`;
+
+      const drumLabels = [
+        "",
+        ...Array.from({ length: TOTAL }, (_, i) =>
+          String(i + 1).padStart(2, "0"),
+        ),
+        "",
+      ];
       drumLabels.forEach((txt) => {
         const el = document.createElement("div");
         el.className = "clock-digit";
@@ -751,26 +1011,32 @@
         if (idx === current) return;
         const dir = idx > current ? 1 : -1;
         const p = PROJECTS[idx];
-        const metaEls = [mLabel, mName.parentElement, mType, mDesc];
-
+        const metaEls = [mCategory, mLabel, mName.parentElement, mType, mDesc];
         metaEls.forEach((el, i) => {
           if (!el) return;
           el.style.transition = `opacity .2s ${i * 25}ms, transform .2s ${i * 25}ms`;
           el.style.opacity = "0";
           el.style.transform = `translateY(${-8 * dir}px)`;
         });
-
         setTimeout(() => {
+          mCategory.textContent = p.category;
+          mCategory.className = `meta-category ${p.catClass}`;
           mLabel.textContent = p.label;
           mName.textContent = p.name;
           mType.textContent = p.type;
           if (mDesc) mDesc.textContent = p.desc;
           mYear.textContent = p.year;
-          mBtn.href = p.href;
-          if (p.svg) {
-            mBtn.innerHTML = `<svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:#0e0e0e;flex-shrink:0"><path d="${GH_PATH}"/></svg>${p.btn}`;
+          // GitHub button: only for Code projects
+          if (!p.figmaHref) {
+            mBtn.style.display = "inline-flex";
+            mBtn.href = p.href;
+            mBtn.innerHTML = `<svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:#0e0e0e;flex-shrink:0"><path d="${GH_PATH}"/></svg>GitHub ↗`;
+            mBtnFigma.style.display = "none";
           } else {
-            mBtn.textContent = p.btn;
+            mBtn.style.display = "none";
+            mBtnFigma.style.display = "inline-flex";
+            mBtnFigma.href = p.figmaHref;
+            mBtnFigma.innerHTML = `${FIGMA_SVG}Figma ↗`;
           }
           metaEls.forEach((el) => {
             if (!el) return;
