@@ -125,6 +125,11 @@
           transform: none;
         }
       }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
 
       .section-title {
         font-family: "Bebas Neue", sans-serif;
@@ -334,6 +339,22 @@
         opacity: 0.85;
         transform: scale(0.98);
       }
+      .btn-submit:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .btn-spinner {
+        display: none;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(10, 10, 10, 0.25);
+        border-top-color: #0a0a0a;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        flex-shrink: 0;
+      }
 
       /* ── SIDE PANEL ── */
       .contact-side {
@@ -354,7 +375,6 @@
         margin-bottom: 24px;
       }
 
-      /* Social links — disposition horizontale */
       .social-list {
         display: flex;
         flex-direction: row;
@@ -431,7 +451,6 @@
         color: var(--light);
       }
 
-      /* Email direct */
       .side-email {
         margin-top: 28px;
         padding-top: 24px;
@@ -712,8 +731,9 @@
             ></textarea>
           </div>
           <div class="hint" id="hint4"></div>
-          <button class="btn-submit" onclick="submitForm()">
-            Envoyer le message ↗
+          <button class="btn-submit" id="btnSubmit" onclick="submitForm()">
+            <span id="btnLabel">Envoyer le message ↗</span>
+            <span class="btn-spinner" id="btnSpinner"></span>
           </button>
         </div>
       </div>
@@ -757,22 +777,17 @@
                 />
               </svg>
             </div>
-            <div class="social-info">
-              <div class="social-name">GitHub</div>
-            </div>
+            <div class="social-info"><div class="social-name">GitHub</div></div>
             <span class="social-arrow">↗</span>
           </a>
-
-         
+        </div>
 
         <!-- Email direct -->
         <div class="side-email">
           <span class="side-email-label">Email direct</span>
-          <a
-            href="mailto:martinfaure2708@gmail.com
-"
-            >martinfaure2708@gmail.com
-          </a>
+          <a href="mailto:martinfaure2708@gmail.com"
+            >martinfaure2708@gmail.com</a
+          >
         </div>
       </div>
     </div>
@@ -890,6 +905,14 @@
         }
         clearHint("hint4");
 
+        // ── État loading ──
+        const btn = document.getElementById("btnSubmit");
+        const label = document.getElementById("btnLabel");
+        const spinner = document.getElementById("btnSpinner");
+        btn.disabled = true;
+        label.textContent = "Envoi en cours…";
+        spinner.style.display = "block";
+
         const name = document.getElementById("inputNom").value.trim();
         const email = document.getElementById("inputEmail").value.trim();
         const entreprise = document
@@ -921,6 +944,7 @@
         }
         document.body.appendChild(form);
 
+        // ── Affichage confirmation après 200ms (avant submit réel) ──
         setTimeout(() => {
           const fa = document.getElementById("formArea");
           fa.style.animation = "stepOut 0.3s ease both";

@@ -6,480 +6,11 @@
     <title>Martin Faure - Blog</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <script src="smooth-scroll.js"></script>
-
     <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <style>
-      *,
-      *::before,
-      *::after {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      :root {
-        --bg: #0a0a0a;
-        --light: #f0ede6;
-        --muted: rgba(255, 255, 255, 0.38);
-        --border: rgba(255, 255, 255, 0.08);
-      }
-      body {
-        background: var(--bg);
-        color: var(--light);
-        font-family: "Inter", sans-serif;
-        overflow-x: hidden;
-        min-height: 100vh;
-      }
-      nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 20px 28px;
-        position: relative;
-        z-index: 10;
-      }
-      .nav-left {
-        font-size: 13px;
-        font-weight: 500;
-        color: var(--light);
-        opacity: 0.85;
-      }
-      .nav-right {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-      .nav-toggle {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        border: 1.5px solid rgba(255, 255, 255, 0.25);
-        background: rgba(255, 255, 255, 0.07);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 16px;
-        color: var(--light);
-        transition: background 0.2s;
-      }
-      .nav-toggle:hover {
-        background: rgba(255, 255, 255, 0.15);
-      }
-      .nav-links {
-        display: flex;
-        gap: 2px;
-        align-items: center;
-      }
-      .nav-links a {
-        text-decoration: none;
-        color: var(--light);
-        font-size: 14px;
-        font-weight: 500;
-        padding: 7px 14px;
-        border-radius: 999px;
-        opacity: 0.55;
-        transition: opacity 0.2s;
-      }
-      .nav-links a:hover {
-        opacity: 1;
-      }
-      .nav-links a.active {
-        background: var(--light);
-        color: var(--bg);
-        opacity: 1;
-        font-weight: 700;
-      }
-      .hero-title {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(80px, 13vw, 200px);
-        line-height: 0.88;
-        padding: 0 14px;
-        color: var(--light);
-        animation: fadeDown 0.7s ease both;
-      }
-      @keyframes fadeDown {
-        from {
-          opacity: 0;
-          transform: translateY(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(18px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      @keyframes panelIn {
-        from {
-          opacity: 0;
-          transform: translateY(14px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .content-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0;
-        padding: 60px 28px 80px;
-        align-items: start;
-        animation: fadeUp 0.8s 0.15s ease both;
-      }
-      .categories {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        position: sticky;
-        top: 40px;
-      }
-      .cat-item {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(52px, 7vw, 100px);
-        line-height: 1;
-        letter-spacing: 0.01em;
-        cursor: pointer;
-        color: rgba(255, 255, 255, 0.2);
-        transition: color 0.3s ease;
-        user-select: none;
-        position: relative;
-      }
-      .cat-item::before {
-        content: "";
-        position: absolute;
-        left: -20px;
-        top: 50%;
-        transform: translateY(-50%) scaleY(0);
-        width: 3px;
-        height: 60%;
-        background: var(--light);
-        border-radius: 2px;
-        transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-      }
-      .cat-item.active {
-        color: var(--light);
-      }
-      .cat-item.active::before {
-        transform: translateY(-50%) scaleY(1);
-      }
-      .cat-item:not(.active):hover {
-        color: rgba(255, 255, 255, 0.5);
-      }
-      .cat-count {
-        font-family: "Inter", sans-serif;
-        font-size: 12px;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        vertical-align: super;
-        color: rgba(255, 255, 255, 0.28);
-        margin-left: 5px;
-      }
-      .panels {
-        padding-top: 8px;
-        min-height: 400px;
-      }
-      .panel {
-        display: none;
-        flex-direction: column;
-        gap: 0;
-      }
-      .panel.active {
-        display: flex;
-        animation: panelIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-      }
-      .panel-subtitle {
-        font-size: 13px;
-        font-weight: 300;
-        color: rgba(255, 255, 255, 0.28);
-        letter-spacing: 0.02em;
-        margin-bottom: 36px;
-        border-left: 1.5px solid rgba(255, 255, 255, 0.12);
-        padding-left: 16px;
-      }
-      .article-row {
-        border-top: 1px solid var(--border);
-        padding: 28px 0;
-        display: grid;
-        grid-template-columns: 36px 1fr 20px;
-        gap: 0 18px;
-        align-items: start;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-      }
-      .article-row::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: var(--light);
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-      }
-      .article-row:hover::before {
-        transform: scaleX(1);
-      }
-      .article-row:last-child {
-        border-bottom: 1px solid var(--border);
-      }
-      .row-index {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 18px;
-        color: rgba(255, 255, 255, 0.15);
-        line-height: 1.4;
-        letter-spacing: 0.05em;
-        padding-top: 3px;
-        transition: color 0.25s;
-      }
-      .article-row:hover .row-index {
-        color: rgba(255, 255, 255, 0.4);
-      }
-      .row-content {
-        display: flex;
-        flex-direction: column;
-        gap: 9px;
-      }
-      .row-meta {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .row-tag {
-        font-size: 9px;
-        font-weight: 700;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.35);
-        background: rgba(255, 255, 255, 0.07);
-        padding: 2px 9px;
-        border-radius: 999px;
-      }
-      .row-tag.new-tag {
-        color: rgba(160, 210, 255, 0.9);
-        background: rgba(160, 210, 255, 0.1);
-        border: 1px solid rgba(160, 210, 255, 0.2);
-      }
-      .row-date {
-        font-size: 11px;
-        font-weight: 400;
-        color: rgba(255, 255, 255, 0.22);
-        letter-spacing: 0.04em;
-      }
-      .row-title {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(20px, 2.6vw, 34px);
-        line-height: 1.05;
-        color: var(--light);
-        letter-spacing: 0.02em;
-        transition: color 0.2s;
-      }
-      .article-row:hover .row-title {
-        color: rgba(255, 255, 255, 0.7);
-      }
-      .row-excerpt {
-        font-size: 13px;
-        font-weight: 300;
-        line-height: 1.65;
-        color: var(--muted);
-        max-width: 420px;
-      }
-      .row-read {
-        font-size: 10px;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.2);
-      }
-      .row-arrow {
-        font-size: 16px;
-        color: rgba(255, 255, 255, 0.18);
-        align-self: center;
-        transition:
-          transform 0.22s,
-          color 0.22s;
-      }
-      .article-row:hover .row-arrow {
-        transform: translate(3px, -3px);
-        color: var(--light);
-      }
-      .reader-overlay {
-        position: fixed;
-        inset: 0;
-        z-index: 500;
-        background: var(--bg);
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-        overflow-y: auto;
-      }
-      .reader-overlay.open {
-        opacity: 1;
-        pointer-events: all;
-      }
-      .reader-inner {
-        max-width: 680px;
-        margin: 0 auto;
-        padding: 56px 32px 100px;
-      }
-      .reader-back {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 12px;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.35);
-        cursor: pointer;
-        margin-bottom: 52px;
-        transition: color 0.2s;
-        background: none;
-        border: none;
-      }
-      .reader-back:hover {
-        color: var(--light);
-      }
-      .reader-eyebrow {
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.28);
-        margin-bottom: 16px;
-      }
-      .reader-title {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(40px, 7vw, 76px);
-        line-height: 0.95;
-        letter-spacing: 0.01em;
-        color: var(--light);
-        margin-bottom: 28px;
-      }
-      .reader-meta {
-        display: flex;
-        align-items: center;
-        font-size: 12px;
-        font-weight: 400;
-        color: rgba(255, 255, 255, 0.28);
-        letter-spacing: 0.05em;
-        padding-bottom: 32px;
-        border-bottom: 1px solid var(--border);
-        margin-bottom: 44px;
-        gap: 0;
-      }
-      .reader-meta span + span::before {
-        content: "-";
-        margin: 0 10px;
-        opacity: 0.3;
-      }
-      .reader-body {
-        font-size: 15px;
-        font-weight: 300;
-        line-height: 1.9;
-        color: rgba(255, 255, 255, 0.62);
-      }
-      .reader-body p {
-        margin-bottom: 22px;
-      }
-      .reader-body h3 {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 30px;
-        letter-spacing: 0.04em;
-        color: var(--light);
-        margin: 40px 0 14px;
-      }
-      .reader-body blockquote {
-        border-left: 1.5px solid rgba(255, 255, 255, 0.18);
-        padding: 2px 0 2px 20px;
-        font-style: italic;
-        color: rgba(255, 255, 255, 0.4);
-        margin: 24px 0;
-      }
-      .reader-body code {
-        font-family: "Courier New", monospace;
-        font-size: 13px;
-        background: rgba(255, 255, 255, 0.06);
-        padding: 2px 7px;
-        border-radius: 3px;
-        color: rgba(160, 210, 255, 0.85);
-      }
-      .reader-body strong {
-        color: var(--light);
-        font-weight: 500;
-      }
-      @media (max-width: 860px) {
-        .content-grid {
-          grid-template-columns: 1fr;
-          padding: 40px 24px 60px;
-          gap: 48px;
-        }
-        .categories {
-          flex-direction: row;
-          flex-wrap: wrap;
-          gap: 0 16px;
-          position: static;
-        }
-        .cat-item::before {
-          display: none;
-        }
-        .cat-item {
-          font-size: clamp(40px, 10vw, 80px);
-          padding-bottom: 8px;
-          border-bottom: 2px solid transparent;
-        }
-        .cat-item.active {
-          border-bottom-color: var(--light);
-        }
-      }
-      @media (max-width: 600px) {
-        nav {
-          padding: 14px 18px;
-        }
-        .nav-links {
-          display: none;
-        }
-        .hero-title {
-          font-size: clamp(52px, 16vw, 90px);
-          padding: 0 12px;
-        }
-        .content-grid {
-          padding: 28px 18px 60px;
-          gap: 36px;
-        }
-        .cat-item {
-          font-size: clamp(36px, 12vw, 64px);
-        }
-        .article-row {
-          grid-template-columns: 28px 1fr;
-          padding: 22px 0;
-        }
-        .row-arrow {
-          display: none;
-        }
-        .row-excerpt {
-          display: none;
-        }
-        .reader-inner {
-          padding: 36px 18px 80px;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="css/blog.css" />
   </head>
   <body>
     <div class="reader-overlay" id="reader">
@@ -533,7 +64,7 @@
             <div class="row-content">
               <div class="row-meta">
                 <span class="row-tag new-tag">Dev</span
-                ><span class="row-date">2 Mar 2025</span>
+                ><span class="row-date">25 Sep 2025</span>
               </div>
               <h2 class="row-title">
                 Comment j'ai construit mon portfolio avec Figma, Claude et
@@ -553,7 +84,7 @@
             <div class="row-content">
               <div class="row-meta">
                 <span class="row-tag">Design</span
-                ><span class="row-date">12 Jan 2025</span>
+                ><span class="row-date">20 Mar 2026</span>
               </div>
               <h2 class="row-title">
                 Pourquoi le brutalisme en design web n'est pas ce que vous
@@ -573,7 +104,7 @@
             <div class="row-content">
               <div class="row-meta">
                 <span class="row-tag">Dev</span
-                ><span class="row-date">3 Déc 2024</span>
+                ><span class="row-date">15 Feb 2026</span>
               </div>
               <h2 class="row-title">
                 CSS Container Queries : le changement de paradigme qu'on
@@ -592,7 +123,7 @@
             <div class="row-content">
               <div class="row-meta">
                 <span class="row-tag">Vie</span
-                ><span class="row-date">18 Nov 2024</span>
+                ><span class="row-date">8 Jan 2026</span>
               </div>
               <h2 class="row-title">
                 Apprendre seul : ce que l'autodidaxie m'a vraiment appris
@@ -611,7 +142,7 @@
             <div class="row-content">
               <div class="row-meta">
                 <span class="row-tag">Design</span
-                ><span class="row-date">5 Oct 2024</span>
+                ><span class="row-date">12 Déc 2025</span>
               </div>
               <h2 class="row-title">
                 Typographie : les règles qu'on ne vous dit jamais
@@ -629,7 +160,7 @@
             <div class="row-content">
               <div class="row-meta">
                 <span class="row-tag">Dev</span
-                ><span class="row-date">22 Sep 2024</span>
+                ><span class="row-date">7 Nov 2025</span>
               </div>
               <h2 class="row-title">
                 Construire une API REST propre avec Node.js et Express
@@ -647,7 +178,7 @@
             <div class="row-content">
               <div class="row-meta">
                 <span class="row-tag">Vie</span
-                ><span class="row-date">8 Août 2024</span>
+                ><span class="row-date">19 Oct 2025</span>
               </div>
               <h2 class="row-title">
                 Mon workflow créatif : de l'idée au rendu final
@@ -671,7 +202,7 @@
             <div class="row-content">
               <div class="row-meta">
                 <span class="row-tag">Design</span
-                ><span class="row-date">12 Jan 2025</span>
+                ><span class="row-date">20 Mar 2026</span>
               </div>
               <h2 class="row-title">
                 Pourquoi le brutalisme en design web n'est pas ce que vous
@@ -690,7 +221,7 @@
             <div class="row-content">
               <div class="row-meta">
                 <span class="row-tag">Design</span
-                ><span class="row-date">5 Oct 2024</span>
+                ><span class="row-date">12 Déc 2025</span>
               </div>
               <h2 class="row-title">
                 Typographie : les règles qu'on ne vous dit jamais
@@ -713,7 +244,7 @@
             <div class="row-content">
               <div class="row-meta">
                 <span class="row-tag new-tag">Dev</span
-                ><span class="row-date">2 Mar 2025</span>
+                ><span class="row-date">25 Sep 2025</span>
               </div>
               <h2 class="row-title">
                 Comment j'ai construit mon portfolio avec Figma, Claude et
@@ -732,7 +263,7 @@
             <div class="row-content">
               <div class="row-meta">
                 <span class="row-tag">Dev</span
-                ><span class="row-date">3 Déc 2024</span>
+                ><span class="row-date">15 Feb 2026</span>
               </div>
               <h2 class="row-title">
                 CSS Container Queries : le changement de paradigme qu'on
@@ -751,7 +282,7 @@
             <div class="row-content">
               <div class="row-meta">
                 <span class="row-tag">Dev</span
-                ><span class="row-date">22 Sep 2024</span>
+                ><span class="row-date">7 Nov 2025</span>
               </div>
               <h2 class="row-title">
                 Construire une API REST propre avec Node.js et Express
@@ -774,7 +305,7 @@
             <div class="row-content">
               <div class="row-meta">
                 <span class="row-tag">Vie</span
-                ><span class="row-date">18 Nov 2024</span>
+                ><span class="row-date">8 Jan 2026</span>
               </div>
               <h2 class="row-title">
                 Apprendre seul : ce que l'autodidaxie m'a vraiment appris
@@ -793,7 +324,7 @@
             <div class="row-content">
               <div class="row-meta">
                 <span class="row-tag">Vie</span
-                ><span class="row-date">8 Août 2024</span>
+                ><span class="row-date">19 Oct 2025</span>
               </div>
               <h2 class="row-title">
                 Mon workflow créatif : de l'idée au rendu final
@@ -810,131 +341,7 @@
         </div>
       </div>
     </div>
-    <script>
-      const articles = [
-        {
-          cat: "Design",
-          date: "12 Janvier 2025",
-          time: "8 min de lecture",
-          title:
-            "Pourquoi le brutalisme en design web n'est pas ce que vous croyez",
-          body: `<p>Le terme "brutalisme" en design web est l'un des plus mal compris de notre industrie.</p><h3>Les origines architecturales</h3><p>Le brutalisme naît dans l'architecture des années 50–70. Le béton brut est laissé apparent, sans revêtement, sans masque. L'idée centrale est l'<strong>honnêteté des matériaux</strong> : montrer ce qui constitue réellement la structure.</p><blockquote>Le brutalisme ne cache pas. Il expose. Il dit : voici ce que je suis, voici comment je fonctionne.</blockquote><h3>Transposé au web</h3><p>Sur le web, cette philosophie se traduit par une mise en avant du medium lui-même. Les liens sont soulignés (comportement natif), les formulaires sont des <code>&lt;form&gt;</code> bruts, les couleurs sont système ou primaires pures. Pas de skeuomorphisme, pas de glassmorphism.</p><h3>Ce que le brutalisme contemporain apporte</h3><p>Dans une époque où tout est lissé et Figma-isé, le brutalisme est un acte politique. Il dit : l'interface n'a pas besoin de vous séduire. Elle a besoin de fonctionner. Cette position est radicale - et c'est précisément ce qui la rend intéressante.</p>`,
-        },
-        {
-          cat: "Dev",
-          date: "3 Décembre 2024",
-          time: "5 min de lecture",
-          title:
-            "CSS Container Queries : le changement de paradigme qu'on attendait",
-          body: `<p>Pendant des années, nous avons conçu des composants réactifs en fonction de la taille de la <em>fenêtre du navigateur</em>. C'était logique à l'époque, mais ça créait un problème fondamental : un composant ne peut pas savoir dans quel contexte il est placé.</p><h3>Le problème des media queries</h3><p>Imaginez une card de blog dans une grille 3 colonnes, puis dans une sidebar. Avec les media queries classiques, impossible de distinguer ces deux cas sans JavaScript compliqué.</p><blockquote>La taille de la fenêtre ne dit pas grand chose sur la taille réelle d'un composant.</blockquote><h3>Container queries à la rescousse</h3><p>Avec <code>@container</code>, on cible la taille du <em>parent direct</em>. Le composant devient autonome et réutilisable. Le support navigateur est excellent (Chrome 105+, Firefox 110+, Safari 16+).</p>`,
-        },
-        {
-          cat: "Vie",
-          date: "18 Novembre 2024",
-          time: "6 min de lecture",
-          title: "Apprendre seul : ce que l'autodidaxie m'a vraiment appris",
-          body: `<p>Personne ne m'a appris à faire du design graphique. J'ai tout cherché, tout testé, tout cassé. Et recommencé.</p><h3>L'ennui comme moteur</h3><p>La chose la plus importante que l'autodidaxie m'a enseignée : <strong>l'ennui est productif</strong>. Quand on n'a pas de prof pour remplir le temps, on est forcé de chercher soi-même ce qu'on veut apprendre.</p><blockquote>La curiosité ne se programme pas. Elle se cultive dans le vide.</blockquote><h3>Les erreurs sont des features</h3><p>En cours, une erreur est sanctionnée. En autodidaxie, une erreur est une information. Ça construit une compréhension beaucoup plus profonde des principes.</p>`,
-        },
-        {
-          cat: "Design",
-          date: "5 Octobre 2024",
-          time: "7 min de lecture",
-          title: "Typographie : les règles qu'on ne vous dit jamais",
-          body: `<p>Le tracking, l'interlignage, le choix de la police - tout le monde connaît ces bases. Mais il y a une couche de subtilité que peu de ressources abordent.</p><h3>Le rythme vertical</h3><p>La typographie, c'est de la musique. Les blancs entre les éléments doivent créer un rythme cohérent qui guide l'œil sans effort.</p><blockquote>Un bon design typographique se ressent avant de se voir.</blockquote><h3>Le paradoxe du contraste</h3><p>On croit souvent que plus c'est contrasté, plus c'est lisible. Faux. Un texte légèrement désaturé (comme <code>#f0ede6</code> sur <code>#0a0a0a</code>) est bien plus confortable sur de longs passages que du blanc pur sur noir pur.</p>`,
-        },
-        {
-          cat: "Dev",
-          date: "22 Septembre 2024",
-          time: "10 min de lecture",
-          title: "Construire une API REST propre avec Node.js et Express",
-          body: `<p>Une API REST, c'est facile à faire fonctionner. C'est difficile à faire <em>bien</em>.</p><h3>Structure de projet</h3><p>La première erreur : tout mettre dans <code>app.js</code>. Ma structure de base : <code>/routes</code>, <code>/controllers</code>, <code>/services</code>, <code>/middlewares</code>, <code>/models</code>. Chaque couche a une responsabilité unique.</p><h3>Gestion des erreurs centralisée</h3><p>Pas de <code>try/catch</code> partout. Un middleware d'erreur global qui intercepte tout.</p><blockquote>Le code de gestion d'erreur ne devrait jamais être plus complexe que le code de succès.</blockquote>`,
-        },
-        {
-          cat: "Vie",
-          date: "8 Août 2024",
-          time: "4 min de lecture",
-          title: "Mon workflow créatif : de l'idée au rendu final",
-          body: `<p>On me demande souvent comment je travaille. Il y a une structure récurrente dans ma façon d'aborder un nouveau travail créatif.</p><h3>Phase 1 : absorption</h3><p>Avant de toucher Figma ou VS Code, je passe du temps à absorber. Références, moodboards, concurrents, univers adjacent. Pas pour copier - pour comprendre le langage visuel du domaine.</p><h3>Phase 2 : esquisse rapide</h3><p>Papier et stylo. Pas Figma. Les outils numériques créent une illusion de précision trop tôt. Je fais 10–15 thumbnails en 20 minutes avant de valider une direction.</p><blockquote>La vitesse d'exécution sur papier libère la pensée créative.</blockquote>`,
-        },
-        {
-          cat: "Dev",
-          date: "2 Mars 2025",
-          time: "9 min de lecture",
-          title:
-            "Comment j'ai construit mon portfolio avec Figma, Claude et GitHub",
-          body: `<p>Construire son propre portfolio, c'est probablement le projet le plus difficile pour un designer-développeur. Pas techniquement - mais psychologiquement. On est à la fois le client, le designer et le développeur. Et on est son propre juge le plus sévère.</p>
-<p>Voici comment j'ai structuré ce projet, et surtout ce que l'utilisation de Claude comme co-développeur a changé dans ma façon de travailler.</p>
-<h3>Phase 1 - Le design Figma : poser les fondations</h3>
-<p>Tout a commencé dans Figma. Pas avec un wireframe classique, mais avec une <strong>direction stylistique</strong> : fond noir profond (<code>#0a0a0a</code>), typographie display en Bebas Neue, texte corps en Inter léger. Une palette quasi-monochrome avec une teinte crème pour le texte - moins fatiguant sur écran que le blanc pur.</p>
-<p>J'ai designé page par page dans un seul fichier, avec des frames nommées proprement (<code>Home/Desktop</code>, <code>Blog/Desktop</code>, etc.). L'avantage : Claude peut lire la logique d'un design si on lui décrit précisément les composants, les espacements, les états hover. Plus la spec est précise, plus la traduction en code est fluide.</p>
-<blockquote>Figma n'est pas qu'un outil de dessin. C'est un langage de spécification.</blockquote>
-<p>J'ai aussi créé un système de variables CSS directement inspiré de mes styles Figma - <code>--bg</code>, <code>--light</code>, <code>--muted</code>, <code>--border</code>. Cette cohérence entre design et code m'a évité des dizaines d'aller-retours.</p>
-<h3>Phase 2 - Claude comme co-développeur</h3>
-<p>J'aurais pu coder tout seul. J'en suis capable. Mais j'ai choisi d'intégrer Claude dès le début, pas pour qu'il "fasse le code à ma place", mais pour <strong>accélérer les parties répétitives</strong> et explorer des solutions auxquelles je n'aurais pas pensé seul.</p>
-<p>Mon workflow concret : je décris une section précisément - par exemple "un nav avec deux zones, gauche = label texte, droite = liens pill avec état actif en inversé" - Claude génère une base HTML/CSS, je corrige et raffine. On itère jusqu'au rendu voulu.</p>
-<p>Ce qui m'a le plus surpris : Claude est excellent pour proposer des <strong>micro-animations CSS</strong>. L'effet de barre qui slide sur les catégories, le <code>scaleX</code> sur les bordures au hover des articles - ce sont des suggestions que j'ai retouchées mais pas inventées. La collaboration va vraiment dans les deux sens.</p>
-<blockquote>Utiliser Claude ne remplace pas la compréhension du code. Ça amplifie la vitesse d'exécution quand la direction est claire.</blockquote>
-<p>Ce qui ne fonctionne pas : lui demander de "faire un portfolio". Sans contraintes précises, le résultat est générique. La valeur vient de la précision des prompts - et cette précision vient d'une vision design solide en amont.</p>
-<h3>Phase 3 - Structure du code et fichiers</h3>
-<p>Le portfolio est un site statique multi-pages. Pas de framework, pas de bundler. HTML, CSS, JS vanilla dans des fichiers séparés par page : <code>index.html</code>, <code>projets.html</code>, <code>blog.html</code>, <code>apropos.html</code>, <code>contact.html</code>.</p>
-<p>Ce choix est délibéré. Un portfolio n'a pas besoin de React. Il a besoin d'être rapide, lisible et maintenable. Chaque page est autonome, ce qui facilite les mises à jour ciblées. Le seul JS utilisé est du vanilla pour trois choses : le switcher de catégories du blog, le reader overlay des articles, et le menu mobile. Moins de 100 lignes en tout.</p>
-<h3>Phase 4 - GitHub et déploiement</h3>
-<p>Le repo GitHub est structuré simplement : à la racine tous les <code>.html</code>, un dossier <code>/assets</code> pour les images, et c'est tout. Pas de dépendances, pas de <code>package.json</code>.</p>
-<p>Le déploiement se fait via <strong>GitHub Pages</strong>, branché directement sur la branche <code>main</code>. À chaque <code>git push</code>, le site est mis à jour en quelques secondes. Aucun pipeline CI/CD, aucune configuration serveur. J'utilise des commits conventionnels pour garder un historique lisible : <code>feat: add blog reader overlay</code>, <code>fix: mobile nav toggle</code>, <code>style: refine typography scale</code>. Cette rigueur m'a sauvé plusieurs fois quand je voulais revenir sur une décision de design.</p>
-<h3>Ce que j'ai appris</h3>
-<p>Ce projet m'a confirmé quelque chose : <strong>la vitesse d'exécution n'est pas l'ennemi de la qualité</strong>. Avec les bons outils et une vision claire, on peut construire quelque chose de soigné rapidement. Claude n'a pas remplacé ma créativité - il a compressé le temps entre l'idée et le rendu.</p>
-<p>La prochaine étape : intégrer un CMS headless pour les articles, probablement Notion comme source de données via API. Mais ça, c'est pour le prochain post.</p>`,
-        },
-      ];
-
-      function switchCat(name, el) {
-        document
-          .querySelectorAll(".cat-item")
-          .forEach((c) => c.classList.remove("active"));
-        el.classList.add("active");
-        document
-          .querySelectorAll(".panel")
-          .forEach((p) => p.classList.remove("active"));
-        document.getElementById("panel-" + name).classList.add("active");
-      }
-      function openReader(idx) {
-        const a = articles[idx];
-        document.getElementById("rEyebrow").textContent =
-          a.cat + " - " + a.time;
-        document.getElementById("rTitle").textContent = a.title;
-        document.getElementById("rDate").textContent = a.date;
-        document.getElementById("rTime").textContent = a.time;
-        document.getElementById("rBody").innerHTML = a.body;
-        const overlay = document.getElementById("reader");
-        overlay.classList.add("open");
-        overlay.scrollTop = 0;
-        document.body.style.overflow = "hidden";
-      }
-      function closeReader() {
-        document.getElementById("reader").classList.remove("open");
-        document.body.style.overflow = "";
-      }
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeReader();
-      });
-      const toggle = document.querySelector(".nav-toggle");
-      const links = document.querySelector(".nav-links");
-      if (toggle && links) {
-        toggle.addEventListener("click", () => {
-          const open = links.style.display === "flex";
-          links.style.display = open ? "" : "flex";
-          links.style.flexDirection = "column";
-          links.style.position = "fixed";
-          links.style.top = "60px";
-          links.style.right = "18px";
-          links.style.background = "var(--bg,#0a0a0a)";
-          links.style.padding = "16px";
-          links.style.borderRadius = "12px";
-          links.style.border = "1px solid rgba(255,255,255,0.1)";
-          links.style.zIndex = "999";
-          if (open) links.removeAttribute("style");
-        });
-      }
-    </script>
+    <script src="js/blog.js"></script>
+    <script src="smooth-scroll.js"></script>
   </body>
 </html>
